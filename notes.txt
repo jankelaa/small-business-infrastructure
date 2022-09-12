@@ -1,0 +1,24 @@
+BACKEND:
+
+npm install sequelize pg pg-hstore
+npm install -g sequelize-cli
+sequelize init
+sequelize db:create
+psql --username=myuser (myuser=postgres, password=pgmaster)
+\c database_name
+sequelize model:generate --name xyz --attributes x:type,y:type
+sequelize db:migrate
+sequelize db:migrate:undo --name xyz
+sequelize seed:generate --name xyz
+sequelize db:seed:all
+
+FRONTEND:
+
+npm i -g @angular/cli
+ng new my_app (n strict, y router, css)
+ng serve --open
+ng g c ime_komponente
+ng g s ime_servisa
+*ngFor='let item of items'
+*ngIf='uslov;else elseGrana'
+<ng-template #elseGrana></ng-template>
