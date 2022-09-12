@@ -21,7 +21,7 @@ router.post('/login', async (req, res) => {
         }
 
         const { username, password } = req.body;
-        console.log(username, password);
+
         const user = await userService.findUserWithPermissionsByUsername(username);
 
         let errorMessage = 'Login credentials not valid.';
@@ -41,7 +41,7 @@ router.post('/login', async (req, res) => {
         // change password 1st time login
 
         res.status(200).send(user);
-    } catch(error){
+    } catch (error) {
         res.status(500).send(error.message);
     }
 });
