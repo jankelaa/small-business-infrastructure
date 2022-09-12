@@ -1,0 +1,24 @@
+<table>
+    <tr>
+        <td>Korisnicko ime: </td>
+        <td>
+            <input type="text" name="username" [(ngModel)]="username">
+        </td>
+    </tr>
+    <tr>
+        <td>Lozinka: </td>
+        <td>
+            <input type="password" name="password" [(ngModel)]="password">
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <button (click)="login()">Prijavi se</button>
+        </td>
+    </tr>
+    <tr *ngIf="message!=null">
+        <td>
+            {{message}}
+        </td>
+    </tr>
+</table>
