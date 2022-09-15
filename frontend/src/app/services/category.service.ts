@@ -6,13 +6,13 @@ import { HttpClient } from '@angular/common/http';
 @Injectable({
   providedIn: 'root'
 })
-export class ProductService {
+export class CategoryService {
 
   baseUrl = environment.baseUrl;
 
   constructor(private httpClient: HttpClient) { }
 
-  getAllProducts() {
-    return this.httpClient.get(`${this.baseUrl}${ApiPaths.product}`);
+  getAllCategories() {
+    return this.httpClient.get(`${this.baseUrl}${ApiPaths.category}`);
   }
 }

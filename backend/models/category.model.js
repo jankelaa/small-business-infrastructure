@@ -12,12 +12,10 @@ module.exports = (sequelize, DataTypes) => {
         name: {
             type: DataTypes.STRING,
             allowNull: false
-        },
-        // imgUrl: {
-        //     type: DataTypes.STRING(1000)
-        // }
+        }
     }, {
         sequelize,
+        timestamps: false,
         tableName: 'categories',
         modelName: 'Category',
     });

@@ -1,0 +1,24 @@
+<div>
+    <table *ngIf='order!=null;else emptyOrder'>
+      <tr>
+        <td>Slika</td>
+        <td>Naziv</td>
+        <td>Dimenzije</td>
+        <td>Cena</td>
+        <td>Količina</td>
+      </tr>
+      <tr *ngFor="let product of order">
+        <td>
+          <img src='{{"assets/images/"+product.imgUrl}}' width="100px">
+          <!-- {{product.imgUrl}} -->
+        </td>
+        <td>{{product.name}}</td>
+        <td>{{product.size}}</td>
+        <td>{{product.price}} RSD</td>
+        <td>{{product.quantity}}</td>
+      </tr>
+    </table>
+    <ng-template #emptyOrder>
+        <h3>Korpa je prazna.</h3>        
+    </ng-template>
+  </div>

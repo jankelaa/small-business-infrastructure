@@ -12,6 +12,7 @@ const authorizationRouter = require('./routes/authorization.router');
 const customerRouter = require('./routes/customer.router');
 const orderRouter = require('./routes/order.router');
 const productRouter = require('./routes/product.router');
+const categoryRouter = require('./routes/category.router');
 const userRouter = require('./routes/user.router');
 const indexRouter = require('./routes/index.router');
 
@@ -19,6 +20,7 @@ app.use('/authorization', authorizationRouter);
 app.use('/customer', customerRouter);
 app.use('/order', orderRouter);
 app.use('/product', productRouter);
+app.use('/category', categoryRouter);
 app.use('/user', userRouter);
 app.use('/', indexRouter);
 

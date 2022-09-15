@@ -1,8 +1,8 @@
 <div>
-  <a routerLink="">O nama</a> |
-  <a routerLink="product-list">BONES kozmetika</a>
-  <!-- <router-outlet></router-outlet> -->
+  <button (click)="addFilter(null)">Svi proizvodi</button>
+  <button *ngFor="let category of allCategories" (click)="addFilter(category.id)">{{category.name}}</button>
 </div>
+<br>
 <div>
   <table>
     <tr>
@@ -10,14 +10,22 @@
       <td>Naziv</td>
       <td>Dimenzije</td>
       <td>Cena</td>
-      <td>U pakovanju</td>
+      <td>Količina</td>
     </tr>
-    <tr *ngFor="let product of allProducts">
-      <td>{{product.imgUrl}}</td>
-      <td>{{product.name}}</td>
-      <td>{{product.size}}</td>
-      <td>{{product.price}}</td>
-      <td>{{product.bundleSize}}</td>
-    </tr>
+    <ng-container *ngFor="let product of allProducts">
+      <tr *ngIf="product.categoryId == filter || filter == null">
+        <td>
+          <img src='{{"assets/images/"+product.imgUrl}}' width="100px">
+          <!-- {{product.imgUrl}} -->
+        </td>
+        <td>{{product.name}}</td>
+        <td>{{product.size}}</td>
+        <td>{{product.price}} RSD</td>
+        <td>
+          <input type="number" name="quantity" [(ngModel)]="product.quantity" min="1">
+          <button (click)="addToCart(product)">Dodaj u korpu</button>
+        </td>
+      </tr>
+    </ng-container>
   </table>
 </div>

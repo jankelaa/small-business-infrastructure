@@ -1,5 +1,25 @@
 /* You can add global styles to this file, and also import other style files */
-body{
+/* body {
     display: flex;
     justify-content: center;
+} */
+
+.header {
+    height: 100px;
+    width: 100%;
+    border: 3px solid #147d43;
+    background-color: #d4fce6;
+    position:fixed;
+    top:0;
+}
+
+.header-content {
+    text-align: center;    
+}
+
+.main-content {
+    display: flex;
+    justify-content: center;
+    padding-top:150px
+    /* text-align: center;     */
 }

@@ -1,10 +1,10 @@
-export class Product{
+export class ProductForOrder{
     id: number;
     categoryId: number;
     name: string;
     imgUrl: string;
     price: number;
     size: string;
-    amountAvailable: number;
     bundleSize: number;
+    quantity: number;
 }
