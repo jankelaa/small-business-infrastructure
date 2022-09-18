@@ -10,6 +10,14 @@ module.exports = (sequelize, DataTypes) => {
           name: 'customerId'
         },
         as: 'customer',
+        onDelete: 'RESTRICT'
+      });
+      
+      Order.CustomerAddress = Order.belongsTo(models.CustomerAddress, {
+        foreignKey: {
+          name: 'customerAddressId'
+        },
+        as: 'customerAddress',
         onDelete: 'SET NULL'
       });
     }
@@ -17,10 +25,6 @@ module.exports = (sequelize, DataTypes) => {
   Order.init({
     totalPrice: {
       type: DataTypes.DECIMAL(10,2)
-    },
-    isShippingAddressDifferent: {
-      type: DataTypes.BOOLEAN,
-      allowNull: false
     },
     status: {
       type: DataTypes.SMALLINT,

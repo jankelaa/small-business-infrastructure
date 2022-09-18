@@ -9,7 +9,6 @@ import { ProductComponent } from './components/product/product.component';
 import { CustomerComponent } from './components/customer/customer.component';
 import { OrderComponent } from './components/order/order.component';
 import { HeaderComponent } from './components/header/header.component';
-import { ButtonComponent } from './components/button/button.component';
 import { ProductsListComponent } from './components/products-list/products-list.component';
 import { LoginComponent } from './components/login/login.component';
 import { EmployeeComponent } from './components/employee/employee.component';
@@ -24,7 +23,6 @@ import { CartComponent } from './components/cart/cart.component';
     CustomerComponent,
     OrderComponent,
     HeaderComponent,
-    ButtonComponent,
     ProductsListComponent,
     LoginComponent,
     EmployeeComponent,

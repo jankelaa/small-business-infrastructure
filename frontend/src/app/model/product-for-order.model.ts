@@ -1,10 +1,20 @@
+import { ProductForList } from "./product-for-list.model";
+
 export class ProductForOrder{
     id: number;
-    categoryId: number;
     name: string;
     imgUrl: string;
     price: number;
     size: string;
-    bundleSize: number;
     quantity: number;
+
+    
+  constructor(product: ProductForList) {
+    this.id = product.id;
+    this.name = product.name;
+    this.imgUrl = product.imgUrl;
+    this.price = product.price;
+    this.size = product.size;
+    this.quantity = product.quantity;
+  }
 }

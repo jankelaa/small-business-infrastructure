@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Category } from 'src/app/model/category.model';
+import { ProductForList } from 'src/app/model/product-for-list.model';
 import { ProductForOrder } from 'src/app/model/product-for-order.model';
 import { CategoryService } from 'src/app/services/category.service';
 import { ProductService } from 'src/app/services/product.service';
@@ -13,8 +14,8 @@ import { ProductService } from 'src/app/services/product.service';
 export class ProductsListComponent implements OnInit {
 
   allCategories: Category[];
-  allProducts: ProductForOrder[];
-  productsToOrder: ProductForOrder[];
+  allProducts: ProductForList[];
+  productsForOrder: ProductForOrder[] = [];
 
   filter = null;
 
@@ -25,7 +26,7 @@ export class ProductsListComponent implements OnInit {
       this.allCategories = allCategories;
     });
 
-    this.productService.getAllProducts().subscribe((allProducts: ProductForOrder[]) => {
+    this.productService.getAllProducts().subscribe((allProducts: ProductForList[]) => {
       this.allProducts = allProducts;
     });;
   }
@@ -34,17 +35,21 @@ export class ProductsListComponent implements OnInit {
     this.filter = categoryId;
   }
 
-  addToCart(product: ProductForOrder) {
-    const index = this.productsToOrder.findIndex(pto => pto.id === product.id);
+  addToCart(product: ProductForList) {
+    if (isNaN(product.quantity) || product.quantity < 1) product.quantity = 1;
+    console.log(product);
+    const index = this.productsForOrder.findIndex(pto => pto.id === product.id);
     if (index == -1) {
-      this.productsToOrder.push(product);
+      this.productsForOrder.push(new ProductForOrder(product));
     } else {
-      this.productsToOrder[index].quantity += product.quantity;
+      this.productsForOrder[index].quantity += product.quantity;
     }
+
+    product.quantity = null;
   }
 
-  order() {
-    localStorage.setItem('order', JSON.stringify(this.productsToOrder));
-    this.router.navigate(['/cart']);
-  }
+  // order() {
+  //   localStorage.setItem('order', JSON.stringify(this.productsToOrder));
+  //   this.router.navigate(['/cart']);
+  // }
 }

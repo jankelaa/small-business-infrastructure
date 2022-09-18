@@ -1,6 +1,6 @@
 'use strict';
 
-const tableName = 'orders';
+const tableName = 'products-orders';
 
 module.exports = {
   async up(queryInterface, Sequelize) {
@@ -11,45 +11,35 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      customerId: {
+      productId: {
         type: Sequelize.INTEGER,
+        allowNull: false,
         references: {
           model: {
-            tableName: 'customers'
+            tableName: 'products'
           },
           key: 'id'
         },
-        onDelete: 'SET NULL'
+        onDelete: 'RESTRICT'
       },
-      totalPrice: {
+      orderId: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: {
+            tableName: 'orders'
+          },
+          key: 'id'
+        },
+        onDelete: 'CASCADE'
+      },
+      price: {
         type: Sequelize.DECIMAL(10, 2),
         allowNull: false
       },
-      customerAddressId: {
+      quantity: {
         type: Sequelize.INTEGER,
-        references: {
-          model: {
-            tableName: 'customer-addresses'
-          },
-          key: 'id'
-        },
-        onDelete: 'SET NULL'
-      },
-      status: {
-        type: Sequelize.SMALLINT,
         allowNull: false
-      },
-      isPaid: {
-        type: Sequelize.BOOLEAN,
-        allowNull: false
-      },
-      createdAt: {
-        allowNull: false,
-        type: Sequelize.DATE
-      },
-      updatedAt: {
-        allowNull: false,
-        type: Sequelize.DATE
       }
     });
   },

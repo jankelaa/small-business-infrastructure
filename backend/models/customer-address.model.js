@@ -35,17 +35,10 @@ module.exports = (sequelize, DataTypes) => {
     isMain: {
       type: DataTypes.BOOLEAN,
       allowNull: false
-    },
-    createdAt: {
-      allowNull: false,
-      type: DataTypes.DATE
-    },
-    updatedAt: {
-      allowNull: false,
-      type: DataTypes.DATE
     }
   }, {
     sequelize,
+    timestamps: false,
     tableName: 'customer-addresses',
     modelName: 'CustomerAddress',
   });
