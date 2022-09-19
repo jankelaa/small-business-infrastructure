@@ -11,6 +11,7 @@
       <td>Dimenzije</td>
       <td>Cena</td>
       <td>Količina</td>
+      <td></td>
     </tr>
     <ng-container *ngFor="let product of allProducts">
       <tr *ngIf="product.categoryId == filter || filter == null">
@@ -23,6 +24,8 @@
         <td>{{product.price}} RSD</td>
         <td>
           <input type="number" name="quantity" [(ngModel)]="product.quantity" min="1">
+        </td>
+        <td>
           <button (click)="addToCart(product)">Dodaj u korpu</button>
         </td>
       </tr>

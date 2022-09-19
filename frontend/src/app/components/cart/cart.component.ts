@@ -16,4 +16,15 @@ export class CartComponent implements OnInit {
     this.order = JSON.parse(localStorage.getItem('order'));
   }
 
+  removeItem(product: ProductForOrder) {
+    const index = this.order.findIndex(o => o.id === product.id);
+
+    if (index != -1) {
+      this.order.splice(index, 1);
+    }
+
+    localStorage.removeItem('order');
+    localStorage.setItem('order', JSON.stringify(this.order));
+  }
+
 }

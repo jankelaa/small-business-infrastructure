@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { Category } from 'src/app/model/category.model';
 import { ProductForList } from 'src/app/model/product-for-list.model';
 import { ProductForOrder } from 'src/app/model/product-for-order.model';
@@ -19,9 +18,11 @@ export class ProductsListComponent implements OnInit {
 
   filter = null;
 
-  constructor(private productService: ProductService, private categoryService: CategoryService, private router: Router) { }
+  constructor(private productService: ProductService, private categoryService: CategoryService) { }
 
   ngOnInit(): void {
+    this.productsForOrder = JSON.parse(localStorage.getItem('order'));
+
     this.categoryService.getAllCategories().subscribe((allCategories: Category[]) => {
       this.allCategories = allCategories;
     });
@@ -36,20 +37,21 @@ export class ProductsListComponent implements OnInit {
   }
 
   addToCart(product: ProductForList) {
-    if (isNaN(product.quantity) || product.quantity < 1) product.quantity = 1;
-    console.log(product);
+    let quantity;
+
+    if (isNaN(product.quantity) || product.quantity < 1) quantity = 1;
+    else quantity = product.quantity;
+
     const index = this.productsForOrder.findIndex(pto => pto.id === product.id);
     if (index == -1) {
-      this.productsForOrder.push(new ProductForOrder(product));
+      this.productsForOrder.push(new ProductForOrder(product, quantity));
     } else {
-      this.productsForOrder[index].quantity += product.quantity;
+      this.productsForOrder[index].quantity += quantity;
     }
 
     product.quantity = null;
-  }
 
-  // order() {
-  //   localStorage.setItem('order', JSON.stringify(this.productsToOrder));
-  //   this.router.navigate(['/cart']);
-  // }
+    localStorage.removeItem('order');
+    localStorage.setItem('order', JSON.stringify(this.productsForOrder));
+  }
 }

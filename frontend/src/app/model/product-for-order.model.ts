@@ -9,12 +9,12 @@ export class ProductForOrder{
     quantity: number;
 
     
-  constructor(product: ProductForList) {
+  constructor(product: ProductForList, quantity: number) {
     this.id = product.id;
     this.name = product.name;
     this.imgUrl = product.imgUrl;
     this.price = product.price;
     this.size = product.size;
-    this.quantity = product.quantity;
+    this.quantity = quantity;
   }
 }

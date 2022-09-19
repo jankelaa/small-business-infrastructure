@@ -5,6 +5,6 @@ export class ProductForList{
     imgUrl: string;
     price: number;
     size: string;
-    // bundleSize: number;
+    bundleSize: number;
     quantity: number;
 }
