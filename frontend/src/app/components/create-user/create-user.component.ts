@@ -1,14 +1,13 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { User } from 'src/app/model/user.model';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
-  selector: 'app-register',
-  templateUrl: './register.component.html',
-  styleUrls: ['./register.component.css']
+  selector: 'app-create-user',
+  templateUrl: './create-user.component.html',
+  styleUrls: ['./create-user.component.css']
 })
-export class RegisterComponent implements OnInit {
+export class CreateUserComponent implements OnInit {
 
   email: string;
   password: string;
@@ -23,8 +22,8 @@ export class RegisterComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  register() {
-    this.userService.register(this.email, this.password, this.name, this.surname, this.phone).subscribe({
+  createUser() {
+    this.userService.createUser(this.email, this.password, this.name, this.surname, this.phone).subscribe({
       next: () => {
         this.message = null;
         alert('User added!');
@@ -34,5 +33,4 @@ export class RegisterComponent implements OnInit {
       }
     })
   }
-
 }

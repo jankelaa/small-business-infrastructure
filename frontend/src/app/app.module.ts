@@ -13,8 +13,8 @@ import { ProductsListComponent } from './components/products-list/products-list.
 import { LoginComponent } from './components/login/login.component';
 import { EmployeeComponent } from './components/employee/employee.component';
 import { HomeComponent } from './components/home/home.component';
-import { RegisterComponent } from './components/register/register.component';
 import { CartComponent } from './components/cart/cart.component';
+import { CreateUserComponent } from './components/create-user/create-user.component';
 
 @NgModule({
   declarations: [
@@ -27,8 +27,8 @@ import { CartComponent } from './components/cart/cart.component';
     LoginComponent,
     EmployeeComponent,
     HomeComponent,
-    RegisterComponent,
-    CartComponent
+    CartComponent,
+    CreateUserComponent
   ],
   imports: [
     BrowserModule,

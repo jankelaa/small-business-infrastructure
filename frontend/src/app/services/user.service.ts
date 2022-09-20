@@ -21,7 +21,7 @@ export class UserService {
     return this.httpClient.post(`${this.baseUrl}${ApiPaths.authentication}/login`, data);
   }
 
-  register(email, password, name, surname, phone) {
+  createUser(email, password, name, surname, phone) {
     const data = {
       email,
       password,
