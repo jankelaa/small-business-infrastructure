@@ -1,13 +1,24 @@
-<div class="header-content">
-  <span>
-    <a [routerLink]="['/']">
-      <h1>BONES group</h1>
-    </a>
-  </span>
-  <a routerLink="">O nama</a> |
-  <a routerLink="product-list">BONES kozmetika</a> | 
-  <a routerLink="cart">Korpa</a> | 
-  <span>
-    <button (click)="login()">Prijavi se</button>
-  </span>
+<!-- <div class="header-content"> -->
+<div class="navbar">
+  <div>
+    <a routerLink="/">BONES group</a>
+  </div>
+  <div>
+    <span>
+      <a routerLink="/">O nama</a>
+    </span>
+    <span>
+      <a routerLink="product-list">BONES kozmetika</a>
+    </span>
+    <span>
+      <a routerLink="cart">
+        <mat-icon [matBadge]="cart_count" matBadgeColor="accent" matBadgeSize="small" [matBadgeHidden]="cart_count===0">
+          shopping_cart
+        </mat-icon>
+      </a>
+    </span>
+    <span>
+      <button mat-raised-button (click)="login()">Prijavite se</button>
+    </span>
+  </div>
 </div>

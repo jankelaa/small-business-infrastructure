@@ -9,6 +9,7 @@ import { User } from 'src/app/model/user.model';
 export class EmployeeComponent implements OnInit {
 
   user: User;
+  componentToDisplay = "create-customer";
 
   constructor() { }
 

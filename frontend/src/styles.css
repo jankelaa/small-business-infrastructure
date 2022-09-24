@@ -3,7 +3,7 @@
     display: flex;
     justify-content: center;
 } */
-
+/* 
 .header {
     height: 100px;
     width: 100%;
@@ -11,15 +11,25 @@
     background-color: #d4fce6;
     position:fixed;
     top:0;
-}
-
+} */
+/* 
 .header-content {
     text-align: center;    
-}
+} */
 
-.main-content {
+/* .main-content {
     display: flex;
     justify-content: center;
     padding-top:150px
-    /* text-align: center;     */
+} */
+
+/* html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; } */
+
+.navbar {
+    justify-content: space-between;
+}
+
+span {
+    padding-right: 1rem;
 }

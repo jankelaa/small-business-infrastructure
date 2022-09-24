@@ -1,8 +1,10 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { MaterialModule } from './material/material.module';
 
 import { AppComponent } from './app.component';
 import { ProductComponent } from './components/product/product.component';
@@ -15,6 +17,7 @@ import { EmployeeComponent } from './components/employee/employee.component';
 import { HomeComponent } from './components/home/home.component';
 import { CartComponent } from './components/cart/cart.component';
 import { CreateUserComponent } from './components/create-user/create-user.component';
+import { CreateCustomerComponent } from './components/create-customer/create-customer.component';
 
 @NgModule({
   declarations: [
@@ -28,13 +31,16 @@ import { CreateUserComponent } from './components/create-user/create-user.compon
     EmployeeComponent,
     HomeComponent,
     CartComponent,
-    CreateUserComponent
+    CreateUserComponent,
+    CreateCustomerComponent
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     AppRoutingModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    MaterialModule
   ],
   providers: [],
   bootstrap: [AppComponent]

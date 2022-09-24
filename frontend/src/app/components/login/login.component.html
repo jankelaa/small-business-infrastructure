@@ -3,7 +3,7 @@
     <tr>
         <td>Korisničko ime: </td>
         <td>
-            <input type="text" name="username" [(ngModel)]="username">
+            <input #nameRef type="text" name="username" [(ngModel)]="username">
         </td>
     </tr>
     <tr>
@@ -14,7 +14,7 @@
     </tr>
     <tr>
         <td>
-            <button (click)="login()">Prijavi se</button>
+            <button mat-raised-button color="primary" (click)="login()">Prijavite se</button>
         </td>
     </tr>
     <tr *ngIf="message!=null">

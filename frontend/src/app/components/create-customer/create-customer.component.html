@@ -1,0 +1,42 @@
+<table>
+    <tr>
+        <td>Poslovni naziv:</td>
+        <td>
+            <input type="text" name="name" [(ngModel)]="name">
+        </td>
+    </tr>
+    <tr>
+        <td>PIB:</td>
+        <td>
+            <input type="tezt" name="pib" [(ngModel)]="pib">
+        </td>
+    </tr>
+    <tr>
+        <td>E-mejl:</td>
+        <td>
+            <input type="text" name="email" [(ngModel)]="email">
+        </td>
+    </tr>
+    <tr>
+        <td>Adresa:</td>
+        <td>
+            <input type="text" name="address" [(ngModel)]="address">
+        </td>
+    </tr>
+    <tr>
+        <td>Šifra:</td>
+        <td>
+            <input type="text" name="secretCode" [(ngModel)]="secretCode">
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <button mat-raised-button color="accent" (click)="createCustomer()">Kreiraj kupca</button>
+        </td>
+    </tr>
+    <tr>
+        <td [colSpan]="2">
+            {{message}}
+        </td>
+    </tr>
+</table>

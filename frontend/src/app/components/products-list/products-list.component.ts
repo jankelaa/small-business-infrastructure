@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Category } from 'src/app/model/category.model';
 import { ProductForList } from 'src/app/model/product-for-list.model';
 import { ProductForOrder } from 'src/app/model/product-for-order.model';
+import { CartService } from 'src/app/services/cart.service';
 import { CategoryService } from 'src/app/services/category.service';
 import { ProductService } from 'src/app/services/product.service';
 
@@ -18,7 +19,8 @@ export class ProductsListComponent implements OnInit {
 
   filter = null;
 
-  constructor(private productService: ProductService, private categoryService: CategoryService) { }
+  constructor(private productService: ProductService, private categoryService: CategoryService,
+    private cartService: CartService) { }
 
   ngOnInit(): void {
     this.productsForOrder = JSON.parse(localStorage.getItem('order'));
@@ -37,7 +39,7 @@ export class ProductsListComponent implements OnInit {
   }
 
   addToCart(product: ProductForList) {
-    let quantity;
+    let quantity: number;
 
     if (isNaN(product.quantity) || product.quantity < 1) quantity = 1;
     else quantity = product.quantity;
@@ -53,5 +55,7 @@ export class ProductsListComponent implements OnInit {
 
     localStorage.removeItem('order');
     localStorage.setItem('order', JSON.stringify(this.productsForOrder));
+    
+    this.cartService.setCartCount(this.productsForOrder.length);
   }
 }

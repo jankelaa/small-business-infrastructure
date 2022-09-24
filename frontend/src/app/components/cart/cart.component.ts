@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductForOrder } from 'src/app/model/product-for-order.model';
+import { CartService } from 'src/app/services/cart.service';
 
 @Component({
   selector: 'app-cart',
@@ -10,7 +11,7 @@ export class CartComponent implements OnInit {
 
   order: ProductForOrder[];
 
-  constructor() { }
+  constructor(private cartService: CartService) { }
 
   ngOnInit(): void {
     this.order = JSON.parse(localStorage.getItem('order'));
@@ -25,6 +26,8 @@ export class CartComponent implements OnInit {
 
     localStorage.removeItem('order');
     localStorage.setItem('order', JSON.stringify(this.order));
+    
+    this.cartService.setCartCount(this.order.length);
   }
 
 }

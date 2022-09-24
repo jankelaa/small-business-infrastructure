@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { CartService } from 'src/app/services/cart.service';
 
 @Component({
   selector: 'app-header',
@@ -8,9 +9,14 @@ import { Router } from '@angular/router';
 })
 export class HeaderComponent implements OnInit {
 
-  constructor(private router: Router) { }
+  cart_count: number;
+
+  constructor(private router: Router, private cartService: CartService) { }
 
   ngOnInit(): void {
+    this.cartService.cartNotificationUpdated.subscribe(
+      cartNotification => this.cart_count = cartNotification
+    )
   }
 
   login() {
