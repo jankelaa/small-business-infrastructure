@@ -1,6 +1,8 @@
 <div>
-  <button (click)="addFilter(null)">Svi proizvodi</button>
-  <button *ngFor="let category of allCategories" (click)="addFilter(category.id)">{{category.name}}</button>
+  <button mat-stroked-button color="accent" (click)="addFilter(null)">Svi proizvodi</button>
+  <button mat-stroked-button color="accent" *ngFor="let category of allCategories" (click)="addFilter(category.id)">
+    {{category.name}}
+  </button>
 </div>
 <br>
 <div>

@@ -17,17 +17,19 @@
     text-align: center;    
 } */
 
-/* .main-content {
-    display: flex;
-    justify-content: center;
-    padding-top:150px
-} */
-
-/* html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; } */
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 .navbar {
     justify-content: space-between;
+    position:fixed;
+    top:0;
+}
+
+.main-content {
+    display: flex;
+    justify-content: center;
+    padding-top:100px
 }
 
 /* span {
