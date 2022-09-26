@@ -12,15 +12,6 @@ export class UserService {
 
   constructor(private httpClient: HttpClient) { }
 
-  login(username, password) {
-    const data = {
-      username,
-      password
-    }
-
-    return this.httpClient.post(`${this.baseUrl}${ApiPaths.authentication}/login`, data);
-  }
-
   createUser(email, password, name, surname, phone) {
     const data = {
       email,

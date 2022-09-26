@@ -1,8 +1,8 @@
 import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { User } from 'src/app/model/user.model';
-import { UserService } from '../../services/user.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { AuthorizationService } from 'src/app/services/authorization.service';
 
 @Component({
   selector: 'app-login',
@@ -18,7 +18,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
   message = null;
 
 
-  constructor(private userService: UserService, private router: Router) { }
+  constructor(private authorizationService: AuthorizationService, private router: Router) { }
 
   ngOnInit(): void {
   }
@@ -28,11 +28,12 @@ export class LoginComponent implements OnInit, AfterViewInit {
   }
 
   login() {
-    this.userService.login(this.username, this.password).subscribe({
+    this.authorizationService.login(this.username, this.password).subscribe({
       next: (user: User) => {
         this.message = null;
 
         localStorage.setItem('user', JSON.stringify(user));
+        this.authorizationService.loggedUserStatusChange();
         this.router.navigate(['/employee']);
       },
       error: (error: HttpErrorResponse) => {

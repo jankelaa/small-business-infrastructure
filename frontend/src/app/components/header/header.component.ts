@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
+import { User } from 'src/app/model/user.model';
+import { AuthorizationService } from 'src/app/services/authorization.service';
 import { CartService } from 'src/app/services/cart.service';
 
 @Component({
@@ -9,13 +11,21 @@ import { CartService } from 'src/app/services/cart.service';
 })
 export class HeaderComponent implements OnInit {
 
+  loggedUserUpdated = new EventEmitter();
+  loggedUser: User;
+
   cart_count: number;
 
-  constructor(private router: Router, private cartService: CartService) {
+  constructor(private router: Router, private cartService: CartService, private authorizationService: AuthorizationService) {
+    this.loggedUser = JSON.parse(localStorage.getItem('user'));
     this.cart_count = JSON.parse(localStorage.getItem('order')).length;
   }
 
   ngOnInit(): void {
+    this.authorizationService.loggedUserUpdated.subscribe(
+      () => this.loggedUser = JSON.parse(localStorage.getItem('user'))
+    )
+
     this.cartService.cartNotificationUpdated.subscribe(
       cartNotification => this.cart_count = cartNotification
     )
@@ -23,6 +33,12 @@ export class HeaderComponent implements OnInit {
 
   login() {
     this.router.navigate(['/login']);
+  }
+
+  logout() {
+    localStorage.removeItem('user');
+    this.authorizationService.loggedUserStatusChange();
+    this.router.navigate(['/']);
   }
 
 }
