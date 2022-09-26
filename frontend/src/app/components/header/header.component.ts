@@ -11,7 +11,9 @@ export class HeaderComponent implements OnInit {
 
   cart_count: number;
 
-  constructor(private router: Router, private cartService: CartService) { }
+  constructor(private router: Router, private cartService: CartService) {
+    this.cart_count = JSON.parse(localStorage.getItem('order')).length;
+  }
 
   ngOnInit(): void {
     this.cartService.cartNotificationUpdated.subscribe(

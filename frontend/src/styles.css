@@ -30,6 +30,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; } */
     justify-content: space-between;
 }
 
-span {
+/* span {
+    padding-left: 1rem;
     padding-right: 1rem;
-}
+} */

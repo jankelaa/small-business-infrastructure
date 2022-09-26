@@ -1,17 +1,17 @@
 <!-- <div class="header-content"> -->
-<div class="navbar">
+<mat-toolbar color="primary" class="navbar">
   <div>
-    <a routerLink="/">BONES group</a>
+    <a mat-stroked-button routerLink="/">BONES group</a>
   </div>
   <div>
     <span>
-      <a routerLink="/">O nama</a>
+      <a mat-stroked-button routerLink="/">O nama</a>
     </span>
     <span>
-      <a routerLink="product-list">BONES kozmetika</a>
+      <a mat-stroked-button routerLink="product-list">BONES kozmetika</a>
     </span>
     <span>
-      <a routerLink="cart">
+      <a mat-flat-button color="primary" routerLink="cart">
         <mat-icon [matBadge]="cart_count" matBadgeColor="accent" matBadgeSize="small" [matBadgeHidden]="cart_count===0">
           shopping_cart
         </mat-icon>
@@ -21,4 +21,4 @@
       <button mat-raised-button (click)="login()">Prijavite se</button>
     </span>
   </div>
-</div>
+</mat-toolbar>
