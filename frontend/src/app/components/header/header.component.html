@@ -4,7 +4,7 @@
     <a mat-flat-button color="primary" routerLink="/"><img src='{{"assets/UI_images/bonescosmetics.png"}}'
         width="300px"></a>
   </div>
-  <div>
+  <div *ngIf="loggedUser===null">
     <span>
       <a mat-flat-button color="primary" routerLink="/">O nama</a>
     </span>
@@ -19,18 +19,18 @@
       </a>
     </span>
     &nbsp;&nbsp;
-    <span *ngIf="loggedUser===null">
+    <span>
       <button mat-raised-button (click)="login()">Prijavite se</button>
     </span>
-    <span *ngIf="loggedUser!==null">
-      <button mat-flat-button color="primary" [matMenuTriggerFor]="userMenu">
-        {{loggedUser.username}}
-        <mat-icon>account_circle</mat-icon>
-      </button>
-      <mat-menu #userMenu>
-        <button mat-menu-item (click)="logout()">Odjavi se</button>
-      </mat-menu>
-      <!-- <button mat-raised-button (click)="logout()">Prijavite se</button> -->
-    </span>
+  </div>
+  <div *ngIf="loggedUser!==null">
+    <button mat-flat-button color="primary" [matMenuTriggerFor]="userMenu">
+      {{loggedUser.username}}
+      <mat-icon>account_circle</mat-icon>
+    </button>
+    <mat-menu #userMenu>
+      <button mat-menu-item (click)="logout()">Odjavi se</button>
+    </mat-menu>
+    <!-- <button mat-raised-button (click)="logout()">Prijavite se</button> -->
   </div>
 </mat-toolbar>
