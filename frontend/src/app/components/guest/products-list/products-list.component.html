@@ -18,7 +18,7 @@
     <ng-container *ngFor="let product of allProducts">
       <tr *ngIf="product.categoryId == filter || filter == null">
         <td>
-          <img src='{{"assets/images/"+product.imgUrl}}' width="100px">
+          <img src='{{"assets/images/products/"+product.imgUrl}}' width="100px">
           <!-- {{product.imgUrl}} -->
         </td>
         <td>{{product.name}}</td>
