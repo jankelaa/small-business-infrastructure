@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CustomerComponent } from './customer.component';
+import { InvalidRouteComponent } from './invalid-route.component';
 
-describe('CustomerComponent', () => {
-  let component: CustomerComponent;
-  let fixture: ComponentFixture<CustomerComponent>;
+describe('InvalidRouteComponent', () => {
+  let component: InvalidRouteComponent;
+  let fixture: ComponentFixture<InvalidRouteComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CustomerComponent ]
+      declarations: [ InvalidRouteComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(CustomerComponent);
+    fixture = TestBed.createComponent(InvalidRouteComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

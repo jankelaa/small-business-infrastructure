@@ -26,7 +26,7 @@ export class CartComponent implements OnInit {
 
     localStorage.removeItem('order');
     localStorage.setItem('order', JSON.stringify(this.order));
-    
+
     this.cartService.setCartCount(this.order.length);
   }
 

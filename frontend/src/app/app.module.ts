@@ -7,24 +7,21 @@ import { HttpClientModule } from '@angular/common/http';
 import { MaterialModule } from './material/material.module';
 
 import { AppComponent } from './app.component';
-import { ProductComponent } from './components/product/product.component';
-import { CustomerComponent } from './components/customer/customer.component';
-import { OrderComponent } from './components/order/order.component';
 import { HeaderComponent } from './components/header/header.component';
-import { ProductsListComponent } from './components/products-list/products-list.component';
-import { LoginComponent } from './components/login/login.component';
+import { ProductsListComponent } from './components/guest/products-list/products-list.component';
+import { LoginComponent } from './components/guest/login/login.component';
 import { EmployeeComponent } from './components/employee/employee.component';
-import { HomeComponent } from './components/home/home.component';
-import { CartComponent } from './components/cart/cart.component';
-import { CreateUserComponent } from './components/create-user/create-user.component';
-import { CreateCustomerComponent } from './components/create-customer/create-customer.component';
+import { HomeComponent } from './components/guest/home/home.component';
+import { CartComponent } from './components/guest/cart/cart.component';
+import { CreateUserComponent } from './components/employee/create-user/create-user.component';
+import { CreateCustomerComponent } from './components/employee/create-customer/create-customer.component';
+import { EmployeeInfoComponent } from './components/employee/employee-info/employee-info.component';
+import { GuestComponent } from './components/guest/guest.component';
+import { InvalidRouteComponent } from './components/invalid-route/invalid-route.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    ProductComponent,
-    CustomerComponent,
-    OrderComponent,
     HeaderComponent,
     ProductsListComponent,
     LoginComponent,
@@ -32,7 +29,10 @@ import { CreateCustomerComponent } from './components/create-customer/create-cus
     HomeComponent,
     CartComponent,
     CreateUserComponent,
-    CreateCustomerComponent
+    CreateCustomerComponent,
+    EmployeeInfoComponent,
+    GuestComponent,
+    InvalidRouteComponent
   ],
   imports: [
     BrowserModule,

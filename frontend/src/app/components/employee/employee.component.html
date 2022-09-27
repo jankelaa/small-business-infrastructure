@@ -1,2 +1,14 @@
-<app-create-user *ngIf="componentToDisplay === 'create-user'"></app-create-user>
-<app-create-customer *ngIf="componentToDisplay === 'create-customer'"></app-create-customer>
+<mat-drawer-container>
+    <mat-drawer mode="side" opened>
+        <mat-nav-list>
+            <a mat-list-item routerLink="/">Info</a>
+            <mat-divider></mat-divider>
+            <a mat-list-item routerLink="create-user">Create user</a>
+            <mat-divider></mat-divider>
+            <a mat-list-item routerLink="create-customer">Create customer</a>
+        </mat-nav-list>
+    </mat-drawer>
+    <mat-drawer-content>
+        <router-outlet></router-outlet>
+    </mat-drawer-content>
+</mat-drawer-container>

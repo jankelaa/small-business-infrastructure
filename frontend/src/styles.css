@@ -1,22 +1,3 @@
-/* You can add global styles to this file, and also import other style files */
-/* body {
-    display: flex;
-    justify-content: center;
-} */
-/* 
-.header {
-    height: 100px;
-    width: 100%;
-    border: 3px solid #147d43;
-    background-color: #d4fce6;
-    position:fixed;
-    top:0;
-} */
-/* 
-.header-content {
-    text-align: center;    
-} */
-
 html,
 body {
     height: 100%;
@@ -27,20 +8,30 @@ body {
     font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
-.navbar {
+.main-content {
+    padding-top: 100px
+}
+
+.guest-content {
+    display: flex;
+    justify-content: center;
+}
+
+.about-us {
+    padding: 1rem;
+}
+
+mat-toolbar {
     justify-content: space-between;
     position: fixed;
     top: 0;
     z-index: 10;
 }
 
-.main-content {
-    display: flex;
-    justify-content: center;
-    padding-top: 100px
+mat-drawer {
+    width: 200px;
 }
 
-/* span {
+mat-drawer-content {
     padding-left: 1rem;
-    padding-right: 1rem;
-} */
+}

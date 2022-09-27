@@ -55,7 +55,7 @@ export class ProductsListComponent implements OnInit {
 
     localStorage.removeItem('order');
     localStorage.setItem('order', JSON.stringify(this.productsForOrder));
-    
+
     this.cartService.setCartCount(this.productsForOrder.length);
   }
 }
