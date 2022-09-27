@@ -1,5 +1,5 @@
 <div>
-  <table *ngIf='order!=null;else emptyOrder'>
+  <table *ngIf='order.length!==0;else emptyOrder'>
     <tr>
       <td>Slika</td>
       <td>Naziv</td>
