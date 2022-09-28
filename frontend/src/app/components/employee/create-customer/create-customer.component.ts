@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { UserService } from 'src/app/services/user.service';
+import { CustomerService } from 'src/app/services/customer.service';
 
 @Component({
   selector: 'app-create-customer',
@@ -12,25 +12,29 @@ export class CreateCustomerComponent implements OnInit {
   name: string;
   pib: string;
   email: string;
+  phone: string;
   address: string;
-  secretCode: string;
+  country: string;
+  city: string;
+  postcode: string;
 
   message = null;
 
-  constructor(private userService: UserService) { }
+  constructor(private customerService: CustomerService) { }
 
   ngOnInit(): void {
   }
 
   createCustomer() {
-    this.userService.createUser(this.name, this.pib, this.email, this.address, this.secretCode).subscribe({
-      next: () => {
-        this.message = null;
-        alert('Customer added!');
-      },
-      error: (error: HttpErrorResponse) => {
-        this.message = error.error;
-      }
-    })
+    this.customerService.createCustomer(this.name, this.pib, this.email, this.phone,
+      this.address, this.country, this.city, this.postcode).subscribe({
+        next: () => {
+          this.message = null;
+          alert('Customer added!');
+        },
+        error: (error: HttpErrorResponse) => {
+          this.message = error.error;
+        }
+      })
   }
 }

@@ -20,6 +20,26 @@
         <button mat-button color="warn" (click)="removeItem(product)">Ukloni</button>
       </td>
     </tr>
+    <tr align="center">
+      <td [colSpan]="6">
+        <hr>
+      </td>
+    </tr>
+    <tr align="right">
+      <td [colSpan]="6">
+        Ukupno: {{total}} RSD
+      </td>
+    </tr>
+    <tr align="center">
+      <td [colSpan]="6">
+        <button mat-raised-button color="primary" (click)="confirmOrder()">Potvrdi narudžbinu</button>
+      </td>
+    </tr>
+    <tr align="center">
+      <td [colSpan]="6">
+        <button mat-stroked-button color="accent" (click)="editOrder()">Izmeni narudžbinu</button>
+      </td>
+    </tr>
   </table>
   <ng-template #emptyOrder>
     <h3>Korpa je prazna.</h3>

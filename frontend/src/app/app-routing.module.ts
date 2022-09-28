@@ -10,6 +10,7 @@ import { CreateCustomerComponent } from './components/employee/create-customer/c
 import { EmployeeInfoComponent } from './components/employee/employee-info/employee-info.component';
 import { GuestComponent } from './components/guest/guest.component';
 import { InvalidRouteComponent } from './components/invalid-route/invalid-route.component';
+import { ConfirmOrderComponent } from './components/guest/confirm-order/confirm-order.component';
 
 const routes: Routes = [
   {
@@ -37,6 +38,9 @@ const routes: Routes = [
       },
       {
         path: 'cart', component: CartComponent
+      },
+      {
+        path: 'confirm-order', component: ConfirmOrderComponent
       },
       { path: '', component: HomeComponent }
     ]

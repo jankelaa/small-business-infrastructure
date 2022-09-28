@@ -1,6 +1,36 @@
+<h2>Unesite Vaš PIB i jedinstvenu lozinku ako ste registrovani kupac:</h2>
 <table>
     <tr>
-        <td>Poslovni naziv:</td>
+        <td width="200px">PIB:</td>
+        <td>
+            <input type="text" name="pib1" [(ngModel)]="pib1">
+        </td>
+    </tr>
+    <tr>
+        <td>Jedinstvena lozinka:</td>
+        <td>
+            <input type="password" name="secretCode" [(ngModel)]="secretCode">
+        </td>
+    </tr>
+    <tr>
+        <td [colSpan]="2">
+            <br>
+            <button mat-raised-button color="primary" (click)="createOrder()">Kreirajte narudžbinu</button>
+        </td>
+    </tr>
+    <tr>
+        <td [colSpan]="2">
+            {{message}}
+        </td>
+    </tr>
+</table>
+<br>
+<hr>
+<br>
+<h2>Registrujte se ako niste registrovani kupac:</h2>
+<table>
+    <tr>
+        <td width="200px">Poslovni naziv:</td>
         <td>
             <input type="text" name="name" [(ngModel)]="name">
         </td>
@@ -8,7 +38,7 @@
     <tr>
         <td>PIB:</td>
         <td>
-            <input type="text" name="pib" [(ngModel)]="pib">
+            <input type="text" name="pib2" [(ngModel)]="pib2">
         </td>
     </tr>
     <tr>
@@ -48,8 +78,9 @@
         </td>
     </tr>
     <tr>
-        <td>
-            <button mat-raised-button color="primary" (click)="createCustomer()">Kreiraj kupca</button>
+        <td [colSpan]="2">
+            <br>
+            <button mat-raised-button color="primary" (click)="customerSignupAndOrder()">Kreirajte narudžbinu</button>
         </td>
     </tr>
     <tr>

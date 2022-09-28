@@ -1,19 +1,19 @@
 const { Router } = require("express");
 const { Customer, sequelize } = require('../models');
 
-// const customerService = require('../services/customer.service');
+const customerService = require('../services/customer.service');
 
 const router = Router();
 
-router.post('/signup', async (req, res) => {
+router.post('/create', async (req, res) => {
     let transaction;
 
     try {
-        const { name, pib, email, address } = req.body;
-        
+        const { name, pib, email, phone, address, country, city, postcode } = req.body;
+
         transaction = await sequelize.transaction();
 
-        const customer = await Customer.create({ name, pib, email, address });
+        const customer = await customerService.createCustomer(name, pib, email, phone, address, country, city, postcode, transaction);
 
         await transaction.commit();
         return res.status(200).json(customer);
