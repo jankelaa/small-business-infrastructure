@@ -6,7 +6,6 @@ const { sequelize } = require("../models");
 const router = Router();
 
 const userService = require('../services/user.service');
-const { handleResponseException } = require("../utils");
 
 router.get('/', async (req, res) => {
     try {

@@ -26,4 +26,28 @@ export class CustomerService {
 
     return this.httpClient.post(`${this.baseUrl}${ApiPaths.customer}/create`, data);
   }
+
+  signin(pib, secretCode) {
+    const data = {
+      pib,
+      secretCode
+    }
+
+    return this.httpClient.post(`${this.baseUrl}${ApiPaths.customer}/signin`, data);
+  }
+
+  signup(name, pib, email, phone, address, country, city, postcode) {
+    const data = {
+      name,
+      pib,
+      email,
+      phone,
+      address,
+      country,
+      city,
+      postcode
+    }
+
+    return this.httpClient.post(`${this.baseUrl}${ApiPaths.customer}/signup`, data);
+  }
 }

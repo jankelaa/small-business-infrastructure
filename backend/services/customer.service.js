@@ -37,6 +37,17 @@ class CustomerService {
     async getAllCustomers() {
         return await Customer.findAll();
     }
+
+    async getCustomerForOrderByPib(pib) {
+        const res = await Customer.findOne({
+            include: Customer.Addresses,
+            where: {
+                pib: pib
+            }
+        });
+
+        return isNil(res) ? null : res;
+    }
 }
 
 module.exports = (() => {

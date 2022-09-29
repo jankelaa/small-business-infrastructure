@@ -1,91 +1,117 @@
-<h2>Unesite Vaš PIB i jedinstvenu lozinku ako ste registrovani kupac:</h2>
-<table>
-    <tr>
-        <td width="200px">PIB:</td>
-        <td>
-            <input type="text" name="pib1" [(ngModel)]="pib1">
-        </td>
-    </tr>
-    <tr>
-        <td>Jedinstvena lozinka:</td>
-        <td>
-            <input type="password" name="secretCode" [(ngModel)]="secretCode">
-        </td>
-    </tr>
-    <tr>
-        <td [colSpan]="2">
+<mat-horizontal-stepper linear>
+    <mat-step label="Prijava" [editable]="false" [completed]="step1">
+        <div *ngIf="customer==null">
+            <h2>Prijavite se ako ste registrovani kupac:</h2>
+            <table>
+                <tr>
+                    <td width="200px">PIB:</td>
+                    <td>
+                        <input type="text" name="pib1" [(ngModel)]="pib1">
+                    </td>
+                </tr>
+                <tr>
+                    <td>Jedinstvena lozinka:</td>
+                    <td>
+                        <input type="password" name="secretCode" [(ngModel)]="secretCode">
+                    </td>
+                </tr>
+                <tr>
+                    <td [colSpan]="2">
+                        <br>
+                        <button mat-raised-button color="primary" (click)="signin()">Prijavite se</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td [colSpan]="2">
+                        {{message}}
+                    </td>
+                </tr>
+            </table>
             <br>
-            <button mat-raised-button color="primary" (click)="createOrder()">Kreirajte narudžbinu</button>
-        </td>
-    </tr>
-    <tr>
-        <td [colSpan]="2">
-            {{message}}
-        </td>
-    </tr>
-</table>
-<br>
-<hr>
-<br>
-<h2>Registrujte se ako niste registrovani kupac:</h2>
-<table>
-    <tr>
-        <td width="200px">Poslovni naziv:</td>
-        <td>
-            <input type="text" name="name" [(ngModel)]="name">
-        </td>
-    </tr>
-    <tr>
-        <td>PIB:</td>
-        <td>
-            <input type="text" name="pib2" [(ngModel)]="pib2">
-        </td>
-    </tr>
-    <tr>
-        <td>E-mejl:</td>
-        <td>
-            <input type="text" name="email" [(ngModel)]="email">
-        </td>
-    </tr>
-    <tr>
-        <td>Telefon:</td>
-        <td>
-            <input type="text" name="phone" [(ngModel)]="phone">
-        </td>
-    </tr>
-    <tr>
-        <td>Adresa:</td>
-        <td>
-            <input type="text" name="address" [(ngModel)]="address">
-        </td>
-    </tr>
-    <tr>
-        <td>Zemlja:</td>
-        <td>
-            <input type="text" name="country" [(ngModel)]="country">
-        </td>
-    </tr>
-    <tr>
-        <td>Grad:</td>
-        <td>
-            <input type="text" name="city" [(ngModel)]="city">
-        </td>
-    </tr>
-    <tr>
-        <td>Poštanski broj:</td>
-        <td>
-            <input type="text" name="postcode" [(ngModel)]="postcode">
-        </td>
-    </tr>
-    <tr>
-        <td [colSpan]="2">
+            <hr>
             <br>
-            <button mat-raised-button color="primary" (click)="customerSignupAndOrder()">Kreirajte narudžbinu</button>
-        </td>
-    </tr>
-    <tr>
-        <td [colSpan]="2">
-            {{message}}
-        </td>
-    </tr>
-</table>
+            <h2>Registrujte se ako niste registrovani kupac:</h2>
+            <table>
+                <tr>
+                    <td width="200px">Poslovni naziv:</td>
+                    <td>
+                        <input type="text" name="name" [(ngModel)]="name">
+                    </td>
+                </tr>
+                <tr>
+                    <td>PIB:</td>
+                    <td>
+                        <input type="text" name="pib2" [(ngModel)]="pib2">
+                    </td>
+                </tr>
+                <tr>
+                    <td>E-mejl:</td>
+                    <td>
+                        <input type="text" name="email" [(ngModel)]="email">
+                    </td>
+                </tr>
+                <tr>
+                    <td>Telefon:</td>
+                    <td>
+                        <input type="text" name="phone" [(ngModel)]="phone">
+                    </td>
+                </tr>
+                <tr>
+                    <td>Adresa:</td>
+                    <td>
+                        <input type="text" name="address" [(ngModel)]="address">
+                    </td>
+                </tr>
+                <tr>
+                    <td>Zemlja:</td>
+                    <td>
+                        <input type="text" name="country" [(ngModel)]="country">
+                    </td>
+                </tr>
+                <tr>
+                    <td>Grad:</td>
+                    <td>
+                        <input type="text" name="city" [(ngModel)]="city">
+                    </td>
+                </tr>
+                <tr>
+                    <td>Poštanski broj:</td>
+                    <td>
+                        <input type="text" name="postcode" [(ngModel)]="postcode">
+                    </td>
+                </tr>
+                <tr>
+                    <td [colSpan]="2">
+                        <br>
+                        <button mat-raised-button color="primary" (click)="signup()">Registrujte se</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td [colSpan]="2">
+                        {{message}}
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div *ngIf="customer!=null">
+            <h2>Uspesno ste se prijavili!</h2>
+            <br>
+            <button mat-raised-button color="primary" matStepperNext>Nastavite na odabir adrese dostave</button>
+        </div>
+    </mat-step>
+    <mat-step label="Adresa za dostavu">
+        <ng-template matStepContent>
+            <table *ngIf='customer!=null'>
+                <tr *ngFor='let addr of customer.addresses'>
+                    <td>{{addr.address}}</td>
+                    <td>{{addr.city}}</td>
+                    <td>{{addr.country}}</td>
+                    <td>{{addr.zipCode}}</td>
+                </tr>
+            </table>
+        </ng-template>
+    </mat-step>
+    <mat-step label="Pregled narudžbine">
+
+    </mat-step>
+</mat-horizontal-stepper>

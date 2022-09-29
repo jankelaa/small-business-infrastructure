@@ -1,5 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { CustomerWithAddresses } from 'src/app/model/customer-with-addresses.model';
 import { ProductForOrder } from 'src/app/model/product-for-order.model';
 import { CustomerService } from 'src/app/services/customer.service';
 import { OrderService } from 'src/app/services/order.service';
@@ -11,11 +13,12 @@ import { OrderService } from 'src/app/services/order.service';
 })
 export class ConfirmOrderComponent implements OnInit {
 
-  pib1: string;
   order: ProductForOrder[];
 
-  pib2: string;
+  pib1: string;
   secretCode: string;
+
+  pib2: string;
   name: string;
   email: string;
   phone: string;
@@ -24,36 +27,33 @@ export class ConfirmOrderComponent implements OnInit {
   city: string;
   postcode: string;
 
+  customer: CustomerWithAddresses = null;
+
+  step1: boolean;
   message = null;
 
-  constructor(private orderService: OrderService) { }
+  constructor(private customerService: CustomerService, private orderService: OrderService, private router: Router) { }
 
   ngOnInit(): void {
+    this.step1 = false;
     this.order = JSON.parse(localStorage.getItem('order'));
+
+    if (this.order.length === 0) this.router.navigate(['/cart']);
   }
 
-  createOrder() {
-    this.orderService.createOrder(this.pib1, this.secretCode, this.order).subscribe({
-        next: () => {
-          this.message = null;
-          alert('Narudžbina kreirana!');
-        },
-        error: (error: HttpErrorResponse) => {
-          this.message = error.error;
-        }
-      })
+  signin() {
+    this.customerService.signin(this.pib1, this.secretCode).subscribe({
+      next: (data: { customer: CustomerWithAddresses }) => {
+        this.message = null;
+        this.customer = data.customer;
+        this.step1 = true;
+      },
+      error: (error: HttpErrorResponse) => {
+        this.message = error.error;
+      }
+    })
   }
 
-  customerSignupAndOrder() {
-    this.orderService.customerSignupAndOrder(this.name, this.pib2, this.email, this.phone,
-      this.address, this.country, this.city, this.postcode).subscribe({
-        next: () => {
-          this.message = null;
-          alert('Narudžbina kreirana!');
-        },
-        error: (error: HttpErrorResponse) => {
-          this.message = error.error;
-        }
-      })
+  signup() {
   }
 }
