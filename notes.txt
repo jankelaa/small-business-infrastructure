@@ -22,3 +22,8 @@ ng g s ime_servisa
 *ngFor='let item of items'
 *ngIf='uslov;else elseGrana'
 <ng-template #elseGrana></ng-template>
+
+Property binding i.e. [] required to evaluate values
+Model binding i.e. [()] required nothing special
+Interpolation binding i.e. {{}} could be used with general attributes
+Event binding i.e. () worked great with functions

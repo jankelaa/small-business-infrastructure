@@ -30,6 +30,8 @@ export class ConfirmOrderComponent implements OnInit {
   customer: CustomerWithAddresses = null;
 
   step1: boolean;
+
+  selectedAddress: number;
   message = null;
 
   constructor(private customerService: CustomerService, private orderService: OrderService, private router: Router) { }
@@ -46,6 +48,11 @@ export class ConfirmOrderComponent implements OnInit {
       next: (data: { customer: CustomerWithAddresses }) => {
         this.message = null;
         this.customer = data.customer;
+
+        this.customer.addresses.forEach(a => {
+          if (a.isMain) this.selectedAddress = a.id
+        });
+
         this.step1 = true;
       },
       error: (error: HttpErrorResponse) => {

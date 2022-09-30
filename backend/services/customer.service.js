@@ -1,5 +1,5 @@
 const { isNil } = require('lodash');
-const { Customer } = require('../models');
+const { Customer, CustomerAddress } = require('../models');
 const generator = require('generate-password');
 
 let instance = null;
@@ -32,6 +32,20 @@ class CustomerService {
             include: Customer.Addresses,
             transaction
         });
+    }
+
+    async addAddressForCustomer(customerId, address, country, city, zipCode, transaction = null) {
+        return await CustomerAddress.create({
+            customerId,
+            address,
+            city,
+            country,
+            zipCode,
+            isMain: false
+        }, {
+            transaction
+        }
+        );
     }
 
     async getAllCustomers() {

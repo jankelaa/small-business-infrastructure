@@ -96,19 +96,26 @@
         <div *ngIf="customer!=null">
             <h2>Uspesno ste se prijavili!</h2>
             <br>
-            <button mat-raised-button color="primary" matStepperNext>Nastavite na odabir adrese dostave</button>
+            <button mat-raised-button color="primary" matStepperNext>Adresa za dostavu ></button>
         </div>
     </mat-step>
     <mat-step label="Adresa za dostavu">
         <ng-template matStepContent>
-            <table *ngIf='customer!=null'>
-                <tr *ngFor='let addr of customer.addresses'>
-                    <td>{{addr.address}}</td>
-                    <td>{{addr.city}}</td>
-                    <td>{{addr.country}}</td>
-                    <td>{{addr.zipCode}}</td>
-                </tr>
-            </table>
+            <div class="delivery-addresses">
+                <mat-radio-group [(ngModel)]="selectedAddress">
+                    <!-- <mat-grid-list cols="3"> -->
+                    <!-- <mat-grid-tile *ngFor='let addr of customer.addresses'> -->
+                    <mat-radio-button *ngFor='let addr of customer.addresses' [value]='addr.id'>
+                        {{addr.address}}
+                        <br>
+                        {{addr.zipCode}}
+                        {{addr.city}}
+                        {{addr.country}}
+                    </mat-radio-button>
+                    <!-- </mat-grid-tile> -->
+                    <!-- </mat-grid-list> -->
+                </mat-radio-group>
+            </div>
         </ng-template>
     </mat-step>
     <mat-step label="Pregled narudžbine">

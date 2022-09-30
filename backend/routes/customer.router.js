@@ -12,6 +12,24 @@ router.post('/create', async (req, res) => {
     let transaction;
 
     try {
+        const validationSchema = Joi.object().keys({
+            name: Joi.string().required(),
+            pib: Joi.number().integer().required(),
+            email: Joi.string().email().required(),
+            phone: Joi.string().required(),
+            address: Joi.string().required(),
+            country: Joi.string().required(),
+            city: Joi.string().required(),
+            postcode: Joi.string().required()
+        });
+
+        const validate = validationSchema.validate(req.body);
+
+        if (!isNil(validate.error)) {
+            res.status(400).send(validate.error.message);
+            return;
+        }
+
         const { name, pib, email, phone, address, country, city, postcode } = req.body;
 
         transaction = await sequelize.transaction();
@@ -63,6 +81,39 @@ router.post('/signin', async (req, res) => {
 
         res.status(200).send(data);
     } catch (error) {
+        res.status(500).send(error.message);
+    }
+});
+
+router.post('/address', async (req, res) => {
+    let transaction;
+
+    try {
+        const validationSchema = Joi.object().keys({
+            customerId: Joi.number().integer().required(),
+            address: Joi.string().required(),
+            country: Joi.string().required(),
+            city: Joi.string().required(),
+            zipCode: Joi.string().required()
+        });
+
+        const validate = validationSchema.validate(req.body);
+
+        if (!isNil(validate.error)) {
+            res.status(400).send(validate.error.message);
+            return;
+        }
+
+        const { customerId, address, country, city, zipCode } = req.body;
+
+        transaction = await sequelize.transaction();
+
+        const customer = await customerService.addAddressForCustomer(customerId, address, country, city, zipCode, transaction);
+
+        await transaction.commit();
+        return res.status(200).json(customer);
+    } catch (error) {
+        transaction.rollback();
         res.status(500).send(error.message);
     }
 });

@@ -7,6 +7,8 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { MatStepperModule } from '@angular/material/stepper';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatGridListModule } from '@angular/material/grid-list';
 
 const MaterialModules = [
   MatButtonModule,
@@ -16,7 +18,9 @@ const MaterialModules = [
   MatMenuModule,
   MatSidenavModule,
   MatListModule,
-  MatStepperModule
+  MatStepperModule,
+  MatRadioModule,
+  MatGridListModule
 ];
 
 @NgModule({
