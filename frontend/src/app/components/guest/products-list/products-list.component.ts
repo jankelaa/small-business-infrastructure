@@ -23,7 +23,9 @@ export class ProductsListComponent implements OnInit {
     private cartService: CartService) { }
 
   ngOnInit(): void {
-    this.productsForOrder = JSON.parse(localStorage.getItem('order'));
+    if (JSON.parse(localStorage.getItem('productsForOrder')) != null) {
+      this.productsForOrder = JSON.parse(localStorage.getItem('productsForOrder'));
+    }
 
     this.categoryService.getAllCategories().subscribe((allCategories: Category[]) => {
       this.allCategories = allCategories;
@@ -53,8 +55,8 @@ export class ProductsListComponent implements OnInit {
 
     product.quantity = null;
 
-    localStorage.removeItem('order');
-    localStorage.setItem('order', JSON.stringify(this.productsForOrder));
+    localStorage.removeItem('productsForOrder');
+    localStorage.setItem('productsForOrder', JSON.stringify(this.productsForOrder));
 
     this.cartService.setCartCount(this.productsForOrder.length);
   }

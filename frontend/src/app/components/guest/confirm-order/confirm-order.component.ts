@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CustomerWithAddresses } from 'src/app/model/customer-with-addresses.model';
 import { ProductForOrder } from 'src/app/model/product-for-order.model';
+import { CartService } from 'src/app/services/cart.service';
 import { CustomerService } from 'src/app/services/customer.service';
 import { OrderService } from 'src/app/services/order.service';
 
@@ -13,7 +14,8 @@ import { OrderService } from 'src/app/services/order.service';
 })
 export class ConfirmOrderComponent implements OnInit {
 
-  order: ProductForOrder[];
+  productsForOrder: ProductForOrder[];
+  totalPrice: number;
 
   pib1: string;
   secretCode: string;
@@ -34,13 +36,21 @@ export class ConfirmOrderComponent implements OnInit {
   selectedAddress: number;
   message = null;
 
-  constructor(private customerService: CustomerService, private orderService: OrderService, private router: Router) { }
+  constructor(private customerService: CustomerService, private orderService: OrderService,
+    private cartService: CartService, private router: Router) { }
 
   ngOnInit(): void {
     this.step1 = false;
-    this.order = JSON.parse(localStorage.getItem('order'));
+    this.productsForOrder = JSON.parse(localStorage.getItem('productsForOrder'));
 
-    if (this.order.length === 0) this.router.navigate(['/cart']);
+    if (this.productsForOrder == null || this.productsForOrder.length === 0) this.router.navigate(['/cart']);
+
+    this.totalPrice = 0;
+    this.productsForOrder.forEach(pfo => {
+      this.totalPrice += pfo.price * pfo.quantity;
+    })
+
+    this.totalPrice = parseFloat(this.totalPrice.toFixed(2));
   }
 
   signin() {
@@ -62,5 +72,20 @@ export class ConfirmOrderComponent implements OnInit {
   }
 
   signup() {
+  }
+
+  confirmOrder() {
+    this.orderService.createOrder(this.customer.id, this.totalPrice, this.selectedAddress, this.productsForOrder).subscribe({
+      next: () => {
+        this.message = null;
+        localStorage.removeItem('productsForOrder');
+        this.cartService.setCartCount(0);
+        this.router.navigate(['/successful-order']);
+      },
+      error: (error: HttpErrorResponse) => {
+        this.message = error.error;
+        console.log(this.message);
+      }
+    })
   }
 }

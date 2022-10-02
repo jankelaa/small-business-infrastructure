@@ -10,36 +10,53 @@ import { CartService } from 'src/app/services/cart.service';
 })
 export class CartComponent implements OnInit {
 
-  order: ProductForOrder[];
-  total: number;
+  productsForOrder: ProductForOrder[];
+  cartCount: number;
+  totalPrice: number;
 
-  constructor(private router: Router, private cartService: CartService) { }
+  constructor(private router: Router, private cartService: CartService) {
+    if (JSON.parse(localStorage.getItem('productsForOrder')) == null) {
+      this.cartCount = 0;
+    } else {
+      this.cartCount = JSON.parse(localStorage.getItem('productsForOrder')).length;
+    }
+  }
 
   ngOnInit(): void {
-    this.order = JSON.parse(localStorage.getItem('order'));
+    this.productsForOrder = JSON.parse(localStorage.getItem('productsForOrder'));
 
-    this.total = 0;
-    this.order.forEach(o => {
-      this.total += o.price * o.quantity;
-    })
+    if (this.productsForOrder == null) {
+      this.cartCount = 0;
+    } else {
+      this.cartCount = this.productsForOrder.length;
+
+      this.totalPrice = 0;
+      this.productsForOrder.forEach(pfo => {
+        this.totalPrice += pfo.price * pfo.quantity;
+      })
+
+      this.totalPrice = parseFloat(this.totalPrice.toFixed(2));
+    }
   }
 
   removeItem(product: ProductForOrder) {
-    const index = this.order.findIndex(o => o.id === product.id);
+    const index = this.productsForOrder.findIndex(o => o.id === product.id);
 
     if (index != -1) {
-      this.order.splice(index, 1);
+      this.productsForOrder.splice(index, 1);
     }
 
-    localStorage.removeItem('order');
-    localStorage.setItem('order', JSON.stringify(this.order));
+    localStorage.removeItem('productsForOrder');
+    localStorage.setItem('productsForOrder', JSON.stringify(this.productsForOrder));
 
-    this.total = 0;
-    this.order.forEach(o => {
-      this.total += o.price * o.quantity;
+    this.totalPrice = 0;
+    this.productsForOrder.forEach(pfo => {
+      this.totalPrice += pfo.price * pfo.quantity;
     })
 
-    this.cartService.setCartCount(this.order.length);
+    this.cartCount = this.productsForOrder.length;
+
+    this.cartService.setCartCount(this.cartCount);
   }
 
   confirmOrder() {
@@ -47,6 +64,6 @@ export class CartComponent implements OnInit {
   }
 
   editOrder() {
-    this.router.navigate(['/product-list']);
+    this.router.navigate(['/products-list']);
   }
 }

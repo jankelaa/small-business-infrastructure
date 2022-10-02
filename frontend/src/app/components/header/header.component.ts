@@ -14,11 +14,16 @@ export class HeaderComponent implements OnInit {
   loggedUserUpdated = new EventEmitter();
   loggedUser: User;
 
-  cart_count: number;
+  cartCount: number;
 
   constructor(private router: Router, private cartService: CartService, private authorizationService: AuthorizationService) {
     this.loggedUser = JSON.parse(localStorage.getItem('user'));
-    this.cart_count = JSON.parse(localStorage.getItem('order')).length;
+
+    if (JSON.parse(localStorage.getItem('productsForOrder')) == null) {
+    this.cartCount = 0;
+    } else {
+      this.cartCount = JSON.parse(localStorage.getItem('productsForOrder')).length;
+    }
   }
 
   ngOnInit(): void {
@@ -27,7 +32,7 @@ export class HeaderComponent implements OnInit {
     )
 
     this.cartService.cartNotificationUpdated.subscribe(
-      cartNotification => this.cart_count = cartNotification
+      cartNotification => this.cartCount = cartNotification
     )
   }
 
@@ -40,5 +45,4 @@ export class HeaderComponent implements OnInit {
     this.authorizationService.loggedUserStatusChange();
     this.router.navigate(['/']);
   }
-
 }

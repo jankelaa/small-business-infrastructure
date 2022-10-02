@@ -27,15 +27,14 @@ export class OrderService {
     return this.httpClient.post(`${this.baseUrl}${ApiPaths.order}/create/signup`, data);
   }
 
-
-
-  createOrder(pib, secretCode, order) {
+  createOrder(customerId, totalPrice, customerAddressId, productsForOrder) {
     const data = {
-      pib,
-      secretCode,
-      order
+      customerId,
+      totalPrice,
+      customerAddressId,
+      productsForOrder
     }
 
-    return this.httpClient.post(`${this.baseUrl}${ApiPaths.order}/create/customer`, data);
+    return this.httpClient.post(`${this.baseUrl}${ApiPaths.order}/create`, data);
   }
 }

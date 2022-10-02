@@ -11,6 +11,7 @@ import { EmployeeInfoComponent } from './components/employee/employee-info/emplo
 import { GuestComponent } from './components/guest/guest.component';
 import { InvalidRouteComponent } from './components/invalid-route/invalid-route.component';
 import { ConfirmOrderComponent } from './components/guest/confirm-order/confirm-order.component';
+import { SuccessfulOrderComponent } from './components/guest/successful-order/successful-order.component';
 
 const routes: Routes = [
   {
@@ -34,13 +35,16 @@ const routes: Routes = [
         path: 'login', component: LoginComponent
       },
       {
-        path: 'product-list', component: ProductsListComponent
+        path: 'products-list', component: ProductsListComponent
       },
       {
         path: 'cart', component: CartComponent
       },
       {
         path: 'confirm-order', component: ConfirmOrderComponent
+      },
+      {
+        path: 'successful-order', component: SuccessfulOrderComponent
       },
       { path: '', component: HomeComponent }
     ]

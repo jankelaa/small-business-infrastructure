@@ -1,4 +1,9 @@
 const { Router } = require("express");
+const Joi = require('joi');
+const { isNil } = require("lodash");
+const { sequelize } = require("../models");
+
+const orderService = require("../services/order.service");
 
 const router = Router();
 
@@ -6,37 +11,38 @@ router.get('', (req, res) => {
     res.status(200).send("Order page!");
 });
 
-// router.post('/create/customer', async (req, res) => {
-//     let transaction;
+router.post('/create', async (req, res) => {
+    let transaction;
 
-//     try {
-//         const validationSchemaCustomer = Joi.object().keys({
-//             pib: Joi.string().email().required(),
-//             secretCode: Joi.string().required()
-//         });
+    try {
+        const validationSchemaCustomer = Joi.object().keys({
+            customerId: Joi.number().integer().required(),
+            totalPrice: Joi.number().required(),
+            customerAddressId: Joi.number().integer().required(),
+            productsForOrder: Joi.array().required()
+        });
 
-//         const validate = validationSchemaCustomer.validate(req.body);
+        const validate = validationSchemaCustomer.validate(req.body);
 
-//         if (!isNil(validate.error)) {
-//             res.status(400).send(validate.error.message);
-//             return;
-//         }
+        if (!isNil(validate.error)) {
+            res.status(400).send(validate.error.message);
+            return;
+        }
 
-//         transaction = await sequelize.transaction();
+        transaction = await sequelize.transaction();
 
-//         const { email, password, name, surname, phone } = req.body;
+        const { customerId, totalPrice, customerAddressId, productsForOrder } = req.body;
+        console.log(customerId, totalPrice, customerAddressId);
+        const order = await orderService.createOrder(customerId, totalPrice, customerAddressId, productsForOrder, transaction);
 
-//         const username = userService.getUsernameFromEmail(email);
+        await transaction.commit();
 
-//         const user = await userService.createUser(username, password, email, name, surname, phone, transaction);
-
-//         await transaction.commit();
-
-//         res.status(200).send(user);
-//     } catch (error) {
-//         transaction.rollback();
-//         res.status(500).send(error.message);
-//     }
-// });
+        res.status(200).send(order);
+    } catch (error) {
+        console.log(error);
+        transaction.rollback();
+        res.status(500).send(error.message);
+    }
+});
 
 module.exports = router;

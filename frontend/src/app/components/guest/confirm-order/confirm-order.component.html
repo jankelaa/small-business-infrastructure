@@ -1,7 +1,7 @@
 <mat-horizontal-stepper linear>
     <mat-step label="Prijava" [editable]="false" [completed]="step1">
         <div *ngIf="customer==null">
-            <h2>Prijavite se ako ste registrovani kupac:</h2>
+            <h1>Prijavite se ako ste registrovani kupac:</h1>
             <table>
                 <tr>
                     <td width="200px">PIB:</td>
@@ -30,7 +30,7 @@
             <br>
             <hr>
             <br>
-            <h2>Registrujte se ako niste registrovani kupac:</h2>
+            <h1>Registrujte se ako niste registrovani kupac:</h1>
             <table>
                 <tr>
                     <td width="200px">Poslovni naziv:</td>
@@ -94,31 +94,65 @@
             </table>
         </div>
         <div *ngIf="customer!=null">
-            <h2>Uspesno ste se prijavili!</h2>
+            <h1>Uspesno ste se prijavili!</h1>
             <br>
             <button mat-raised-button color="primary" matStepperNext>Adresa za dostavu ></button>
         </div>
     </mat-step>
-    <mat-step label="Adresa za dostavu">
+    <mat-step label="Dostava">
         <ng-template matStepContent>
+            <h1>Adresa za dostavu:</h1>
             <div class="delivery-addresses">
                 <mat-radio-group [(ngModel)]="selectedAddress">
-                    <!-- <mat-grid-list cols="3"> -->
-                    <!-- <mat-grid-tile *ngFor='let addr of customer.addresses'> -->
                     <mat-radio-button *ngFor='let addr of customer.addresses' [value]='addr.id'>
                         {{addr.address}}
                         <br>
                         {{addr.zipCode}}
                         {{addr.city}}
+                        <br>
                         {{addr.country}}
                     </mat-radio-button>
-                    <!-- </mat-grid-tile> -->
-                    <!-- </mat-grid-list> -->
                 </mat-radio-group>
             </div>
+            <br>
+            <button mat-raised-button color="primary" matStepperNext>Pregled narudžbine ></button>
         </ng-template>
     </mat-step>
     <mat-step label="Pregled narudžbine">
-
+        <h1>Informacije o narudžbini:</h1>
+        <ng-template matStepContent>
+            <br>
+            <h2>Adresa za dostavu:</h2>
+            <div *ngFor='let addr of customer.addresses'>
+                <span *ngIf='addr.id===selectedAddress'>
+                    {{addr.address}}, {{addr.zipCode}} {{addr.city}}, {{addr.country}}
+                </span>
+            </div>
+            <br>
+            <h2>Vaša porudžbina:</h2>
+            <table>
+                <tr *ngFor="let product of productsForOrder">
+                    <td>{{product.quantity}}x</td>
+                    <td>
+                        <img src='{{"assets/images/products/"+product.imgUrl}}' width="100px">
+                    </td>
+                    <td>{{product.name}}</td>
+                    <td>{{product.size}}</td>
+                    <td>{{product.price*product.quantity}} RSD</td>
+                </tr>
+                <tr align="center">
+                  <td [colSpan]="5">
+                    <hr>
+                  </td>
+                </tr>
+                <tr align="right">
+                  <td [colSpan]="5">
+                    Ukupno: {{totalPrice}} RSD
+                  </td>
+                </tr>
+            </table>
+            <br>
+            <button mat-raised-button color="primary" (click)="confirmOrder()">Potvrdi narudžbinu</button>
+        </ng-template>
     </mat-step>
 </mat-horizontal-stepper>

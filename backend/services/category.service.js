@@ -11,9 +11,6 @@ class CategoryService {
     async getAllCategories() {
         return await Category.findAll();
     }
-
-    // async insertCategory(name, transaction = null) {
-    // }
 }
 
 module.exports = (() => {

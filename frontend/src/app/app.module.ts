@@ -19,6 +19,7 @@ import { EmployeeInfoComponent } from './components/employee/employee-info/emplo
 import { GuestComponent } from './components/guest/guest.component';
 import { InvalidRouteComponent } from './components/invalid-route/invalid-route.component';
 import { ConfirmOrderComponent } from './components/guest/confirm-order/confirm-order.component';
+import { SuccessfulOrderComponent } from './components/guest/successful-order/successful-order.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { ConfirmOrderComponent } from './components/guest/confirm-order/confirm-
     EmployeeInfoComponent,
     GuestComponent,
     InvalidRouteComponent,
-    ConfirmOrderComponent
+    ConfirmOrderComponent,
+    SuccessfulOrderComponent
   ],
   imports: [
     BrowserModule,
