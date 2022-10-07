@@ -12,16 +12,36 @@ import { GuestComponent } from './components/guest/guest.component';
 import { InvalidRouteComponent } from './components/invalid-route/invalid-route.component';
 import { ConfirmOrderComponent } from './components/guest/confirm-order/confirm-order.component';
 import { SuccessfulOrderComponent } from './components/guest/successful-order/successful-order.component';
+import { AllUsersComponent } from './components/employee/all-users/all-users.component';
+import { AllOrdersComponent } from './components/employee/all-orders/all-orders.component';
+import { AllProductsComponent } from './components/employee/all-products/all-products.component';
+import { AddProductsComponent } from './components/employee/add-products/add-products.component';
+import { AllCustomersComponent } from './components/employee/all-customers/all-customers.component';
 
 const routes: Routes = [
   {
     path: 'employee', component: EmployeeComponent,
     children: [
       {
+        path: 'all-users', component: AllUsersComponent
+      },
+      {
         path: 'create-user', component: CreateUserComponent
       },
       {
         path: 'create-customer', component: CreateCustomerComponent
+      },
+      {
+        path: 'all-customers', component: AllCustomersComponent
+      },
+      {
+        path: 'all-orders', component: AllOrdersComponent
+      },
+      {
+        path: 'all-products', component: AllProductsComponent
+      },
+      {
+        path: 'add-products', component: AddProductsComponent
       },
       {
         path: '', component: EmployeeInfoComponent

@@ -12,6 +12,10 @@ export class OrderService {
 
   constructor(private httpClient: HttpClient) { }
 
+  getAllOrders() {
+    return this.httpClient.get(`${this.baseUrl}${ApiPaths.order}`);
+  }
+
   customerSignupAndOrder(name, pib, email, phone, address, country, city, postcode) {
     const data = {
       name,

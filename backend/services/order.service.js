@@ -4,6 +4,10 @@ const { Order, ProductOrder } = require('../models');
 let instance = null;
 
 class OrderService {
+    async getAllOrders() {
+        return Order.findAll();
+    }
+
     async createOrder(customerId, totalPrice, customerAddressId, productsForOrder, transaction = null) {
         const order = await Order.create({
             customerId,

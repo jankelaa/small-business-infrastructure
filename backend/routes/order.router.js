@@ -7,10 +7,27 @@ const orderService = require("../services/order.service");
 
 const router = Router();
 
-router.get('', (req, res) => {
-    res.status(200).send("Order page!");
-});
+router.get('/', async (req, res) => {
+    try {
+        const orders = await orderService.getAllOrders();
+        const formatedOrders = orders.map(o => {
+            return {
+                id: o.id,
+                customerId: o.customerId,
+                customerAddressId: o.customerAddressId,
+                totalPrice: o.totalPrice,
+                status: o.status,
+                isPaid: o.isPaid,
+                createdAt: o.createdAt.toLocaleString(),
+                updatedAt: o.updatedAt.toLocaleString()
+            }
+        });
 
+        res.status(200).send(formatedOrders);
+    } catch (error) {
+        res.status(500).send(error.message);
+    }
+});
 router.post('/create', async (req, res) => {
     let transaction;
 

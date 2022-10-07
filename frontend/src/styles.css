@@ -1,16 +1,26 @@
-html,
+/* html,
 body {
     height: 100%;
-}
+} */
 
 body {
     margin: 0;
     font-family: Roboto, "Helvetica Neue", sans-serif;
+    /* display: flex;
+    flex-direction: column; */
 }
 
 .main-content {
-    padding-top: 100px
+    margin-top: 100px;
+    /* padding-bottom: 2.5rem;
+    flex: 1; */
 }
+
+/* #footer {
+    width: 100%;
+    height: 2.5rem;
+    margin-top: 5px;
+} */
 
 .guest-content {
     display: flex;
@@ -36,10 +46,22 @@ mat-toolbar {
 
 mat-drawer {
     width: 200px;
+    margin-top: 100px;
+    /* position: fixed; */
+    /* display: inline-table;
+    overflow: auto;
+    position: fixed;
+    height: 400px; */
 }
+
+/* mat-drawer-container {
+    height: 100%;
+} */
 
 mat-drawer-content {
     padding-left: 1rem;
+    padding-right: 1rem;
+    /* height: 100%; */
 }
 
 mat-radio-button {

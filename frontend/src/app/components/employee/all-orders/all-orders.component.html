@@ -1,0 +1,23 @@
+<div>
+    <table>
+        <tr>
+            <td>Kupac</td>
+            <td>Adresa</td>
+            <td>Iznos</td>
+            <td>Status</td>
+            <td>Status plaćanja</td>
+            <td>Datum</td>
+        </tr>
+        <tr *ngFor="let order of allOrders">
+            <td>{{order.customerId}}</td>
+            <td>{{order.customerAddressId}}</td>
+            <td>{{order.totalPrice}} RSD</td>
+            <td>{{order.status}}</td>
+            <td>{{order.isPaid}}</td>
+            <td>{{order.createdAt}}</td>
+            <!-- <td>
+                <button mat-raised-button color="accent" (click)="addToCart(product)">Dodaj u korpu</button>
+            </td> -->
+        </tr>
+    </table>
+</div>
