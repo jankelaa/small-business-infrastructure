@@ -5,7 +5,12 @@ let instance = null;
 
 class OrderService {
     async getAllOrders() {
-        return Order.findAll();
+        return Order.findAll({
+            include: [
+                Order.Customer,
+                Order.CustomerAddress
+            ]
+        });
     }
 
     async createOrder(customerId, totalPrice, customerAddressId, productsForOrder, transaction = null) {
@@ -28,6 +33,16 @@ class OrderService {
         })
 
         return await ProductOrder.bulkCreate(productsOrders, { transaction })
+    }
+
+    async getOrderInfoById(orderId) {
+        return await Order.findOne({
+            where: { id: orderId },
+            include: [
+                Order.Customer,
+                Order.CustomerAddress
+            ]
+        });
     }
 }
 

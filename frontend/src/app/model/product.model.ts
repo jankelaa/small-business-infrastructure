@@ -1,5 +1,6 @@
-export class Product{
+export class Product {
     id: number;
+    barcode: string;
     categoryId: number;
     name: string;
     imgUrl: string;

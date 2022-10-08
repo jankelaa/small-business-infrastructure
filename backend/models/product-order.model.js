@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
                     name: 'productId',
                     allowNull: false
                 },
-                as: 'Product',
+                as: 'product',
                 onDelete: 'CASCADE'
             });
 
@@ -19,7 +19,7 @@ module.exports = (sequelize, DataTypes) => {
                     name: 'orderId',
                     allowNull: false
                 },
-                as: 'Order',
+                as: 'order',
                 onDelete: 'CASCADE'
             });
         }

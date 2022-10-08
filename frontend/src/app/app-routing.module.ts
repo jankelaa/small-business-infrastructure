@@ -17,6 +17,7 @@ import { AllOrdersComponent } from './components/employee/all-orders/all-orders.
 import { AllProductsComponent } from './components/employee/all-products/all-products.component';
 import { AddProductsComponent } from './components/employee/add-products/add-products.component';
 import { AllCustomersComponent } from './components/employee/all-customers/all-customers.component';
+import { OrderComponent } from './components/employee/order/order.component';
 
 const routes: Routes = [
   {
@@ -36,6 +37,9 @@ const routes: Routes = [
       },
       {
         path: 'all-orders', component: AllOrdersComponent
+      },
+      {
+        path: 'order/:id', component: OrderComponent
       },
       {
         path: 'all-products', component: AllProductsComponent

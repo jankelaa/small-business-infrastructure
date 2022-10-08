@@ -2,32 +2,29 @@ const { Router } = require("express");
 const Joi = require('joi');
 const { isNil } = require("lodash");
 const { sequelize } = require("../models");
+const Order = require("../models/response-models/order.model");
+const ProductForOrder = require("../models/response-models/products-for-order.model");
 
 const orderService = require("../services/order.service");
+const productService = require("../services/product.service");
 
 const router = Router();
 
 router.get('/', async (req, res) => {
     try {
         const orders = await orderService.getAllOrders();
-        const formatedOrders = orders.map(o => {
-            return {
-                id: o.id,
-                customerId: o.customerId,
-                customerAddressId: o.customerAddressId,
-                totalPrice: o.totalPrice,
-                status: o.status,
-                isPaid: o.isPaid,
-                createdAt: o.createdAt.toLocaleString(),
-                updatedAt: o.updatedAt.toLocaleString()
-            }
-        });
+        const formattedOrders = orders.map(o => new Order(o));
 
-        res.status(200).send(formatedOrders);
+        const data = {
+            orders: formattedOrders
+        }
+
+        res.status(200).send(data);
     } catch (error) {
         res.status(500).send(error.message);
     }
 });
+
 router.post('/create', async (req, res) => {
     let transaction;
 
@@ -58,6 +55,24 @@ router.post('/create', async (req, res) => {
     } catch (error) {
         console.log(error);
         transaction.rollback();
+        res.status(500).send(error.message);
+    }
+});
+
+router.get('/:orderId', async (req, res) => {
+    try {
+        const { orderId } = req.params;
+
+        const order = await orderService.getOrderInfoById(orderId);
+        const productsForOrder = await productService.getProductsForOrder(orderId);
+
+        const data = {
+            order: new Order(order),
+            productsForOrder: productsForOrder.map(pfo => new ProductForOrder(pfo))
+        }
+
+        res.status(200).send(data);
+    } catch (error) {
         res.status(500).send(error.message);
     }
 });

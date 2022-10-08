@@ -41,4 +41,8 @@ export class OrderService {
 
     return this.httpClient.post(`${this.baseUrl}${ApiPaths.order}/create`, data);
   }
+
+  getOrderWithProducts(orderId: number) {
+    return this.httpClient.get(`${this.baseUrl}${ApiPaths.order}/${orderId}`);
+  }
 }

@@ -1,10 +1,11 @@
-export class ProductForList{
+export class ProductForList {
     id: number;
+    barcode: string;
     categoryId: number;
     name: string;
     imgUrl: string;
-    price: number;
     size: string;
     bundleSize: number;
+    price: number;
     quantity: number;
 }

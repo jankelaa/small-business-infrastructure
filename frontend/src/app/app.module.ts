@@ -26,6 +26,7 @@ import { AllOrdersComponent } from './components/employee/all-orders/all-orders.
 import { AllProductsComponent } from './components/employee/all-products/all-products.component';
 import { AddProductsComponent } from './components/employee/add-products/add-products.component';
 import { AllCustomersComponent } from './components/employee/all-customers/all-customers.component';
+import { OrderComponent } from './components/employee/order/order.component';
 
 @NgModule({
   declarations: [
@@ -48,7 +49,8 @@ import { AllCustomersComponent } from './components/employee/all-customers/all-c
     AllOrdersComponent,
     AllProductsComponent,
     AddProductsComponent,
-    AllCustomersComponent
+    AllCustomersComponent,
+    OrderComponent
   ],
   imports: [
     BrowserModule,

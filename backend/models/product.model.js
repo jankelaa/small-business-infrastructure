@@ -13,6 +13,11 @@ module.exports = (sequelize, DataTypes) => {
         as: 'category',
         onDelete: 'SET NULL'
       });
+
+      Product.Orders = Product.hasMany(models.ProductOrder, {
+        as: 'productOrders',
+        foreignKey: 'productId'
+      })
     }
   }
   Product.init({

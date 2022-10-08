@@ -1,7 +1,7 @@
 const { isNil } = require('lodash');
 const csv = require('csv-parser');
 const fs = require('fs');
-const { Product } = require('../models');
+const { Product, ProductOrder } = require('../models');
 
 let instance = null;
 
@@ -41,6 +41,16 @@ class ProductService {
                     transaction
                 });
             });
+    }
+
+    async getProductsForOrder(orderId) {
+        return await ProductOrder.findAll({
+            where: { orderId },
+            include: {
+                model: Product,
+                as: 'product'
+            }
+        })
     }
 }
 

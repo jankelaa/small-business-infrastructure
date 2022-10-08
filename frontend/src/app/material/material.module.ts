@@ -8,6 +8,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatRadioModule } from '@angular/material/radio';
+import { MatTableModule } from '@angular/material/table';
 
 const MaterialModules = [
   MatButtonModule,
@@ -18,7 +19,8 @@ const MaterialModules = [
   MatSidenavModule,
   MatListModule,
   MatStepperModule,
-  MatRadioModule
+  MatRadioModule,
+  MatTableModule
 ];
 
 @NgModule({
