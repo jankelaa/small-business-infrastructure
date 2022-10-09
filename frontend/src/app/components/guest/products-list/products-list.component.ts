@@ -17,6 +17,8 @@ export class ProductsListComponent implements OnInit {
   allProducts: ProductForList[];
   productsForOrder: ProductForOrder[] = [];
 
+  displayedColumns: string[] = ['img', 'name', 'size', 'price', 'quantity', 'add'];
+
   filter = null;
 
   constructor(private productService: ProductService, private categoryService: CategoryService,

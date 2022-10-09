@@ -1,30 +1,7 @@
-<!-- <div>
-    <table>
-        <tr>
-            <td>Kupac</td>
-            <td>Adresa</td>
-            <td>Iznos</td>
-            <td>Status</td>
-            <td>Status plaćanja</td>
-            <td>Datum</td>
-        </tr>
-        <tr *ngFor="let order of allOrders">
-            <td>{{order.customer.name}}</td>
-            <td>
-                {{order.customerAddress.address}}, {{order.customerAddress.zipCode}} {{order.customerAddress.city}},
-                {{order.customerAddress.country}}
-            </td>
-            <td>{{order.totalPrice}} RSD</td>
-            <td>{{order.status}}</td>
-            <td>{{order.isPaid}}</td>
-            <td>{{order.createdAt}}</td>
-        </tr>
-    </table>
-</div> -->
 <table mat-table [dataSource]="allOrders" class="mat-elevation-z8">
     <ng-container matColumnDef="customer">
-        <th th mat-header-cell *matHeaderCellDef> Kupac </th>
-        <td td mat-cell *matCellDef="let order"> {{order.customer.name}} </td>
+        <th mat-header-cell *matHeaderCellDef> Kupac </th>
+        <td mat-cell *matCellDef="let order"> {{order.customer.name}} </td>
     </ng-container>
 
     <ng-container matColumnDef="address">

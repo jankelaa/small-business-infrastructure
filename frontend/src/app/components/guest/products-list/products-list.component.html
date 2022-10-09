@@ -6,31 +6,46 @@
 </div>
 <br>
 <div>
-  <table>
-    <tr>
-      <td>Slika</td>
-      <td>Naziv</td>
-      <td>Dimenzije</td>
-      <td>Cena</td>
-      <td>Količina</td>
-      <td></td>
-    </tr>
-    <ng-container *ngFor="let product of allProducts">
-      <tr *ngIf="product.categoryId == filter || filter == null">
-        <td>
-          <img src='{{"assets/images/products/"+product.imgUrl}}' width="100px">
-          <!-- {{product.imgUrl}} -->
-        </td>
-        <td>{{product.name}}</td>
-        <td>{{product.size}}</td>
-        <td>{{product.price}} RSD</td>
-        <td>
-          <input type="number" name="quantity" [(ngModel)]="product.quantity" min="1">
-        </td>
-        <td>
-          <button mat-raised-button color="accent" (click)="addToCart(product)">Dodaj u korpu</button>
-        </td>
-      </tr>
+  <mat-table [dataSource]="allProducts" class="mat-elevation-z8">
+    <ng-container matColumnDef="img">
+      <mat-header-cell *matHeaderCellDef> Slika </mat-header-cell>
+      <mat-cell *matCellDef="let product">
+        <img src='{{"assets/images/products/"+product.imgUrl}}' width="100px">
+      </mat-cell>
     </ng-container>
-  </table>
+
+    <ng-container matColumnDef="name">
+      <mat-header-cell *matHeaderCellDef> Naziv </mat-header-cell>
+      <mat-cell *matCellDef="let product">
+        {{product.name}}
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="size">
+      <mat-header-cell *matHeaderCellDef> Dimenzije </mat-header-cell>
+      <mat-cell *matCellDef="let product"> {{product.size}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="price">
+      <mat-header-cell *matHeaderCellDef> Cena </mat-header-cell>
+      <mat-cell *matCellDef="let product"> {{product.price}} RSD </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="quantity">
+      <mat-header-cell *matHeaderCellDef> Količina </mat-header-cell>
+      <mat-cell *matCellDef="let product">
+        <input type="number" name="quantity" [(ngModel)]="product.quantity" min="1">
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="add">
+      <mat-header-cell *matHeaderCellDef> </mat-header-cell>
+      <mat-cell *matCellDef="let product">
+        <button mat-raised-button color="accent" (click)="addToCart(product)">Dodaj u korpu</button>
+      </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
 </div>
