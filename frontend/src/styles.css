@@ -76,12 +76,24 @@ mat-radio-button {
     margin: 5px;
 }
 
-tr.mat-row td.mat-cell {
+/* tr.mat-row td.mat-cell {
     border-bottom: 1px solid transparent;
     border-top: 1px solid transparent;
     cursor: pointer;
 }
 
 tr.mat-row:hover td.mat-cell {
+    border-color: currentColor;
+} */
+
+
+
+tr.hoverborder td.hoverborder {
+    border-bottom: 1px solid transparent;
+    border-top: 1px solid transparent;
+    cursor: pointer;
+}
+
+tr.hoverborder:hover td.hoverborder {
     border-color: currentColor;
 }

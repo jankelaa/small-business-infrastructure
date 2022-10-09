@@ -1,1 +1,51 @@
-<p>all-products works!</p>
+<div>
+    <button mat-stroked-button color="accent" (click)="addFilter(null)">Svi proizvodi</button>
+    <button mat-stroked-button color="accent" *ngFor="let category of allCategories" (click)="addFilter(category.id)">
+        {{category.name}}
+    </button>
+</div>
+<br>
+<div>
+    <table mat-table [dataSource]="productsToDisplay" class="mat-elevation-z8">
+        <ng-container matColumnDef="img">
+            <th mat-header-cell *matHeaderCellDef> Slika </th>
+            <td mat-header-cell *matCellDef="let product">
+                <img src='{{"assets/images/products/"+product.imgUrl}}' width="100px">
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef> Naziv </th>
+            <td mat-header-cell *matCellDef="let product">
+                {{product.name}}
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="size">
+            <th mat-header-cell *matHeaderCellDef> Dimenzije </th>
+            <td mat-header-cell *matCellDef="let product"> {{product.size}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="price">
+            <th mat-header-cell *matHeaderCellDef> Cena </th>
+            <td mat-header-cell *matCellDef="let product"> {{product.price}} RSD </td>
+        </ng-container>
+
+        <ng-container matColumnDef="quantity">
+            <th mat-header-cell *matHeaderCellDef> Količina </th>
+            <td mat-header-cell *matCellDef="let product">
+                <input type="number" name="quantity" [(ngModel)]="product.quantity" min="1">
+            </td>
+        </ng-container>
+
+        <!-- <ng-container matColumnDef="add">
+        <th mat-header-cell *matHeaderCellDef> </th>
+        <td mat-header-cell *matCellDef="let product">
+          <button mat-raised-button color="accent" (click)="addToCart(product)">Dodaj u korpu</button>
+        </td>
+      </ng-container> -->
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+</div>

@@ -1,12 +1,12 @@
 <table mat-table [dataSource]="allOrders" class="mat-elevation-z8">
     <ng-container matColumnDef="customer">
         <th mat-header-cell *matHeaderCellDef> Kupac </th>
-        <td mat-cell *matCellDef="let order"> {{order.customer.name}} </td>
+        <td mat-cell class="hoverborder" *matCellDef="let order"> {{order.customer.name}} </td>
     </ng-container>
 
     <ng-container matColumnDef="address">
         <th mat-header-cell *matHeaderCellDef> Adresa </th>
-        <td mat-cell *matCellDef="let order">
+        <td mat-cell class="hoverborder" *matCellDef="let order">
             {{order.customerAddress.address}},
             {{order.customerAddress.zipCode}} {{order.customerAddress.city}},
             {{order.customerAddress.country}}
@@ -15,24 +15,24 @@
 
     <ng-container matColumnDef="totalPrice">
         <th mat-header-cell *matHeaderCellDef> Iznos </th>
-        <td mat-cell *matCellDef="let order"> {{order.totalPrice}} RSD</td>
+        <td mat-cell class="hoverborder" *matCellDef="let order"> {{order.totalPrice}} RSD</td>
     </ng-container>
 
     <ng-container matColumnDef="status">
         <th mat-header-cell *matHeaderCellDef> Status </th>
-        <td mat-cell *matCellDef="let order"> {{order.status}} </td>
+        <td mat-cell class="hoverborder" *matCellDef="let order"> {{order.status}} </td>
     </ng-container>
 
     <ng-container matColumnDef="isPaid">
         <th mat-header-cell *matHeaderCellDef> Status plaćanja </th>
-        <td mat-cell *matCellDef="let order"> {{order.isPaid}} </td>
+        <td mat-cell class="hoverborder" *matCellDef="let order"> {{order.isPaid}} </td>
     </ng-container>
 
     <ng-container matColumnDef="createdAt">
         <th mat-header-cell *matHeaderCellDef> Datum </th>
-        <td mat-cell *matCellDef="let order"> {{order.createdAt}} </td>
+        <td mat-cell class="hoverborder" *matCellDef="let order"> {{order.createdAt}} </td>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row (click)="openOrder(row)" *matRowDef="let row; columns: displayedColumns;"></tr>
+    <tr mat-row class="hoverborder" (click)="openOrder(row)" *matRowDef="let row; columns: displayedColumns;"></tr>
 </table>

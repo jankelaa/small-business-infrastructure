@@ -15,11 +15,10 @@ export class ProductsListComponent implements OnInit {
 
   allCategories: Category[];
   allProducts: ProductForList[];
+  productsToDisplay: ProductForList[];
   productsForOrder: ProductForOrder[] = [];
 
   displayedColumns: string[] = ['img', 'name', 'size', 'price', 'quantity', 'add'];
-
-  filter = null;
 
   constructor(private productService: ProductService, private categoryService: CategoryService,
     private cartService: CartService) { }
@@ -34,12 +33,16 @@ export class ProductsListComponent implements OnInit {
     });
 
     this.productService.getAllProducts().subscribe((allProducts: ProductForList[]) => {
-      this.allProducts = allProducts;
-    });;
+      this.productsToDisplay = this.allProducts = allProducts;
+    });
   }
 
   addFilter(categoryId: number) {
-    this.filter = categoryId;
+    this.productsToDisplay = categoryId == null ? this.allProducts : [];
+
+    this.allProducts.forEach(ap => {
+      if (ap.categoryId == categoryId) this.productsToDisplay.push(ap);
+    });
   }
 
   addToCart(product: ProductForList) {
