@@ -1,6 +1,7 @@
 const { isNil } = require('lodash');
 const csv = require('csv-parser');
 const fs = require('fs');
+const { Readable } = require('stream');
 const { Product, ProductOrder } = require('../models');
 
 let instance = null;
@@ -25,22 +26,37 @@ class ProductService {
             .on('end', async () => await Product.bulkCreate(products, { transaction }));
     }
 
-    async updateProducts(transaction = null) {
+    async updateProducts(file, transaction = null) {
         const products = [];
+        const stream = Readable.from(file.buffer);
 
-        fs.createReadStream('../storage/products.csv')
-            .pipe(csv({}))
+        stream.pipe(csv({}))
             .on('data', (data) => {
                 console.log(data);
                 products.push(data)
             })
             .on('end', async () => {
+                // console.log(products);
+                console.log('HEJ KRAJ JE');
                 return await Product.bulkCreate(products, {
                     upsertKeys: ['barcode'],
                     updateOnDuplicate: ['name', 'size', 'price'],
                     transaction
                 });
             });
+        // fs.createReadStream('../storage/products.csv')
+        //     .pipe(csv({}))
+        //     .on('data', (data) => {
+        //         // console.log(data);
+        //         products.push(data)
+        //     })
+        //     .on('end', async () => {
+        //         return await Product.bulkCreate(products, {
+        //             upsertKeys: ['barcode'],
+        //             updateOnDuplicate: ['name', 'size', 'price'],
+        //             transaction
+        //         });
+        //     });
     }
 
     async getProductsForOrder(orderId) {

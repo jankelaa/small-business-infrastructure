@@ -15,4 +15,8 @@ export class ProductService {
   getAllProducts() {
     return this.httpClient.get(`${this.baseUrl}${ApiPaths.product}`);
   }
+
+  updateProducts(fd: FormData) {
+    return this.httpClient.post(`${this.baseUrl}${ApiPaths.product}/update`, fd);
+  }
 }

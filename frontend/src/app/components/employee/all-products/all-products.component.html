@@ -14,6 +14,13 @@
             </td>
         </ng-container>
 
+        <ng-container matColumnDef="barcode">
+            <th mat-header-cell *matHeaderCellDef> Barkod </th>
+            <td mat-header-cell *matCellDef="let product">
+                {{product.barcode}}
+            </td>
+        </ng-container>
+
         <ng-container matColumnDef="name">
             <th mat-header-cell *matHeaderCellDef> Naziv </th>
             <td mat-header-cell *matCellDef="let product">
@@ -33,9 +40,7 @@
 
         <ng-container matColumnDef="quantity">
             <th mat-header-cell *matHeaderCellDef> Količina </th>
-            <td mat-header-cell *matCellDef="let product">
-                <input type="number" name="quantity" [(ngModel)]="product.quantity" min="1">
-            </td>
+            <td mat-header-cell *matCellDef="let product">{{product.amountAvailable}}</td>
         </ng-container>
 
         <!-- <ng-container matColumnDef="add">
