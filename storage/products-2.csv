@@ -1,0 +1,80 @@
+barcode,name,price,size,imgUrl,categoryId
+3709059311109,Pavloderm šampon,249.99,250 ml,PavlodermSampon250ml.jpg,1
+2517166943408,Pavloderm šampon,349.99,400 ml,PavlodermSampon400ml.jpg,1
+1392854185666,Pavloderm kupka,249.99,250 ml,PavlodermKupka250ml.jpg,1
+4314195916754,Pavloderm kupka,349.99,400 ml,PavlodermKupka400ml.jpg,1
+1359365398145,Pavloderm mleko,249.99,250 ml,PavlodermMleko250ml.jpg,1
+5539498402756,Pavloderm ulje,249.99,250 ml,PavlodermUlje250ml.jpg,1
+7909602850382,Pavloderm šampon i kupka,399.99,400 ml,pavloderm_sampon_kupka_400ml.jpg,1
+3820544730283,Pavloderm mast,99.99,100 ml,PavlodermMast100mlSaKutijicom.jpg,1
+7052086045076,Pavloderm puder,89.99,90 g,PavlodermPuder90gr.jpg,1
+1878048843369,Pavloderm krema,49.99,50 ml,PavlodermKrema50ml.jpg,1
+1663160802836,Pavloderm krema,99.99,100 ml,pavloderm_krema_100ml.jpg,1
+8165442530921,Pavloderm krema,149.99,150 ml,pavloderm_krema_150ml.jpg,1
+2698541071366,Pavloderm krema,199.99,200 ml,pavloderm_krema_200ml.jpg,1
+4277416285036,Pavloderm krema,299.99,300 ml,pavloderm_krema_300ml.jpg,1
+7970770645496,Pavloderm krema,119.99,tuba 120 ml,pavloderm_tuba_120ml.jpg,1
+5846274838444,Pavloderm krema Sensitive,49.99,50 ml,PavlodermKremaSensitive50ml.jpg,1
+0282716089183,Pavloderm krema Sensitive,199.99,200 ml,pavloderm_sensitive_200ml.jpg,1
+5843909387203,Pavloderm krema Sensitive,49.99,tuba 50 ml,PavlodermKremaSensitiveTuba50ml.jpg,1
+3238578440855,Pavloderm bebi sapun,79.99,80 g,PavlodermSapun80gr.jpg,1
+4389930997428,Pavloderm vlažne maramice,59.99,60 komada,PavlodermVlazneMaramice60.jpg,1
+8196336959160,Pavloderm vlažne maramice,71.99,72 komada,PavlodermVlazneMaramice72.jpg,1
+9345069445466,Kalladont junior ukus jagode,54.99,55 g,KalladontJuniorJagoda55gr.jpg,2
+1540151215801,Kalladont junior ukus žvakaće gume, 54.99,55 g,KalladontJuniorZvakacaGuma55gr.jpg,2
+9807526583641,Kalladont plus,74.99,75 g,KalladontPlus75gr.jpg,2
+7948246804341,Kalladont plus,109.99,110 g,KalladontPlus110gr.jpg,2
+0495078873121,Kalladont Oxygen,109.99,110 g,KalladontOxygen.jpg,2
+6777983692827,Bonident herbal,119.99,120 g,BonidentHerbal.jpg,2
+3985464182720,Kalladont plus,149.99,150 g,KalladontPlus150gr.jpg,2
+5432851815643,Bademova krema,89.99,tuba 90 ml,bademova_krema_90ml.jpg,3
+0682247430904,Bademova krema sa maslinovim uljem,99.99,100 ml,bademova_krema_100ml.jpg,3
+4569886408661,Bademova krema,199.99,200 ml,bademova_krema_200ml.jpg,3
+9614341785360,Chamill krema,89.99,tuba 90 ml,chamill_krema_90ml.jpg,3
+7488970773737,Chamill krema,199.99,200 ml,chamill_krema_200ml.jpg,3
+6327376336702,Argan krema,149.99,150 ml,argan_krema_150ml.jpg,3
+5561894925460,Glicerona krema,89.99,tuba 90 ml,glicerona_krema_90ml.jpg,3
+6925798100062,Glicerona krema,149.99,150 ml,glicerona_krema_150ml.jpg,3
+8183972293982,Hidratantna krema,199.99,200 ml,hidrantna_krema_200ml.jpg,3
+4454325470742,Univerzalna krema,199.99,200 ml,univerzalna_krema_200ml.jpg,3
+9560982571756,Konjski gel PFERDE BALSAM EXTRA STRONG,249.99,250 ml,PferdbalsamExtraStrong.jpg,3
+3429286959011,Konjski gel PFERDE BALSAM,249.99,250 ml,PferdbalsamKonjskiGel.jpg,3
+5758887408789,Neven krema,149.99,150 ml,neven_150ml.jpg,3
+3609674136133,Neven krema,249.99,250 ml,neven_250ml.jpg,3
+9425058532496,Anticelulit gel,199.99,tuba 200 ml,AnticelulitGelTuba200ml.jpg,3
+7328762281181,Anticelulit krema,199.99,tuba 200 ml,AnticelulitKremaTuba200ml.jpg,3
+3783021393042,Uljani skidač laka,59.99,60 ml,skidac_laka_60ml.jpg,3
+9567873791911,Uljani skidač laka,89.99,tuba 90 ml,skidac_laka_90ml.jpg,3
+1387400445335,Šampon Breza,499.99,500 ml,SamponBreza500ml.jpg,4
+5768929910367,Šampon Breza,999.99,1 L,SamponBreza1L.jpg,4
+3059070325586,Šampon Jabuka,499.99,500 ml,SamponJabuka500ml.jpg,4
+4941301685634,Šampon Jabuka,999.99,1 L,SamponJabuka1L.jpg,4
+4052033985824,Šampon Kamilica,499.99,500 ml,SamponKamilica500ml.jpg,4
+8917895304124,Šampon Kamilica,999.99,1 L,SamponKamilica1L.jpg,4
+5255966026897,Šampon Kopriva,499.99,500 ml,SamponKopriva500ml.jpg,4
+4867882504090,Šampon Kopriva,999.99,1 L,SamponKopriva1L.jpg,4
+3777597436967,Regenerator,499.99,500 ml,regenerator_500ml.jpg,4
+6278749910101,Regenerator,999.99,1000 ml,regenerator_1000ml.jpg,4
+5720705293475,Kana za kosu,49.99,50 g,kana_50g.jpg,4
+0069809323943,Kana za kosu,99.99,100 g,kana_100g.jpg,4
+2044997517855,Ulje za kosu orah,89.99,90 ml,UljeZaKosuOrah.jpg,4
+2646635788217,Ulje za kosu čičak,89.99,90 ml,UljeZaKosuCicak.jpg,4
+4226856025953,Ulje za kosu kokos,89.99,90 ml,UljeZaKosuKokos.jpg,4
+3832333791243,Millenium krema za brijanje,74.99,75 ml,MilleniumKremaZaBrijanje.jpg,5
+2223188949328,Losion posle brijanja Millenium,124.99,125 ml,LosionMillenium.jpg,5
+9349300383893,Losion posle brijanja Aquarius,124.99,125 ml,LosionAquarius.jpg,5
+4261441748670,Muški dezodorans Millenium,149.99,150 ml,DezodoransMillenium.jpg,5
+8116244515502,Muški dezodorans Aquarius,149.99,150 ml,DezodoransAquarius.jpg,5
+4907935490966,Antibakterijski gel,499.99,500 ml,AntibakterijskiGel500.jpg,6
+5258254672981,Tečni sapun breskva,499.99,500 ml,TecniSapunBreskva.jpg,7
+8056596949893,Tečni sapun breskva,999.99,1 L,TecniSapunBreskva.jpg,7
+2840506156291,Tečni sapun breskva,4999.99,5 L,TecniSapunBreskva.jpg,7
+8026014130988,Tečni sapun jabuka,499.99,500 ml,TecniSapunJabuka.jpg,7
+1750959604627,Tečni sapun jabuka,999.99,1 L,TecniSapunJabuka.jpg,7
+4301702039460,Tečni sapun jabuka,4999.99,5 L,TecniSapunJabuka.jpg,7
+7940465543318,Tečni sapun cvetni,499.99,500 ml,TecniSapunCvetni.jpg,7
+1639852378884,Tečni sapun cvetni,999.99,1 L,TecniSapunCvetni.jpg,7
+6267830469529,Tečni sapun cvetni,4999.99,5 L,TecniSapunCvetni.jpg,7
+7424433087278,Destilovana voda,999.99,1 L,DestilovanaVoda1.jpg,8
+5382376304808,Destilovana voda,1999.99,2 L,DestilovanaVoda2.jpg,8
+8162763719095,Destilovana voda,4999.99,5 L,DestilovanaVoda5.jpg,8
