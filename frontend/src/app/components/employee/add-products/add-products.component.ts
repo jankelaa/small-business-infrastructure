@@ -26,21 +26,16 @@ export class AddProductsComponent implements OnInit {
     const fd = new FormData();
     fd.append('file', this.selectedFile);
 
-    this.productService.updateProducts(fd).subscribe(res => {
-      console.log(res);
+    this.productService.updateProducts(fd).subscribe({
+      next: () => {
+        this.message = null;
+        this.selectedFile = null;
+      },
+      error: (error: HttpErrorResponse) => {
+        this.message = error.error;
+        console.log(this.message);
+      }
     }
-      //   {
-      //   next: () => {
-      //     console.log('Back to front!');
-      //     this.message = null;
-      //     this.selectedFile = null;
-      //   },
-      //   error: (error: HttpErrorResponse) => {
-      //     console.log('O NE NEKI ERROR');
-      //     this.message = error.error;
-      //     console.log(this.message);
-      //   }
-      // }
     )
   }
 }

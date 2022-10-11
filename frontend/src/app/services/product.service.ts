@@ -17,6 +17,6 @@ export class ProductService {
   }
 
   updateProducts(fd: FormData) {
-    return this.httpClient.post(`${this.baseUrl}${ApiPaths.product}/update`, fd);
+    return this.httpClient.post(`${this.baseUrl}${ApiPaths.product}/update`, fd, { responseType: 'text' });
   }
 }
