@@ -1,12 +1,13 @@
 const { isNil } = require('lodash');
 const { Customer, CustomerAddress } = require('../models');
 const generator = require('generate-password');
+const { Op } = require('sequelize');
 
 let instance = null;
 
 class CustomerService {
     async createCustomer(name, pib, email, phone,
-        address, country, city, postcode, transaction = null) {
+        address, country, city, postcode, rank, transaction = null) {
         const secretCode = generator.generate({
             length: 10,
             numbers: true,
@@ -20,7 +21,7 @@ class CustomerService {
             pib,
             email,
             secretCode,
-            rank: 1,
+            rank,
             addresses: [{
                 address,
                 city,
@@ -48,16 +49,33 @@ class CustomerService {
         );
     }
 
+    async getCustomerById(id, transaction = null) {
+        return await Customer.findByPk(id, { transaction });
+    }
+
     async getAllCustomers() {
         return await Customer.findAll();
     }
 
-    async getCustomerForOrderByPib(pib) {
+    async getCustomerForOrderByPib(pib, transaction = null) {
         const res = await Customer.findOne({
             include: Customer.Addresses,
+            where: { pib },
+            transaction
+        });
+
+        return isNil(res) ? null : res;
+    }
+
+    async getCustomerByPibOrEmail(pib, email, transaction = null) {
+        const res = await Customer.findOne({
             where: {
-                pib: pib
-            }
+                [Op.or]: [
+                    { pib },
+                    { email }
+                ]
+            },
+            transaction
         });
 
         return isNil(res) ? null : res;

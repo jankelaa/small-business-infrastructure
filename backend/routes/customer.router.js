@@ -1,10 +1,14 @@
 const { Router } = require("express");
 const { isNil } = require("lodash");
 const Joi = require('joi');
+
 const { Customer, sequelize } = require('../models');
 
 const customerService = require('../services/customer.service');
 const CustomerWithAddresses = require("../models/response-models/customer-with-address.model");
+
+const enums = require('../enums/enums');
+const customerRanks = enums.customerRanks;
 
 const router = Router();
 
@@ -34,10 +38,71 @@ router.post('/create', async (req, res) => {
 
         transaction = await sequelize.transaction();
 
-        const customer = await customerService.createCustomer(name, pib, email, phone, address, country, city, postcode, transaction);
+        let customer = await customerService.getCustomerByPibOrEmail(pib, email, transaction);
+
+        const customerRank = customerRanks.VERIFIED;
+
+        if (!isNil(customer)) {
+            await transaction.commit();
+            res.status(400).send('PIB and email for customer must be unique.');
+            return;
+        }
+
+        customer = await customerService.createCustomer(name, pib, email, phone, address,
+            country, city, postcode, customerRank, transaction);
 
         await transaction.commit();
         return res.status(200).json(customer);
+    } catch (error) {
+        transaction.rollback();
+        res.status(500).send(error.message);
+    }
+});
+
+router.post('/signup', async (req, res) => {
+    let transaction;
+
+    try {
+        const validationSchema = Joi.object().keys({
+            name: Joi.string().required(),
+            pib: Joi.number().integer().required(),
+            email: Joi.string().email().required(),
+            phone: Joi.string().required(),
+            address: Joi.string().required(),
+            country: Joi.string().required(),
+            city: Joi.string().required(),
+            postcode: Joi.string().required()
+        });
+
+        const validate = validationSchema.validate(req.body);
+
+        if (!isNil(validate.error)) {
+            res.status(400).send(validate.error.message);
+            return;
+        }
+
+        const { name, pib, email, phone, address, country, city, postcode } = req.body;
+
+        transaction = await sequelize.transaction();
+
+        let customer = await customerService.getCustomerByPibOrEmail(pib, email, transaction);
+
+        if (!isNil(customer)) {
+            await transaction.commit();
+            res.status(400).send('PIB and email for customer must be unique.');
+            return;
+        }
+
+        const customerRank = customerRanks.PENDING;
+
+        customer = await customerService.createCustomer(name, pib, email, phone, address,
+            country, city, postcode, customerRank, transaction);
+
+        const data = { customer: new CustomerWithAddresses(customer) }
+
+        await transaction.commit();
+
+        return res.status(200).json(data);
     } catch (error) {
         transaction.rollback();
         res.status(500).send(error.message);

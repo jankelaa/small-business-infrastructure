@@ -72,6 +72,22 @@ export class ConfirmOrderComponent implements OnInit {
   }
 
   signup() {
+    this.customerService.signup(this.name, this.pib2, this.email, this.phone, this.address, this.country, this.city, this.postcode)
+      .subscribe({
+        next: (data: { customer: CustomerWithAddresses }) => {
+          this.message = null;
+          this.customer = data.customer;
+
+          this.customer.addresses.forEach(a => {
+            if (a.isMain) this.selectedAddress = a.id
+          });
+
+          this.step1 = true;
+        },
+        error: (error: HttpErrorResponse) => {
+          this.message = error.error;
+        }
+      })
   }
 
   confirmOrder() {

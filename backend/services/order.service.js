@@ -13,12 +13,12 @@ class OrderService {
         });
     }
 
-    async createOrder(customerId, totalPrice, customerAddressId, productsForOrder, transaction = null) {
+    async createOrder(customerId, totalPrice, customerAddressId, productsForOrder, status, transaction = null) {
         const order = await Order.create({
             customerId,
             totalPrice,
             customerAddressId,
-            status: 0
+            status
         }, {
             transaction
         });

@@ -5,8 +5,13 @@ const { sequelize } = require("../models");
 const Order = require("../models/response-models/order.model");
 const ProductForOrder = require("../models/response-models/products-for-order.model");
 
+const customerService = require("../services/customer.service");
 const orderService = require("../services/order.service");
 const productService = require("../services/product.service");
+
+const enums = require('../enums/enums');
+const customerRanks = enums.customerRanks;
+const orderStatuses = enums.orderStatuses;
 
 const router = Router();
 
@@ -46,8 +51,22 @@ router.post('/create', async (req, res) => {
         transaction = await sequelize.transaction();
 
         const { customerId, totalPrice, customerAddressId, productsForOrder } = req.body;
-        console.log(customerId, totalPrice, customerAddressId);
-        const order = await orderService.createOrder(customerId, totalPrice, customerAddressId, productsForOrder, transaction);
+
+        const customer = await customerService.getCustomerById(customerId, transaction);
+
+        if (isNil(customer)) {
+            await transaction.commit();
+            res.status(400).send(`Customer not found, id ${customerId}`);
+            return;
+        }
+
+        console.log(customer);
+        console.log(customer.rank, customerRanks.PENDING);
+
+        const status = customer.rank === customerRanks.PENDING ? orderStatuses.PENDING : orderStatuses.CONFIRMED;
+        console.log(status);
+
+        const order = await orderService.createOrder(customerId, totalPrice, customerAddressId, productsForOrder, status, transaction);
 
         await transaction.commit();
 
