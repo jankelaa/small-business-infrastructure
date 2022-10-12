@@ -28,7 +28,7 @@ export class AddProductsComponent implements OnInit {
 
     this.productService.updateProducts(fd).subscribe({
       next: () => {
-        this.message = null;
+        this.message = 'Učitavanje je uspešno izvršeno, možete učitati novi fajl.';
         this.selectedFile = null;
       },
       error: (error: HttpErrorResponse) => {
