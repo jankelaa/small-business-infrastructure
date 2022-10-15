@@ -6,6 +6,16 @@ module.exports = (sequelize, DataTypes) => {
   class Customer extends Model {
     static associate(models) {
       Customer.Addresses = Customer.hasMany(models.CustomerAddress, { as: 'addresses', foreignKey: 'customerId' });
+
+      Customer.PermanentDiscount = Customer.hasOne(models.CustomerPermanentDiscount, {
+        as: 'permanentDiscount',
+        foreignKey: 'customerId'
+      });
+
+      Customer.ProductDiscounts = Customer.hasMany(models.CustomerProductDiscount, {
+        as: 'productDiscounts',
+        foreignKey: 'customerId'
+      });
     }
   }
   Customer.init({

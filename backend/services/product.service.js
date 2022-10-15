@@ -14,6 +14,10 @@ class ProductService {
         return await Product.findAll();
     }
 
+    async getProductById(id, transaction = null) {
+        return await Product.findByPk(id, { transaction });
+    }
+
     async updateProducts(file, transaction = null) {
         return new Promise(function (resolve, reject) {
             const products = [];

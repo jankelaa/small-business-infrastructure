@@ -1,5 +1,5 @@
 const { isNil } = require('lodash');
-const { Customer, CustomerAddress } = require('../models');
+const { Customer, CustomerAddress, CustomerPermanentDiscount, CustomerProductDiscount } = require('../models');
 const generator = require('generate-password');
 const { Op } = require('sequelize');
 
@@ -44,6 +44,31 @@ class CustomerService {
             zipCode,
             isMain: false
         }, {
+            transaction
+        }
+        );
+    }
+
+    async addPermanentDiscountForCustomer(customerId, percentage, transaction = null) {
+        return await CustomerPermanentDiscount.create({
+            customerId,
+            percentage
+        }, {
+            upsertKeys: ['customerId'],
+            updateOnDuplicate: ['percentage'],
+            transaction
+        }
+        );
+    }
+
+    async addProductDiscountForCustomer(customerId, productId, percentage, transaction = null) {
+        return await CustomerProductDiscount.create({
+            customerId,
+            productId,
+            percentage
+        }, {
+            upsertKeys: ['customerId', 'productId'],
+            updateOnDuplicate: ['percentage'],
             transaction
         }
         );

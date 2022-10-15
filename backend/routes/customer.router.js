@@ -5,6 +5,7 @@ const Joi = require('joi');
 const { Customer, sequelize } = require('../models');
 
 const customerService = require('../services/customer.service');
+const productService = require('../services/product.service');
 const CustomerWithAddresses = require("../models/response-models/customer-with-address.model");
 
 const enums = require('../enums/enums');
@@ -177,6 +178,93 @@ router.post('/address', async (req, res) => {
 
         await transaction.commit();
         return res.status(200).json(customer);
+    } catch (error) {
+        transaction.rollback();
+        res.status(500).send(error.message);
+    }
+});
+
+router.post('/discount/permanent', async (req, res) => {
+    let transaction;
+
+    try {
+        const validationSchema = Joi.object().keys({
+            customerId: Joi.number().integer().required(),
+            percentage: Joi.number().required()
+        });
+
+        const validate = validationSchema.validate(req.body);
+
+        if (!isNil(validate.error)) {
+            res.status(400).send(validate.error.message);
+            return;
+        }
+
+        const { customerId, percentage } = req.body;
+
+        transaction = await sequelize.transaction();
+
+        const customer = await customerService.getCustomerById(customerId, transaction);
+
+        if (isNil(customer)) {
+            await transaction.commit();
+            res.status(400).send(`Customer with not found, customerId ${customerId}.`);
+            return;
+        }
+
+        await customerService.addPermanentDiscountForCustomer(customerId, percentage, transaction);
+
+        await transaction.commit();
+
+        return res.status(200).send('Permanent discount successfully added.');
+    } catch (error) {
+        transaction.rollback();
+        res.status(500).send(error.message);
+    }
+});
+
+router.post('/discount/product', async (req, res) => {
+    let transaction;
+
+    try {
+        const validationSchema = Joi.object().keys({
+            customerId: Joi.number().integer().required(),
+            productId: Joi.number().integer().required(),
+            percentage: Joi.number().required()
+        });
+
+        const validate = validationSchema.validate(req.body);
+
+        if (!isNil(validate.error)) {
+            res.status(400).send(validate.error.message);
+            return;
+        }
+
+        const { customerId, productId, percentage } = req.body;
+
+        transaction = await sequelize.transaction();
+
+        const customer = await customerService.getCustomerById(customerId, transaction);
+
+        if (isNil(customer)) {
+            await transaction.commit();
+            res.status(400).send(`Customer with not found, customerId ${customerId}.`);
+            return;
+        }
+
+        const product = await productService.getProductById(productId, transaction);
+
+        if (isNil(product)) {
+            await transaction.commit();
+            res.status(400).send(`Product with not found, productId ${productId}.`);
+            return;
+        }
+
+        await customerService.addProductDiscountForCustomer(customerId, productId, percentage, transaction);
+
+        await transaction.commit();
+
+        return res.status(200).send('Product discount successfully added.');
     } catch (error) {
         transaction.rollback();
         res.status(500).send(error.message);
