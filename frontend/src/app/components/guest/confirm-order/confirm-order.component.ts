@@ -100,7 +100,6 @@ export class ConfirmOrderComponent implements OnInit {
       },
       error: (error: HttpErrorResponse) => {
         this.message = error.error;
-        console.log(this.message);
       }
     })
   }

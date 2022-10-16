@@ -33,7 +33,6 @@ export class AddProductsComponent implements OnInit {
       },
       error: (error: HttpErrorResponse) => {
         this.message = error.error;
-        console.log(this.message);
       }
     }
     )
