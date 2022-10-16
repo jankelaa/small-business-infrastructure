@@ -5,6 +5,7 @@ class Customer {
         this.pib = customer.pib;
         this.email = customer.email;
         this.rank = customer.rank;
+        // this.phone = customer.phone;
     }
 }
 

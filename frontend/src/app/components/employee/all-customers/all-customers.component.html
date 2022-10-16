@@ -1,1 +1,25 @@
-<p>all-customers works!</p>
+<table mat-table [dataSource]="allCustomers" class="mat-elevation-z8">
+    <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef> Kupac </th>
+        <td mat-cell class="hoverborder" *matCellDef="let customer"> {{customer.name}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="pib">
+        <th mat-header-cell *matHeaderCellDef> PIB </th>
+        <td mat-cell class="hoverborder" *matCellDef="let customer"> {{customer.pib}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="email">
+        <th mat-header-cell *matHeaderCellDef> Email </th>
+        <td mat-cell class="hoverborder" *matCellDef="let customer"> {{customer.email}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="rank">
+        <th mat-header-cell *matHeaderCellDef> Rank </th>
+        <td mat-cell class="hoverborder" *matCellDef="let customer"> {{customer.rank}} </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row class="hoverborder" (click)="openCustomer(row)" *matRowDef="let row; columns: displayedColumns;">
+    </tr>
+</table>

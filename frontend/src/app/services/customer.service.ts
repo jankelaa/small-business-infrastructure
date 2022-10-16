@@ -12,6 +12,10 @@ export class CustomerService {
 
   constructor(private httpClient: HttpClient) { }
 
+  getAllCustomers() {
+    return this.httpClient.get(`${this.baseUrl}${ApiPaths.customer}`);
+  }
+
   createCustomer(name, pib, email, phone, address, country, city, postcode) {
     const data = {
       name,
