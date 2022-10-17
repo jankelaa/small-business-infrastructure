@@ -11,26 +11,17 @@ import { CartService } from 'src/app/services/cart.service';
 export class CartComponent implements OnInit {
 
   productsForOrder: ProductForOrder[];
-  cartCount: number;
-  totalPrice: number;
+  cartCount: number = 0;
+  totalPrice: number = 0;
 
-  constructor(private router: Router, private cartService: CartService) {
-    if (JSON.parse(localStorage.getItem('productsForOrder')) == null) {
-      this.cartCount = 0;
-    } else {
-      this.cartCount = JSON.parse(localStorage.getItem('productsForOrder')).length;
-    }
-  }
+  constructor(private router: Router, private cartService: CartService) { }
 
   ngOnInit(): void {
     this.productsForOrder = JSON.parse(localStorage.getItem('productsForOrder'));
 
-    if (this.productsForOrder == null) {
-      this.cartCount = 0;
-    } else {
+    if (this.productsForOrder != null) {
       this.cartCount = this.productsForOrder.length;
 
-      this.totalPrice = 0;
       this.productsForOrder.forEach(pfo => {
         this.totalPrice += pfo.price * pfo.quantity;
       })
