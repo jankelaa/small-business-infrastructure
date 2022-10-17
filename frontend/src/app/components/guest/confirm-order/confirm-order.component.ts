@@ -104,11 +104,13 @@ export class ConfirmOrderComponent implements OnInit {
         pfo.price -= pfo.price * this.customer.permanentDiscount / 100;
       }
 
-      if (pfo.id in this.productDiscounts) pfo.price -= pfo.price * this.productDiscounts[pfo.id] / 100;
+      if (pfo.id in this.productDiscounts) {
+        pfo.price -= pfo.price * this.productDiscounts[pfo.id] / 100;
+      }
 
       pfo.price = parseFloat(pfo.price.toFixed(2));
 
-      this.baseAmount += pfo.price;
+      this.baseAmount += pfo.price * pfo.quantity;
       this.baseAmount = parseFloat(this.baseAmount.toFixed(2));
     })
 
