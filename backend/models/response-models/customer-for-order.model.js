@@ -1,3 +1,4 @@
+const { isNil } = require("lodash");
 const Address = require("./address.model");
 
 class CustomerForOrder {
@@ -9,7 +10,9 @@ class CustomerForOrder {
 
         this.addresses = customer.addresses.map(a => new Address(a));
 
-        this.permanentDiscount = parseFloat(customer.permanentDiscount.percentage);
+        this.permanentDiscount = isNil(customer.permanentDiscount) ? null : parseFloat(customer.permanentDiscount.percentage);
+
+        this.productDiscounts = customer.productDiscounts;
     }
 }
 

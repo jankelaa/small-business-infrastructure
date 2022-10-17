@@ -86,7 +86,8 @@ class CustomerService {
         const res = await Customer.findOne({
             include: [
                 Customer.Addresses,
-                Customer.PermanentDiscount
+                Customer.PermanentDiscount,
+                Customer.ProductDiscounts
             ],
             where: { pib },
             transaction

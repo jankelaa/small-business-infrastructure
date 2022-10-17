@@ -78,57 +78,57 @@ module.exports = {
       });
 
       await queryInterface.addColumn(ordersTableName, baseAmountColumn, {
-        type: Sequelize.DECIMAL(5, 2),
+        type: Sequelize.DECIMAL(10, 2),
         allowNull: false,
         defaultValue: 0
       }, { transaction });
 
       await queryInterface.addColumn(ordersTableName, pdvAmount, {
-        type: Sequelize.DECIMAL(5, 2),
+        type: Sequelize.DECIMAL(10, 2),
         allowNull: false,
         defaultValue: 0
       }, { transaction });
 
       await queryInterface.addColumn(ordersTableName, totalAmountWithPdvColumn, {
-        type: Sequelize.DECIMAL(5, 2),
+        type: Sequelize.DECIMAL(10, 2),
         allowNull: false,
         defaultValue: 0
       }, { transaction });
 
       await queryInterface.addColumn(ordersTableName, shippingAmountColumn, {
-        type: Sequelize.DECIMAL(5, 2),
+        type: Sequelize.DECIMAL(10, 2),
         allowNull: false,
         defaultValue: 0
       }, { transaction });
 
       await queryInterface.addColumn(ordersTableName, shippingAmountWithPdvColumn, {
-        type: Sequelize.DECIMAL(5, 2),
+        type: Sequelize.DECIMAL(10, 2),
         allowNull: false,
         defaultValue: 0
       }, { transaction });
 
       await queryInterface.changeColumn(ordersTableName, baseAmountColumn, {
-        type: Sequelize.DECIMAL(5, 2),
+        type: Sequelize.DECIMAL(10, 2),
         allowNull: false
       }, { transaction });
 
       await queryInterface.changeColumn(ordersTableName, pdvAmount, {
-        type: Sequelize.DECIMAL(5, 2),
+        type: Sequelize.DECIMAL(10, 2),
         allowNull: false
       }, { transaction });
 
       await queryInterface.changeColumn(ordersTableName, totalAmountWithPdvColumn, {
-        type: Sequelize.DECIMAL(5, 2),
+        type: Sequelize.DECIMAL(10, 2),
         allowNull: false
       }, { transaction });
 
       await queryInterface.changeColumn(ordersTableName, shippingAmountColumn, {
-        type: Sequelize.DECIMAL(5, 2),
+        type: Sequelize.DECIMAL(10, 2),
         allowNull: false
       }, { transaction });
 
       await queryInterface.changeColumn(ordersTableName, shippingAmountWithPdvColumn, {
-        type: Sequelize.DECIMAL(5, 2),
+        type: Sequelize.DECIMAL(10, 2),
         allowNull: false
       }, { transaction });
 

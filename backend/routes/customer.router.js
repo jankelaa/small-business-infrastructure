@@ -177,6 +177,7 @@ router.post('/address', async (req, res) => {
         const customer = await customerService.addAddressForCustomer(customerId, address, country, city, zipCode, transaction);
 
         await transaction.commit();
+        
         return res.status(200).json(customer);
     } catch (error) {
         transaction.rollback();

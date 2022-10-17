@@ -40,6 +40,7 @@ export class ConfirmOrderComponent implements OnInit {
   step1: boolean;
 
   selectedAddress: number;
+  productDiscounts = {};
   message = null;
 
   constructor(private customerService: CustomerService, private orderService: OrderService,
@@ -60,6 +61,10 @@ export class ConfirmOrderComponent implements OnInit {
 
         this.customer.addresses.forEach(a => {
           if (a.isMain) this.selectedAddress = a.id
+        });
+
+        this.customer.productDiscounts.forEach(pd => {
+          this.productDiscounts[pd.productId] = pd.percentage;
         });
 
         this.orderCalculations();
@@ -97,8 +102,11 @@ export class ConfirmOrderComponent implements OnInit {
     this.productsForOrder.forEach(pfo => {
       if (this.customer.permanentDiscount != null && this.customer.permanentDiscount > 0) {
         pfo.price -= pfo.price * this.customer.permanentDiscount / 100;
-        pfo.price = parseFloat(pfo.price.toFixed(2));
       }
+
+      if (pfo.id in this.productDiscounts) pfo.price -= pfo.price * this.productDiscounts[pfo.id] / 100;
+
+      pfo.price = parseFloat(pfo.price.toFixed(2));
 
       this.baseAmount += pfo.price;
       this.baseAmount = parseFloat(this.baseAmount.toFixed(2));
