@@ -9,6 +9,9 @@ class OrderService {
             include: [
                 Order.Customer,
                 Order.CustomerAddress
+            ],
+            order: [
+                ['createdAt', 'DESC']
             ]
         });
     }
