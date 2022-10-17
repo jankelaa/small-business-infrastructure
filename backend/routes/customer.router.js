@@ -6,7 +6,7 @@ const { Customer, sequelize } = require('../models');
 
 const customerService = require('../services/customer.service');
 const productService = require('../services/product.service');
-const CustomerWithAddresses = require("../models/response-models/customer-with-address.model");
+const CustomerForOrder = require("../models/response-models/customer-for-order.model");
 
 const enums = require('../enums/enums');
 const customerRanks = enums.customerRanks;
@@ -99,7 +99,7 @@ router.post('/signup', async (req, res) => {
         customer = await customerService.createCustomer(name, pib, email, phone, address,
             country, city, postcode, customerRank, transaction);
 
-        const data = { customer: new CustomerWithAddresses(customer) }
+        const data = { customer: new CustomerForOrder(customer) };
 
         await transaction.commit();
 
@@ -143,7 +143,7 @@ router.post('/signin', async (req, res) => {
             return;
         }
 
-        const data = { customer: new CustomerWithAddresses(customer) }
+        const data = { customer: new CustomerForOrder(customer) };
 
         res.status(200).send(data);
     } catch (error) {

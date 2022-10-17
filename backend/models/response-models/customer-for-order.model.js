@@ -1,6 +1,6 @@
 const Address = require("./address.model");
 
-class CustomerWithAddresses {
+class CustomerForOrder {
     constructor(customer) {
         this.id = customer.id;
         this.name = customer.name;
@@ -8,7 +8,9 @@ class CustomerWithAddresses {
         this.rank = customer.rank;
 
         this.addresses = customer.addresses.map(a => new Address(a));
+
+        this.permanentDiscount = parseFloat(customer.permanentDiscount.percentage);
     }
 }
 
-module.exports = CustomerWithAddresses;
+module.exports = CustomerForOrder;

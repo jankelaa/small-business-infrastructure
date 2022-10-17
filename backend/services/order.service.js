@@ -13,9 +13,15 @@ class OrderService {
         });
     }
 
-    async createOrder(customerId, totalPrice, customerAddressId, productsForOrder, status, transaction = null) {
+    async createOrder(customerId, baseAmount, pdvAmount, totalAmountWithPdv, shippingAmount, shippingAmountWithPdv,
+        totalPrice, customerAddressId, productsForOrder, status, transaction = null) {
         const order = await Order.create({
             customerId,
+            baseAmount,
+            pdvAmount,
+            totalAmountWithPdv,
+            shippingAmount,
+            shippingAmountWithPdv,
             totalPrice,
             customerAddressId,
             status

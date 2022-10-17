@@ -31,9 +31,15 @@ export class OrderService {
     return this.httpClient.post(`${this.baseUrl}${ApiPaths.order}/create/signup`, data);
   }
 
-  createOrder(customerId, totalPrice, customerAddressId, productsForOrder) {
+  createOrder(customerId, baseAmount, pdvAmount, totalAmountWithPdv, shippingAmount, shippingAmountWithPdv,
+    totalPrice, customerAddressId, productsForOrder) {
     const data = {
       customerId,
+      baseAmount,
+      pdvAmount,
+      totalAmountWithPdv,
+      shippingAmount,
+      shippingAmountWithPdv,
       totalPrice,
       customerAddressId,
       productsForOrder

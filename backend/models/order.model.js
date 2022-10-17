@@ -23,6 +23,21 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Order.init({
+    baseAmount: {
+      type: DataTypes.DECIMAL(10,2)
+    },
+    pdvAmount: {
+      type: DataTypes.DECIMAL(10,2)
+    },
+    totalAmountWithPdv: {
+      type: DataTypes.DECIMAL(10,2)
+    },
+    shippingAmount: {
+      type: DataTypes.DECIMAL(10,2)
+    },
+    shippingAmountWithPdv: {
+      type: DataTypes.DECIMAL(10,2)
+    },
     totalPrice: {
       type: DataTypes.DECIMAL(10,2)
     },

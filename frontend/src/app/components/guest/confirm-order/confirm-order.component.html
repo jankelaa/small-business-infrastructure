@@ -141,14 +141,34 @@
                     <td>{{product.price*product.quantity}} RSD</td>
                 </tr>
                 <tr align="center">
-                  <td [colSpan]="5">
-                    <hr>
-                  </td>
+                    <td [colSpan]="5">
+                        <hr>
+                    </td>
                 </tr>
                 <tr align="right">
-                  <td [colSpan]="5">
-                    Ukupno: {{totalPrice}} RSD
-                  </td>
+                    <td [colSpan]="5">
+                        Ukupan iznos bez PDV: {{baseAmount}} RSD
+                    </td>
+                </tr>
+                <tr align="right">
+                    <td [colSpan]="5">
+                        PDV : {{pdvAmount}} RSD
+                    </td>
+                </tr>
+                <tr align="right">
+                    <td [colSpan]="5">
+                        Ukupno sa PDV : {{totalAmountWithPdv}} RSD
+                    </td>
+                </tr>
+                <tr align="right">
+                    <td [colSpan]="5">
+                        Dostava: {{shippingAmountWithPdv}} RSD
+                    </td>
+                </tr>
+                <tr align="right">
+                    <td [colSpan]="5">
+                        <b>Ukupno za plaćanje: {{totalPrice}} RSD </b>
+                    </td>
                 </tr>
             </table>
             <br>

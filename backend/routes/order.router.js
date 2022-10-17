@@ -36,6 +36,11 @@ router.post('/create', async (req, res) => {
     try {
         const validationSchemaCustomer = Joi.object().keys({
             customerId: Joi.number().integer().required(),
+            baseAmount: Joi.number().required(),
+            pdvAmount: Joi.number().required(),
+            totalAmountWithPdv: Joi.number().required(),
+            shippingAmount: Joi.number().required(),
+            shippingAmountWithPdv: Joi.number().required(),
             totalPrice: Joi.number().required(),
             customerAddressId: Joi.number().integer().required(),
             productsForOrder: Joi.array().required()
@@ -50,7 +55,8 @@ router.post('/create', async (req, res) => {
 
         transaction = await sequelize.transaction();
 
-        const { customerId, totalPrice, customerAddressId, productsForOrder } = req.body;
+        const { customerId, baseAmount, pdvAmount, totalAmountWithPdv, shippingAmount, shippingAmountWithPdv,
+            totalPrice, customerAddressId, productsForOrder } = req.body;
 
         const customer = await customerService.getCustomerById(customerId, transaction);
 
@@ -60,13 +66,10 @@ router.post('/create', async (req, res) => {
             return;
         }
 
-        console.log(customer);
-        console.log(customer.rank, customerRanks.PENDING);
-
         const status = customer.rank === customerRanks.PENDING ? orderStatuses.PENDING : orderStatuses.CONFIRMED;
-        console.log(status);
 
-        const order = await orderService.createOrder(customerId, totalPrice, customerAddressId, productsForOrder, status, transaction);
+        const order = await orderService.createOrder(customerId, baseAmount, pdvAmount, totalAmountWithPdv,
+            shippingAmount, shippingAmountWithPdv, totalPrice, customerAddressId, productsForOrder, status, transaction);
 
         await transaction.commit();
 

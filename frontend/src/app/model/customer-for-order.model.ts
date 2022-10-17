@@ -1,4 +1,4 @@
-export class CustomerWithAddresses {
+export class CustomerForOrder {
   id: number;
   name: string;
   pib: number;
@@ -10,6 +10,11 @@ export class CustomerWithAddresses {
     city: string;
     country: string;
     zipCode: string;
-    isMain: boolean;    
+    isMain: boolean;
+  }];
+  permanentDiscount: number;
+  productDiscounts: [{
+    productId: number;
+    percentage: number;
   }];
 }

@@ -84,7 +84,10 @@ class CustomerService {
 
     async getCustomerForOrderByPib(pib, transaction = null) {
         const res = await Customer.findOne({
-            include: Customer.Addresses,
+            include: [
+                Customer.Addresses,
+                Customer.PermanentDiscount
+            ],
             where: { pib },
             transaction
         });
