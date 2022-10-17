@@ -17,10 +17,6 @@
         </mat-icon>
       </a>
     </span>
-    &nbsp;&nbsp;
-    <span>
-      <button mat-raised-button (click)="login()">Prijavite se</button>
-    </span>
   </div>
   <div *ngIf="loggedUser!==null">
     <button mat-flat-button color="primary" [matMenuTriggerFor]="userMenu">
