@@ -14,9 +14,9 @@
         <td mat-cell class="hoverborder" *matCellDef="let customer"> {{customer.email}} </td>
     </ng-container>
 
-    <ng-container matColumnDef="rank">
+    <ng-container matColumnDef="rankString">
         <th mat-header-cell *matHeaderCellDef> Rank </th>
-        <td mat-cell class="hoverborder" *matCellDef="let customer"> {{customer.rank}} </td>
+        <td mat-cell class="hoverborder" *matCellDef="let customer"> {{customer.rankString}} </td>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

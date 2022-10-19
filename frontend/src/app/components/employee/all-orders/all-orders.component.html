@@ -19,13 +19,13 @@
     </ng-container>
 
     <ng-container matColumnDef="status">
-        <th mat-header-cell *matHeaderCellDef> Status </th>
-        <td mat-cell class="hoverborder" *matCellDef="let order"> {{order.status}} </td>
+        <th mat-header-cell *matHeaderCellDef> Status porudžbine </th>
+        <td mat-cell class="hoverborder" *matCellDef="let order"> {{order.statusString}} </td>
     </ng-container>
 
-    <ng-container matColumnDef="isPaid">
+    <ng-container matColumnDef="isPaidString">
         <th mat-header-cell *matHeaderCellDef> Status plaćanja </th>
-        <td mat-cell class="hoverborder" *matCellDef="let order"> {{order.isPaid}} </td>
+        <td mat-cell class="hoverborder" *matCellDef="let order"> {{order.isPaidString}} </td>
     </ng-container>
 
     <ng-container matColumnDef="createdAt">

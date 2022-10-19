@@ -12,13 +12,19 @@ export class AllOrdersComponent implements OnInit {
 
   allOrders: Order[];
 
-  displayedColumns: string[] = ['customer', 'address', 'totalPrice', 'status', 'isPaid', 'createdAt'];
+  displayedColumns: string[] = ['customer', 'address', 'totalPrice', 'status', 'isPaidString', 'createdAt'];
 
   constructor(private router: Router, private orderService: OrderService) { }
 
   ngOnInit(): void {
     this.orderService.getAllOrders().subscribe((data: { orders: Order[] }) => {
-      this.allOrders = data.orders;
+      this.allOrders = data.orders.map(o => {
+        return {
+          ...o,
+          statusString: this.orderService.getStatusString(o.status),
+          isPaidString: this.orderService.getPaymentStatusString(o.isPaid)
+        }
+      });
     });
   }
 

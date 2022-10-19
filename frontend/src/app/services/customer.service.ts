@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { ApiPaths } from '../../enums/api-paths';
+import { CustomerRanks } from 'src/enums/customer-ranks';
 
 @Injectable({
   providedIn: 'root'
@@ -53,5 +54,9 @@ export class CustomerService {
     }
 
     return this.httpClient.post(`${this.baseUrl}${ApiPaths.customer}/signup`, data);
+  }
+
+  getCustomerRankString(rank: number) {
+    return CustomerRanks[rank];
   }
 }

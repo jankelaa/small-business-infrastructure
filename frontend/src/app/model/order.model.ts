@@ -2,7 +2,9 @@ export class Order {
     id: number;
     totalPrice: number;
     status: number;
+    statusString: string;
     isPaid: boolean;
+    isPaidString: string;
     createdAt: Date;
     updatedAt: Date;
     customer: {

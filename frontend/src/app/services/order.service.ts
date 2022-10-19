@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { ApiPaths } from '../../enums/api-paths';
+import { OrderStatuses } from 'src/enums/order-statuses';
 
 @Injectable({
   providedIn: 'root'
@@ -50,5 +51,13 @@ export class OrderService {
 
   getOrderWithProducts(orderId: number) {
     return this.httpClient.get(`${this.baseUrl}${ApiPaths.order}/${orderId}`);
+  }
+
+  getStatusString(status: number) {
+    return OrderStatuses[status];
+  }
+
+  getPaymentStatusString(isPaid: boolean) {
+    return isPaid ? 'plaćeno' : 'čeka plaćanje'
   }
 }
