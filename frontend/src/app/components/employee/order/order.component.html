@@ -1,39 +1,70 @@
-<h1>Informacije o narudžbini:</h1>
-<br>
-<h2>Kupac:</h2>
-<b>Naziv:</b> {{order.customer.name}}
-<br>
-<b>PIB:</b> {{order.customer.pib}}
-<br>
-<b>Email:</b> {{order.customer.email}}
-<br>
-<br>
-<h2>Adresa za dostavu:</h2>
-{{order.customerAddress.address}}, {{order.customerAddress.zipCode}} {{order.customerAddress.city}},
-{{order.customerAddress.country}}
-<br>
-<br>
-<h2>Proizvodi:</h2>
-<table>
-    <tr *ngFor="let product of productsForOrder">
-        <td>{{product.quantity}}x</td>
-        <td>
-            <img src='{{"assets/images/products/"+product.imgUrl}}' width="100px">
-        </td>
-        <td>{{product.name}}</td>
-        <td>{{product.size}}</td>
-        <td>{{product.price*product.quantity}} RSD</td>
-    </tr>
-    <tr align="center">
-        <td [colSpan]="5">
-            <hr>
-        </td>
-    </tr>
-    <tr align="right">
-        <td [colSpan]="5">
-            Ukupno: {{order.totalPrice}} RSD
-        </td>
-    </tr>
-</table>
-<br>
-<button mat-raised-button color="primary" (click)="approveOrder()">Potvrdi narudžbinu</button>
+<div *ngIf="order">
+    <h1>Informacije o narudžbini:</h1>
+    <p><b>Status porudžbine:</b> {{order.statusString}}</p>
+    <p><b>Status plaćanja:</b> {{order.isPaidString}}</p>
+    <h2>Kupac:</h2>
+    <b>Naziv:</b> {{order.customer.name}}
+    <br>
+    <b>PIB:</b> {{order.customer.pib}}
+    <br>
+    <b>Email:</b> {{order.customer.email}}
+    <br>
+    <br>
+    <h2>Adresa za dostavu:</h2>
+    {{order.customerAddress.address}}, {{order.customerAddress.zipCode}} {{order.customerAddress.city}},
+    {{order.customerAddress.country}}
+    <br>
+    <br>
+    <h2>Proizvodi:</h2>
+    <table>
+        <tr *ngFor="let product of productsForOrder">
+            <td>{{product.quantity}}x</td>
+            <td>
+                <img src='{{"assets/images/products/"+product.imgUrl}}' width="100px">
+            </td>
+            <td>{{product.name}}</td>
+            <td>{{product.size}}</td>
+            <td>{{product.price*product.quantity}} RSD</td>
+        </tr>
+        <tr align="center">
+            <td [colSpan]="5">
+                <hr>
+            </td>
+        </tr>
+        <tr align="right">
+            <td [colSpan]="5">
+                Ukupan iznos bez PDV: {{order.baseAmount}} RSD
+            </td>
+        </tr>
+        <tr align="right">
+            <td [colSpan]="5">
+                PDV : {{order.pdvAmount}} RSD
+            </td>
+        </tr>
+        <tr align="right">
+            <td [colSpan]="5">
+                Ukupno sa PDV : {{order.totalAmountWithPdv}} RSD
+            </td>
+        </tr>
+        <tr align="right">
+            <td [colSpan]="5">
+                Dostava: {{order.shippingAmountWithPdv}} RSD
+            </td>
+        </tr>
+        <tr align="right">
+            <td [colSpan]="5">
+                <b>Ukupno za plaćanje: {{order.totalPrice}} RSD </b>
+            </td>
+        </tr>
+        <tr align="center" *ngIf="displayApproveButton">
+            <td [colSpan]="5">
+                <button mat-raised-button color="primary" (click)="approveOrder()">Potvrdi narudžbinu</button>
+            </td>
+        </tr>
+        <tr align="center" *ngIf="displayCancelButton">
+            <td [colSpan]="5">
+                <button mat-stroked-button color="accent" (click)="cancelOrder()">Otkaži narudžbinu</button>
+            </td>
+        </tr>
+    </table>
+</div>

@@ -85,7 +85,7 @@ router.get('/:orderId', async (req, res) => {
     try {
         const { orderId } = req.params;
 
-        const order = await orderService.getOrderInfoById(orderId);
+        const order = await orderService.getOrderWithCustomerAndAdress(orderId);
         const productsForOrder = await productService.getProductsForOrder(orderId);
 
         const data = {
@@ -95,6 +95,98 @@ router.get('/:orderId', async (req, res) => {
 
         res.status(200).send(data);
     } catch (error) {
+        res.status(500).send(error.message);
+    }
+});
+
+router.post('/approve', async (req, res) => {
+    let transaction;
+
+    try {
+        const validationSchemaCustomer = Joi.object().keys({
+            orderId: Joi.number().integer().required()
+        });
+
+        const validate = validationSchemaCustomer.validate(req.body);
+
+        if (!isNil(validate.error)) {
+            res.status(400).send(validate.error.message);
+            return;
+        }
+
+        transaction = await sequelize.transaction();
+
+        const { orderId } = req.body;
+
+        const order = await orderService.getOrderWithCustomerById(orderId, transaction);
+
+        if (isNil(order)) {
+            await transaction.commit();
+            res.status(400).send(`Order not found, orderId ${orderId}`);
+            return;
+        }
+
+        if (order.status !== orderStatuses.PENDING) {
+            await transaction.commit();
+            res.status(400).send(`Order already approved or canceled, orderId ${orderId}`);
+            return;
+        }
+
+        await orderService.updateOrderStatus(orderId, orderStatuses.APPROVED, transaction);
+
+        if (order.customer.rank === customerRanks.PENDING) {
+            await customerService.upgradeCustomerRank(order.customer.id, customerRanks.VERIFIED, transaction);
+        }
+
+        await transaction.commit();
+
+        res.status(200).send('Order successfully confirmed.');
+    } catch (error) {
+        transaction.rollback();
+        res.status(500).send(error.message);
+    }
+});
+
+router.post('/cancel', async (req, res) => {
+    let transaction;
+
+    try {
+        const validationSchemaCustomer = Joi.object().keys({
+            orderId: Joi.number().integer().required()
+        });
+
+        const validate = validationSchemaCustomer.validate(req.body);
+
+        if (!isNil(validate.error)) {
+            res.status(400).send(validate.error.message);
+            return;
+        }
+
+        transaction = await sequelize.transaction();
+
+        const { orderId } = req.body;
+
+        const order = await orderService.getOrderById(orderId, transaction);
+
+        if (isNil(order)) {
+            await transaction.commit();
+            res.status(400).send(`Order not found, orderId ${orderId}`);
+            return;
+        }
+
+        if (order.status === orderStatuses.CANCELED || order.status === orderStatuses.COMPLETED) {
+            await transaction.commit();
+            res.status(400).send(`Order already approved or canceled, orderId ${orderId}`);
+            return;
+        }
+
+        await orderService.updateOrderStatus(orderId, orderStatuses.CANCELED, transaction);
+
+        await transaction.commit();
+
+        res.status(200).send('Order has been canceled.');
+    } catch (error) {
+        transaction.rollback();
         res.status(500).send(error.message);
     }
 });

@@ -44,13 +44,39 @@ class OrderService {
         return await ProductOrder.bulkCreate(productsOrders, { transaction })
     }
 
-    async getOrderInfoById(orderId) {
+    async getOrderById(orderId, transaction = null) {
+        return await Order.findOne({
+            where: { id: orderId },
+            transaction
+        });
+    }
+
+    async getOrderWithCustomerById(orderId, transaction = null) {
+        return await Order.findOne({
+            where: { id: orderId },
+            include: [
+                Order.Customer
+            ],
+            transaction
+        });
+    }
+
+    async getOrderWithCustomerAndAdress(orderId) {
         return await Order.findOne({
             where: { id: orderId },
             include: [
                 Order.Customer,
                 Order.CustomerAddress
             ]
+        });
+    }
+
+    async updateOrderStatus(orderId, status, transaction = null) {
+        return await Order.update({
+            status
+        }, {
+            where: { id: orderId },
+            transaction
         });
     }
 }

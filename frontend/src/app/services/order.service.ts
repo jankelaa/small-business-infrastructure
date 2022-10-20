@@ -49,8 +49,28 @@ export class OrderService {
     return this.httpClient.post(`${this.baseUrl}${ApiPaths.order}/create`, data);
   }
 
+  approveOrder(orderId: number) {
+    const data = {
+      orderId
+    }
+
+    return this.httpClient.post(`${this.baseUrl}${ApiPaths.order}/approve`, data);
+  }
+
+  cancelOrder(orderId: number) {
+    const data = {
+      orderId
+    }
+
+    return this.httpClient.post(`${this.baseUrl}${ApiPaths.order}/cancel`, data);
+  }
+
   getOrderWithProducts(orderId: number) {
     return this.httpClient.get(`${this.baseUrl}${ApiPaths.order}/${orderId}`);
+  }
+
+  getOrderStatuses() {
+    return OrderStatuses;
   }
 
   getStatusString(status: number) {

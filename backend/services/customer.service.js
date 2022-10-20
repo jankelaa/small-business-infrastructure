@@ -109,6 +109,15 @@ class CustomerService {
 
         return isNil(res) ? null : res;
     }
+
+    async upgradeCustomerRank(customerId, rank, transaction = null) {
+        await Customer.update({
+            rank
+        }, {
+            where: { id: customerId },
+            transaction
+        })
+    }
 }
 
 module.exports = (() => {

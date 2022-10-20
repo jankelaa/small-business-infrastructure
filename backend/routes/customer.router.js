@@ -285,48 +285,48 @@ router.get('/', async (req, res) => {
     }
 })
 
-router.route('/:id')
-    .get(async (req, res) => {
-        const id = req.params.id;
-        try {
-            const customer = await Customer.findByPk(id);
+// router.route('/:id')
+//     .get(async (req, res) => {
+//         const id = req.params.id;
+//         try {
+//             const customer = await Customer.findByPk(id);
 
-            return res.json(customer);
-        } catch (err) {
-            console.log(err);
-            return res.status(500).json(err);
-        }
-    })
-    .put(async (req, res) => {
-        const id = req.params.id;
-        try {
-            const customer = await Customer.update(id);
+//             return res.json(customer);
+//         } catch (err) {
+//             console.log(err);
+//             return res.status(500).json(err);
+//         }
+//     })
+//     .put(async (req, res) => {
+//         const id = req.params.id;
+//         try {
+//             const customer = await Customer.update(id);
 
-            return res.json(customer);
-        } catch (err) {
-            console.log(err);
-            return res.status(500).json(err);
-        }
-    })
-    .delete(async (req, res) => {
-        const id = req.params.id;
-        try {
-            const isDeleted = await Customer.destroy({
-                where: {
-                    id,
-                    rank: 0
-                }
-            });
+//             return res.json(customer);
+//         } catch (err) {
+//             console.log(err);
+//             return res.status(500).json(err);
+//         }
+//     })
+//     .delete(async (req, res) => {
+//         const id = req.params.id;
+//         try {
+//             const isDeleted = await Customer.destroy({
+//                 where: {
+//                     id,
+//                     rank: 0
+//                 }
+//             });
 
-            if (isDeleted) {
-                return res.status(200).send(`Customer with id: ${id} is successfully deleted.`);
-            } else {
-                return res.status(400).send(`Customer with id: ${id} was not found.`);
-            }
-        } catch (err) {
-            console.log(err);
-            return res.status(500).json(err);
-        }
-    })
+//             if (isDeleted) {
+//                 return res.status(200).send(`Customer with id: ${id} is successfully deleted.`);
+//             } else {
+//                 return res.status(400).send(`Customer with id: ${id} was not found.`);
+//             }
+//         } catch (err) {
+//             console.log(err);
+//             return res.status(500).json(err);
+//         }
+//     })
 
 module.exports = router;
