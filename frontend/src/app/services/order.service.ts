@@ -54,7 +54,7 @@ export class OrderService {
       orderId
     }
 
-    return this.httpClient.post(`${this.baseUrl}${ApiPaths.order}/approve`, data);
+    return this.httpClient.post(`${this.baseUrl}${ApiPaths.order}/approve`, data, { responseType: 'text' });
   }
 
   cancelOrder(orderId: number) {
@@ -62,7 +62,7 @@ export class OrderService {
       orderId
     }
 
-    return this.httpClient.post(`${this.baseUrl}${ApiPaths.order}/cancel`, data);
+    return this.httpClient.post(`${this.baseUrl}${ApiPaths.order}/cancel`, data, { responseType: 'text' });
   }
 
   getOrderWithProducts(orderId: number) {
@@ -78,6 +78,6 @@ export class OrderService {
   }
 
   getPaymentStatusString(isPaid: boolean) {
-    return isPaid ? 'plaćeno' : 'čeka plaćanje'
+    return isPaid ? 'plaćeno' : 'nije plaćeno'
   }
 }

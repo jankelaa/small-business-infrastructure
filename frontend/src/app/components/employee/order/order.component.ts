@@ -49,9 +49,7 @@ export class OrderComponent implements OnInit {
   approveOrder() {
     this.orderService.approveOrder(this.orderId).subscribe({
       next: () => {
-        this.order.status = this.orderStatuses.odobrena;
-        this.displayApproveButton = false;
-        location.reload();
+        window.location.reload();
       },
       error: (error: HttpErrorResponse) => {
         this.message = error.error;
@@ -62,9 +60,6 @@ export class OrderComponent implements OnInit {
   cancelOrder() {
     this.orderService.cancelOrder(this.orderId).subscribe({
       next: () => {
-        this.order.status = this.orderStatuses.otkazana;
-        this.displayApproveButton = false;
-        this.displayCancelButton = false;
         window.location.reload();
       },
       error: (error: HttpErrorResponse) => {
