@@ -9,6 +9,7 @@ const productService = require('../services/product.service');
 const CustomerForOrder = require("../models/response-models/customer-for-order.model");
 
 const enums = require('../enums/enums');
+const CustomerFull = require("../models/response-models/customer-full.model");
 const customerRanks = enums.customerRanks;
 
 const router = Router();
@@ -177,7 +178,7 @@ router.post('/address', async (req, res) => {
         const customer = await customerService.addAddressForCustomer(customerId, address, country, city, zipCode, transaction);
 
         await transaction.commit();
-        
+
         return res.status(200).json(customer);
     } catch (error) {
         transaction.rollback();
@@ -272,6 +273,22 @@ router.post('/discount/product', async (req, res) => {
     }
 });
 
+router.get('/:customerId', async (req, res) => {
+    try {
+        const { customerId } = req.params;
+
+        const customer = await customerService.getCustomerWithAllById(customerId);
+
+        const data = {
+            customer: new CustomerFull(customer)
+        }
+
+        res.status(200).send(data);
+    } catch (error) {
+        res.status(500).send(error.message);
+    }
+});
+
 router.get('/', async (req, res) => {
     try {
         const customers = await customerService.getAllCustomers();
@@ -283,50 +300,6 @@ router.get('/', async (req, res) => {
         console.log(err);
         return res.status(500).json(err);
     }
-})
-
-// router.route('/:id')
-//     .get(async (req, res) => {
-//         const id = req.params.id;
-//         try {
-//             const customer = await Customer.findByPk(id);
-
-//             return res.json(customer);
-//         } catch (err) {
-//             console.log(err);
-//             return res.status(500).json(err);
-//         }
-//     })
-//     .put(async (req, res) => {
-//         const id = req.params.id;
-//         try {
-//             const customer = await Customer.update(id);
-
-//             return res.json(customer);
-//         } catch (err) {
-//             console.log(err);
-//             return res.status(500).json(err);
-//         }
-//     })
-//     .delete(async (req, res) => {
-//         const id = req.params.id;
-//         try {
-//             const isDeleted = await Customer.destroy({
-//                 where: {
-//                     id,
-//                     rank: 0
-//                 }
-//             });
-
-//             if (isDeleted) {
-//                 return res.status(200).send(`Customer with id: ${id} is successfully deleted.`);
-//             } else {
-//                 return res.status(400).send(`Customer with id: ${id} was not found.`);
-//             }
-//         } catch (err) {
-//             console.log(err);
-//             return res.status(500).json(err);
-//         }
-//     })
+});
 
 module.exports = router;

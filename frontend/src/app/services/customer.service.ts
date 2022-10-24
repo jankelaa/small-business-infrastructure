@@ -17,6 +17,10 @@ export class CustomerService {
     return this.httpClient.get(`${this.baseUrl}${ApiPaths.customer}`);
   }
 
+  getCustomerById(customerId: number) {
+    return this.httpClient.get(`${this.baseUrl}${ApiPaths.customer}/${customerId}`);
+  }
+
   createCustomer(name, pib, email, phone, address, country, city, postcode) {
     const data = {
       name,

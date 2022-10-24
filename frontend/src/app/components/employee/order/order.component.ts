@@ -23,8 +23,7 @@ export class OrderComponent implements OnInit {
 
   message: string;
 
-  constructor(private activatedRoute: ActivatedRoute, private router: Router,
-    private orderService: OrderService) { }
+  constructor(private activatedRoute: ActivatedRoute, private orderService: OrderService) { }
 
   ngOnInit(): void {
     this.orderId = parseInt(this.activatedRoute.snapshot.paramMap.get('id'));

@@ -1,5 +1,5 @@
 const { isNil } = require('lodash');
-const { Customer, CustomerAddress, CustomerPermanentDiscount, CustomerProductDiscount } = require('../models');
+const { Customer, CustomerAddress, CustomerPermanentDiscount, CustomerProductDiscount, Product } = require('../models');
 const generator = require('generate-password');
 const { Op } = require('sequelize');
 
@@ -80,6 +80,27 @@ class CustomerService {
 
     async getAllCustomers() {
         return await Customer.findAll();
+    }
+
+    async getCustomerWithAllById(customerId, transaction = null) {
+        const res = await Customer.findOne({
+            include: [
+                Customer.Addresses,
+                Customer.PermanentDiscount,
+                {
+                    association: Customer.ProductDiscounts,
+                    include: {
+                        model: Product,
+                        as: 'product'
+                    }
+                },
+                Customer.Orders
+            ],
+            where: { id: customerId },
+            transaction
+        });
+
+        return isNil(res) ? null : res;
     }
 
     async getCustomerForOrderByPib(pib, transaction = null) {

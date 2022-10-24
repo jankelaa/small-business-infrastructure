@@ -19,7 +19,7 @@ module.exports = (sequelize, DataTypes) => {
                     name: 'productId',
                     allowNull: false
                 },
-                as: 'Product',
+                as: 'product',
                 onDelete: 'CASCADE'
             });
         }

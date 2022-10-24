@@ -18,6 +18,7 @@ import { AllProductsComponent } from './components/employee/all-products/all-pro
 import { AddProductsComponent } from './components/employee/add-products/add-products.component';
 import { AllCustomersComponent } from './components/employee/all-customers/all-customers.component';
 import { OrderComponent } from './components/employee/order/order.component';
+import { CustomerComponent } from './components/employee/customer/customer.component';
 
 const routes: Routes = [
   {
@@ -34,6 +35,9 @@ const routes: Routes = [
       },
       {
         path: 'all-customers', component: AllCustomersComponent
+      },
+      {
+        path: 'customer/:id', component: CustomerComponent
       },
       {
         path: 'all-orders', component: AllOrdersComponent
