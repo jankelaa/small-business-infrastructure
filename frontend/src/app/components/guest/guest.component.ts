@@ -20,5 +20,4 @@ export class GuestComponent implements OnInit {
       this.router.navigate(['/employee']);
     }
   }
-
 }

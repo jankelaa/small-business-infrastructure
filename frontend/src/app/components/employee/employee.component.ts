@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { User } from 'src/app/model/user.model';
 
 @Component({
@@ -8,12 +9,15 @@ import { User } from 'src/app/model/user.model';
 })
 export class EmployeeComponent implements OnInit {
 
-  user: User;
+  loggedUser: User;
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit(): void {
-    this.user = JSON.parse(localStorage.getItem('user'));
-  }
+    this.loggedUser = JSON.parse(localStorage.getItem('user'));
 
+    if (this.loggedUser == null) {
+      this.router.navigate(['/']);
+    }
+  }
 }
