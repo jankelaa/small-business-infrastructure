@@ -3,12 +3,10 @@
     <p><b>Status porudžbine:</b> {{order.statusString}}</p>
     <p><b>Status plaćanja:</b> {{order.isPaidString}}</p>
     <h2>Kupac:</h2>
-    <b>Naziv:</b> {{order.customer.name}}
-    <br>
-    <b>PIB:</b> {{order.customer.pib}}
-    <br>
-    <b>Email:</b> {{order.customer.email}}
-    <br>
+    <p><b>Naziv:</b> {{order.customer.name}}</p>
+    <p><b>PIB:</b> {{order.customer.pib}}</p>
+    <p><b>Email:</b> {{order.customer.email}}</p>
+    <p><b>Rank:</b> {{order.customer.rankString}}</p>
     <br>
     <h2>Adresa za dostavu:</h2>
     {{order.customerAddress.address}}, {{order.customerAddress.zipCode}} {{order.customerAddress.city}},

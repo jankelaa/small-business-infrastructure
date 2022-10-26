@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Order } from 'src/app/model/order.model';
 import { ProductForOrder } from 'src/app/model/product-for-order.model';
+import { CustomerService } from 'src/app/services/customer.service';
 import { OrderService } from 'src/app/services/order.service';
 
 @Component({
@@ -23,7 +24,8 @@ export class OrderComponent implements OnInit {
 
   message: string;
 
-  constructor(private activatedRoute: ActivatedRoute, private orderService: OrderService) { }
+  constructor(private activatedRoute: ActivatedRoute, private orderService: OrderService,
+    private customerService: CustomerService) { }
 
   ngOnInit(): void {
     this.orderId = parseInt(this.activatedRoute.snapshot.paramMap.get('id'));
@@ -32,6 +34,8 @@ export class OrderComponent implements OnInit {
       this.order = data.order;
       this.order.statusString = this.orderService.getStatusString(data.order.status);
       this.order.isPaidString = this.orderService.getPaymentStatusString(data.order.isPaid);
+
+      this.order.customer.rankString = this.customerService.getCustomerRankString(this.order.customer.rank);
 
       this.productsForOrder = data.productsForOrder;
 

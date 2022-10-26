@@ -22,6 +22,7 @@ export class Order {
         pib: number;
         email: string;
         rank: number;
+        rankString: string;
     };
 
     customerAddress: {
