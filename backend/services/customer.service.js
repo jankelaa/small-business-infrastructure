@@ -93,8 +93,7 @@ class CustomerService {
                         model: Product,
                         as: 'product'
                     }
-                },
-                Customer.Orders
+                }
             ],
             where: { id: customerId },
             transaction

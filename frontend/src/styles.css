@@ -42,6 +42,11 @@ table {
     border-color: lightgray;
 }
 
+.warning-message {
+    color: red;
+    font-weight: bold;
+}
+
 mat-toolbar {
     justify-content: space-between;
     position: fixed;

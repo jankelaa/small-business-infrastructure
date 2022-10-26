@@ -210,15 +210,23 @@ router.post('/discount/permanent', async (req, res) => {
 
         if (isNil(customer)) {
             await transaction.commit();
-            res.status(400).send(`Customer with not found, customerId ${customerId}.`);
+            res.status(400).send(`Customer not found, customerId ${customerId}.`);
             return;
         }
 
-        await customerService.addPermanentDiscountForCustomer(customerId, percentage, transaction);
+        const permanentDiscount = await customerService.addPermanentDiscountForCustomer(customerId, percentage, transaction);
+
+        if (customer.rank !== customerRanks.PARTNER) {
+            await customerService.upgradeCustomerRank(customer.id, customerRanks.PARTNER, transaction);
+        }
+
+        const data = {
+            permanentDiscountPercentage: parseFloat(permanentDiscount.percentage)
+        };
 
         await transaction.commit();
 
-        return res.status(200).send('Permanent discount successfully added.');
+        return res.status(200).send(data);
     } catch (error) {
         transaction.rollback();
         res.status(500).send(error.message);

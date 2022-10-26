@@ -4,14 +4,72 @@
     <p><b>PIB:</b> {{customer.pib}}</p>
     <p><b>Email:</b> {{customer.email}}</p>
     <p><b>Rank:</b> {{customer.rankString}}</p>
-    <p *ngIf="customer.permanentDiscount!=null"><b>Rabat:</b> {{customer.permanentDiscount}} %</p>
-    <p *ngIf="customer.permanentDiscount==null"><button mat-raised-button color="primary" (click)="addPermanentDiscount()">Dodaj rabat za korisnika</button></p>
-    <div *ngIf="customer.addresses.length>0">
-        <br>
-        <h2>Adrese:</h2>
-        <div *ngFor='let addr of customer.addresses'>
-            {{addr.address}}, {{addr.zipCode}} {{addr.city}}, {{addr.country}}
-        </div>
+    <p><b>Rabat: </b>
+        <span *ngIf="editPermanentDiscount==false">
+            {{customer.permanentDiscount}} %
+            <button mat-raised-button color="accent" (click)="enablePermanentDiscountEdit()">
+                Izmeni rabat <mat-icon>mode_edit</mat-icon>
+            </button>
+        </span>
+        <span *ngIf="editPermanentDiscount==true">
+            <input type="number" min="1" max="100" [(ngModel)]="customer.permanentDiscount"> %
+            <button mat-raised-button color="primary" (click)="addPermanentDiscount()">
+                Sačuvaj <mat-icon>save</mat-icon>
+            </button>
+        </span>
+    </p>
+    <p *ngIf="messagePermanentDiscount!=null" class="warning-message">{{messagePermanentDiscount}}</p>
+    <br>
+    <h2>Adrese:</h2>
+    <div *ngFor='let addr of customer.addresses'>
+        {{addr.address}}, {{addr.zipCode}} {{addr.city}}, {{addr.country}}
+    </div>
+    <hr>
+    <div *ngIf="addAddressForm==false">
+        <button mat-raised-button color="accent" (click)="enableAddAddressForm()">
+            Dodaj adresu <mat-icon>add</mat-icon>
+        </button>
+    </div>
+    <div *ngIf="addAddressForm==true">
+        <table>
+            <tr>
+                <td>Adresa:</td>
+                <td>
+                    <input type="text" name="address" [(ngModel)]="address">
+                </td>
+            </tr>
+            <tr>
+                <td>Zemlja:</td>
+                <td>
+                    <input type="text" name="country" [(ngModel)]="country">
+                </td>
+            </tr>
+            <tr>
+                <td>Grad:</td>
+                <td>
+                    <input type="text" name="city" [(ngModel)]="city">
+                </td>
+            </tr>
+            <tr>
+                <td>Poštanski broj:</td>
+                <td>
+                    <input type="text" name="postcode" [(ngModel)]="postcode">
+                </td>
+            </tr>
+            <tr>
+                <td [colSpan]="2">
+                    <br>
+                    <button mat-raised-button color="primary" (click)="addAddress()">
+                        Sačuvaj <mat-icon>save</mat-icon>
+                    </button>
+                </td>
+            </tr>
+            <tr *ngIf="messageAddAddress!=null" class="warning-message">
+                <td [colSpan]="2">
+                    {{messageAddAddress}}
+                </td>
+            </tr>
+        </table>
     </div>
     <div *ngIf="customer.productDiscounts.length>0">
         <br>

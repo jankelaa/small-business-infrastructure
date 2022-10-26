@@ -63,4 +63,25 @@ export class CustomerService {
   getCustomerRankString(rank: number) {
     return CustomerRanks[rank];
   }
+
+  addPermanentDiscountForCustomer(customerId: number, percentage: number) {
+    const data = {
+      customerId,
+      percentage
+    }
+
+    return this.httpClient.post(`${this.baseUrl}${ApiPaths.customer}/discount/permanent`, data);
+  }
+
+  addAddressForCustomer(customerId: number, address: string, city: string, country: string, postcode: string) {
+    const data = {
+      customerId,
+      address,
+      city,
+      country,
+      zipCode: postcode
+    }
+
+    return this.httpClient.post(`${this.baseUrl}${ApiPaths.customer}/address`, data);
+  }
 }
