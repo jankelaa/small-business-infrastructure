@@ -34,6 +34,26 @@ class CustomerService {
             transaction
         });
     }
+    async customerSignup(name, pib, email, phone,
+        address, country, city, postcode, rank, transaction = null) {
+
+        return await Customer.create({
+            name,
+            pib,
+            email,
+            rank,
+            addresses: [{
+                address,
+                city,
+                country,
+                zipCode: postcode,
+                isMain: true
+            }]
+        }, {
+            include: Customer.Addresses,
+            transaction
+        });
+    }
 
     async addAddressForCustomer(customerId, address, country, city, zipCode, transaction = null) {
         return await CustomerAddress.create({

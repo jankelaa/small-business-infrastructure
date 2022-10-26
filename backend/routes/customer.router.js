@@ -97,7 +97,7 @@ router.post('/signup', async (req, res) => {
 
         const customerRank = customerRanks.PENDING;
 
-        customer = await customerService.createCustomer(name, pib, email, phone, address,
+        customer = await customerService.customerSignup(name, pib, email, phone, address,
             country, city, postcode, customerRank, transaction);
 
         const data = { customer: new CustomerForOrder(customer) };
