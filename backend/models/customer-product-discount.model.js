@@ -28,6 +28,9 @@ module.exports = (sequelize, DataTypes) => {
         percentage: {
             type: DataTypes.DECIMAL(5, 2),
             allowNull: false
+        },
+        dateExpire: {
+            type: DataTypes.DATE
         }
     }, {
         sequelize,

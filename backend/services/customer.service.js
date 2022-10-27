@@ -90,8 +90,7 @@ class CustomerService {
             upsertKeys: ['customerId', 'productId'],
             updateOnDuplicate: ['percentage'],
             transaction
-        }
-        );
+        });
     }
 
     async getCustomerById(id, transaction = null) {

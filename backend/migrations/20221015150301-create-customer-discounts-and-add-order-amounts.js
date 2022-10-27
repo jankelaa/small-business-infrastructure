@@ -60,7 +60,7 @@ module.exports = {
           allowNull: false,
           uniqueKeys: 'customer_product_unique',
           references: {
-            model: 'categories',
+            model: 'products',
             key: 'id'
           },
           onDelete: 'CASCADE'
@@ -68,6 +68,9 @@ module.exports = {
         percentage: {
           type: Sequelize.DECIMAL(5, 2),
           allowNull: false
+        },
+        dateExpire: {
+          type: Sequelize.DATE
         }
       }, {
         uniqueKeys: {

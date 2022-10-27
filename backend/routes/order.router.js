@@ -66,7 +66,7 @@ router.post('/create', async (req, res) => {
             return;
         }
 
-        const status = customer.rank === customerRanks.PENDING ? orderStatuses.PENDING : orderStatuses.CONFIRMED;
+        const status = customer.rank === customerRanks.PENDING ? orderStatuses.PENDING : orderStatuses.APPROVED;
 
         const order = await orderService.createOrder(customerId, baseAmount, pdvAmount, totalAmountWithPdv,
             shippingAmount, shippingAmountWithPdv, totalPrice, customerAddressId, productsForOrder, status, transaction);

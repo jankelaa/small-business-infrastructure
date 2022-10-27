@@ -41,6 +41,22 @@ router.post('/update', upload.single('file'), async (req, res) => {
     }
 });
 
+router.post('/discounts/add', upload.single('file'), async (req, res) => {
+    let transaction;
+    try {
+        const file = req.file;
+
+        transaction = await sequelize.transaction();
+        await productService.addProductDiscounts(file, transaction);
+        await transaction.commit();
+
+        res.status(200).send('Product discounts successfully inserted.');
+    } catch (error) {
+        transaction.rollback();
+        res.status(500).send(error.message);
+    }
+});
+
 router.get('/:id', (req, res) => {
     res.status(200).send("Product page!");
 });
