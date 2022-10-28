@@ -54,6 +54,7 @@ router.post('/create', async (req, res) => {
             country, city, postcode, customerRank, transaction);
 
         await transaction.commit();
+
         return res.status(200).json(customer);
     } catch (error) {
         transaction.rollback();
@@ -136,8 +137,7 @@ router.post('/signin', async (req, res) => {
             return;
         }
 
-        // const isPasswordValid = await userService.isCorrectPassword(password, user.password);
-        const isSecretCodeValid = secretCode === customer.secretCode;
+        const isSecretCodeValid = await customerService.isCorrectSecretCode(secretCode, customer.secretCode);
 
         if (!isSecretCodeValid) {
             res.status(400).send(errorMessage);

@@ -1,7 +1,12 @@
 const { isNil } = require('lodash');
-const { Customer, CustomerAddress, CustomerPermanentDiscount, CustomerProductDiscount, Product } = require('../models');
+const bcrypt = require('bcrypt');
 const generator = require('generate-password');
 const { Op } = require('sequelize');
+
+const { Customer, CustomerAddress, CustomerPermanentDiscount, CustomerProductDiscount, Product } = require('../models');
+const emailService = require('./email.service');
+
+const saltRounds = 10;
 
 let instance = null;
 
@@ -16,11 +21,15 @@ class CustomerService {
             strict: true
         });
 
+        await emailService.main(email, name, secretCode);
+
+        const secretCodeHash = await generateSecretCodeHash(secretCode);
+
         return await Customer.create({
             name,
             pib,
             email,
-            secretCode,
+            secretCode: secretCodeHash,
             rank,
             addresses: [{
                 address,
@@ -157,6 +166,15 @@ class CustomerService {
             transaction
         })
     }
+
+    async isCorrectSecretCode(secretCode, secretCodeHash) {
+        return await bcrypt.compare(secretCode, secretCodeHash);
+    }
+}
+
+const generateSecretCodeHash = async secretCode => {
+    const salt = await bcrypt.genSalt(saltRounds);
+    return await bcrypt.hash(secretCode, salt);
 }
 
 module.exports = (() => {
