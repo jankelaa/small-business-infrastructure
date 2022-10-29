@@ -135,7 +135,8 @@ router.post('/approve', async (req, res) => {
         await orderService.updateOrderStatus(orderId, orderStatuses.APPROVED, transaction);
 
         if (order.customer.rank === customerRanks.PENDING) {
-            await customerService.upgradeCustomerRank(order.customer.id, customerRanks.VERIFIED, transaction);
+            await customerService.updateCustomerRankAndSecretCode(order.customer.id, order.customer.email,
+                order.customer.name, customerRanks.VERIFIED, transaction);
         }
 
         await transaction.commit();

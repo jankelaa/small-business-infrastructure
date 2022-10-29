@@ -13,17 +13,7 @@ let instance = null;
 class CustomerService {
     async createCustomer(name, pib, email, phone,
         address, country, city, postcode, rank, transaction = null) {
-        const secretCode = generator.generate({
-            length: 10,
-            numbers: true,
-            lowercase: true,
-            uppercase: true,
-            strict: true
-        });
-
-        await emailService.main(email, name, secretCode);
-
-        const secretCodeHash = await generateSecretCodeHash(secretCode);
+        const secretCodeHash = await generateSecretCodeHash(email, name);
 
         return await Customer.create({
             name,
@@ -43,6 +33,7 @@ class CustomerService {
             transaction
         });
     }
+
     async customerSignup(name, pib, email, phone,
         address, country, city, postcode, rank, transaction = null) {
 
@@ -167,14 +158,38 @@ class CustomerService {
         })
     }
 
+    async updateCustomerRankAndSecretCode(customerId, email, name, rank, transaction = null) {
+        const secretCodeHash = await generateSecretCodeHash(email, name);
+
+        return await Customer.update({
+            rank,
+            secretCode: secretCodeHash
+        }, {
+            where: { id: customerId },
+            transaction
+        })
+    }
+
     async isCorrectSecretCode(secretCode, secretCodeHash) {
         return await bcrypt.compare(secretCode, secretCodeHash);
     }
 }
 
-const generateSecretCodeHash = async secretCode => {
+const generateSecretCodeHash = async (email, name) => {
+    const secretCode = generator.generate({
+        length: 10,
+        numbers: true,
+        lowercase: true,
+        uppercase: true,
+        strict: true
+    });
+
     const salt = await bcrypt.genSalt(saltRounds);
-    return await bcrypt.hash(secretCode, salt);
+    const secretCodeHash = await bcrypt.hash(secretCode, salt);
+
+    await emailService.main(email, name, secretCode);
+
+    return secretCodeHash;
 }
 
 module.exports = (() => {

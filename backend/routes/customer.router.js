@@ -216,7 +216,10 @@ router.post('/discount/permanent', async (req, res) => {
 
         const permanentDiscount = await customerService.addPermanentDiscountForCustomer(customerId, percentage, transaction);
 
-        if (customer.rank !== customerRanks.PARTNER) {
+        if (customer.rank === customerRanks.PENDING) {
+            await customerService.updateCustomerRankAndSecretCode(customer.id, customer.email, customer.name,
+                customerRanks.PARTNER, transaction);
+        } else if ((customer.rank === customerRanks.VERIFIED)) {
             await customerService.upgradeCustomerRank(customer.id, customerRanks.PARTNER, transaction);
         }
 
