@@ -1,6 +1,7 @@
 const { isNil } = require('lodash');
 const csv = require('csv-parser');
 const fs = require('fs');
+const moment = require('moment');
 const { Product, ProductOrder, CustomerProductDiscount } = require('../models');
 
 let instance = null;
@@ -42,6 +43,7 @@ class ProductService {
     async addProductDiscounts(file, transaction = null) {
         return new Promise(function (resolve, reject) {
             const productDiscounts = [];
+            const nextMonthDate = moment.utc().add(1, 'months');
 
             fs.createReadStream(file.path)
                 .pipe(csv({}))
@@ -53,10 +55,11 @@ class ProductService {
                         await CustomerProductDiscount.create({
                             customerId: pd.customerId,
                             productId: pd.productId,
-                            percentage: pd.percentage
+                            percentage: pd.percentage,
+                            dateExpire: nextMonthDate
                         }, {
                             upsertKeys: ['customerId', 'productId'],
-                            updateOnDuplicate: ['percentage'],
+                            updateOnDuplicate: ['percentage', 'dateExpire'],
                             transaction
                         });
                         resolve(productDiscounts);

@@ -1,6 +1,7 @@
 const { isNil } = require('lodash');
 const bcrypt = require('bcrypt');
 const generator = require('generate-password');
+const moment = require('moment');
 const { Op } = require('sequelize');
 
 const { Customer, CustomerAddress, CustomerPermanentDiscount, CustomerProductDiscount, Product } = require('../models');
@@ -102,12 +103,19 @@ class CustomerService {
     }
 
     async getCustomerWithAllById(customerId, transaction = null) {
+        const dateNow = moment.utc();
+
         const res = await Customer.findOne({
             include: [
                 Customer.Addresses,
                 Customer.PermanentDiscount,
                 {
                     association: Customer.ProductDiscounts,
+                    where: {
+                        dateExpire: {
+                            [Op.gte]: dateNow
+                        }
+                    },
                     include: {
                         model: Product,
                         as: 'product'
@@ -122,11 +130,21 @@ class CustomerService {
     }
 
     async getCustomerForOrderByPib(pib, transaction = null) {
+        const dateNow = moment.utc();
+
         const res = await Customer.findOne({
             include: [
                 Customer.Addresses,
                 Customer.PermanentDiscount,
-                Customer.ProductDiscounts
+                {
+                    model: CustomerProductDiscount,
+                    as: 'productDiscounts',
+                    where: {
+                        dateExpire: {
+                            [Op.gte]: dateNow
+                        }
+                    },
+                }
             ],
             where: { pib },
             transaction
