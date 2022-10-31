@@ -6,6 +6,7 @@ export class ProductForOrder {
   name: string;
   imgUrl: string;
   price: number;
+  totalPrice: number;
   size: string;
   quantity: number;
 
@@ -16,6 +17,7 @@ export class ProductForOrder {
     this.name = product.name;
     this.imgUrl = product.imgUrl;
     this.price = product.price;
+    this.totalPrice = parseFloat((product.price * quantity).toFixed(2));
     this.size = product.size;
     this.quantity = quantity;
   }

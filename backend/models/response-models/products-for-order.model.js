@@ -10,6 +10,7 @@ class ProductForOrder {
 
         this.price = productForOrder.price;
         this.quantity = productForOrder.quantity;
+        this.totalPrice = productForOrder.totalPrice;
     }
 }
 

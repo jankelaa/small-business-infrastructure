@@ -37,7 +37,8 @@ class OrderService {
                 orderId: order.id,
                 productId: pfo.id,
                 quantity: pfo.quantity,
-                price: pfo.price
+                price: pfo.price,
+                totalPrice: pfo.totalPrice
             }
         })
 

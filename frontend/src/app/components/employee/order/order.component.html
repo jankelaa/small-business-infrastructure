@@ -15,6 +15,13 @@
     <br>
     <h2>Proizvodi:</h2>
     <table>
+        <tr align="left">
+            <th>Količina</th>
+            <th>Slika</th>
+            <th>Naziv</th>
+            <th>Pakovanje</th>
+            <th>Cena artikla</th>
+            <th>Zbirna cena</th>
         <tr *ngFor="let product of productsForOrder">
             <td>{{product.quantity}}x</td>
             <td>
@@ -22,45 +29,46 @@
             </td>
             <td>{{product.name}}</td>
             <td>{{product.size}}</td>
-            <td>{{product.price*product.quantity}} RSD</td>
+            <td>{{product.price}} RSD</td>
+            <td>{{product.totalPrice}} RSD</td>
         </tr>
         <tr align="center">
-            <td [colSpan]="5">
+            <td [colSpan]="6">
                 <hr>
             </td>
         </tr>
         <tr align="right">
-            <td [colSpan]="5">
+            <td [colSpan]="6">
                 Ukupan iznos bez PDV: {{order.baseAmount}} RSD
             </td>
         </tr>
         <tr align="right">
-            <td [colSpan]="5">
+            <td [colSpan]="6">
                 PDV : {{order.pdvAmount}} RSD
             </td>
         </tr>
         <tr align="right">
-            <td [colSpan]="5">
+            <td [colSpan]="6">
                 Ukupno sa PDV : {{order.totalAmountWithPdv}} RSD
             </td>
         </tr>
         <tr align="right">
-            <td [colSpan]="5">
+            <td [colSpan]="6">
                 Dostava: {{order.shippingAmountWithPdv}} RSD
             </td>
         </tr>
         <tr align="right">
-            <td [colSpan]="5">
+            <td [colSpan]="6">
                 <b>Ukupno za plaćanje: {{order.totalPrice}} RSD </b>
             </td>
         </tr>
         <tr align="center" *ngIf="displayApproveButton">
-            <td [colSpan]="5">
+            <td [colSpan]="6">
                 <button mat-raised-button color="primary" (click)="approveOrder()">Potvrdi narudžbinu</button>
             </td>
         </tr>
         <tr align="center" *ngIf="displayCancelButton">
-            <td [colSpan]="5">
+            <td [colSpan]="6">
                 <button mat-stroked-button color="accent" (click)="cancelOrder()">Otkaži narudžbinu</button>
             </td>
         </tr>

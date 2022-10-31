@@ -1,21 +1,23 @@
 <div>
+  <h1>Vaša korpa: </h1>
   <table *ngIf='cartCount!==0;else emptyOrder'>
-    <tr>
-      <td>Slika</td>
-      <td>Naziv</td>
-      <td>Dimenzije</td>
-      <td>Cena</td>
-      <td>Količina</td>
-      <td></td>
+    <tr align="left">
+      <th>Količina</th>
+      <th>Slika</th>
+      <th>Naziv</th>
+      <th>Pakovanje</th>
+      <th>Cena artikla</th>
+      <th>Zbirna cena</th>
     </tr>
     <tr *ngFor="let product of productsForOrder">
+      <td>{{product.quantity}}x</td>
       <td>
         <img src='{{"assets/images/products/"+product.imgUrl}}' width="100px">
       </td>
       <td>{{product.name}}</td>
       <td>{{product.size}}</td>
       <td>{{product.price}} RSD</td>
-      <td>{{product.quantity}}</td>
+      <td>{{product.totalPrice}} RSD</td>
       <td>
         <button mat-button color="warn" (click)="removeItem(product)">Ukloni</button>
       </td>

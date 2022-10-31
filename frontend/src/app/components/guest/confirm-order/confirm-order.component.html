@@ -131,6 +131,14 @@
             <br>
             <h2>Vaša porudžbina:</h2>
             <table>
+                <tr align="left">
+                    <th>Količina</th>
+                    <th>Slika</th>
+                    <th>Naziv</th>
+                    <th>Pakovanje</th>
+                    <th>Cena artikla</th>
+                    <th>Zbirna cena</th>
+                </tr>
                 <tr *ngFor="let product of productsForOrder">
                     <td>{{product.quantity}}x</td>
                     <td>
@@ -138,35 +146,36 @@
                     </td>
                     <td>{{product.name}}</td>
                     <td>{{product.size}}</td>
-                    <td>{{product.price*product.quantity}} RSD</td>
+                    <td>{{product.price}} RSD</td>
+                    <td>{{product.totalPrice}} RSD</td>
                 </tr>
                 <tr align="center">
-                    <td [colSpan]="5">
+                    <td [colSpan]="6">
                         <hr>
                     </td>
                 </tr>
                 <tr align="right">
-                    <td [colSpan]="5">
+                    <td [colSpan]="6">
                         Ukupan iznos bez PDV: {{baseAmount}} RSD
                     </td>
                 </tr>
                 <tr align="right">
-                    <td [colSpan]="5">
+                    <td [colSpan]="6">
                         PDV : {{pdvAmount}} RSD
                     </td>
                 </tr>
                 <tr align="right">
-                    <td [colSpan]="5">
+                    <td [colSpan]="6">
                         Ukupno sa PDV : {{totalAmountWithPdv}} RSD
                     </td>
                 </tr>
                 <tr align="right">
-                    <td [colSpan]="5">
+                    <td [colSpan]="6">
                         Dostava: {{shippingAmountWithPdv}} RSD
                     </td>
                 </tr>
                 <tr align="right">
-                    <td [colSpan]="5">
+                    <td [colSpan]="6">
                         <b>Ukupno za plaćanje: {{totalPrice}} RSD </b>
                     </td>
                 </tr>

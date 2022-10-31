@@ -23,7 +23,7 @@ export class CartComponent implements OnInit {
       this.cartCount = this.productsForOrder.length;
 
       this.productsForOrder.forEach(pfo => {
-        this.totalPrice += pfo.price * pfo.quantity;
+        this.totalPrice += pfo.totalPrice;
       })
 
       this.totalPrice = parseFloat(this.totalPrice.toFixed(2));

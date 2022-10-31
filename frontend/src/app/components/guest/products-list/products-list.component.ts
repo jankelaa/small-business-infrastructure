@@ -48,14 +48,19 @@ export class ProductsListComponent implements OnInit {
   addToCart(product: ProductForList) {
     let quantity: number;
 
-    if (isNaN(product.quantity) || product.quantity < 1) quantity = 1;
-    else quantity = product.quantity;
+    if (isNaN(product.quantity) || product.quantity < 1) {
+      quantity = 1;
+    } else {
+      quantity = product.quantity;
+    }
 
-    const index = this.productsForOrder.findIndex(pto => pto.id === product.id);
+    const index = this.productsForOrder.findIndex(pfo => pfo.id === product.id);
     if (index == -1) {
       this.productsForOrder.push(new ProductForOrder(product, quantity));
     } else {
       this.productsForOrder[index].quantity += quantity;
+      this.productsForOrder[index].totalPrice =
+        parseFloat((this.productsForOrder[index].totalPrice + product.price * quantity).toFixed(2));
     }
 
     product.quantity = null;
