@@ -38,18 +38,6 @@
             <td mat-header-cell *matCellDef="let product"> {{product.price}} RSD </td>
         </ng-container>
 
-        <ng-container matColumnDef="quantity">
-            <th mat-header-cell *matHeaderCellDef> Na stanju </th>
-            <td mat-header-cell *matCellDef="let product">{{product.amountAvailable}}</td>
-        </ng-container>
-
-        <!-- <ng-container matColumnDef="add">
-        <th mat-header-cell *matHeaderCellDef> </th>
-        <td mat-header-cell *matCellDef="let product">
-          <button mat-raised-button color="accent" (click)="addToCart(product)">Dodaj u korpu</button>
-        </td>
-      </ng-container> -->
-
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
