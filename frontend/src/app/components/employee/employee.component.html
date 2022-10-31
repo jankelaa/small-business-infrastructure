@@ -3,7 +3,7 @@
         <mat-nav-list>
             <a mat-list-item routerLink="/">Info</a>
             <mat-divider></mat-divider>
-            <a mat-list-item [matMenuTriggerFor]='usersMenu'>Korisnici</a>
+            <a mat-list-item [matMenuTriggerFor]='usersMenu'>Zaposleni</a>
             <mat-divider></mat-divider>
             <a mat-list-item [matMenuTriggerFor]='customersMenu'>Kupci</a>
             <mat-divider></mat-divider>
@@ -13,8 +13,8 @@
         </mat-nav-list>
         <mat-menu #usersMenu>
             <mat-nav-list>
-                <a mat-list-item routerLink="all-users">Svi korisnici</a>
-                <a mat-list-item routerLink="create-user">Dodajte novog korisnika</a>
+                <a mat-list-item routerLink="all-users">Svi zaposleni</a>
+                <a mat-list-item routerLink="create-user">Dodajte novog zaposlenog</a>
             </mat-nav-list>
         </mat-menu>
         <mat-menu #customersMenu>

@@ -38,8 +38,6 @@ router.post('/login', async (req, res) => {
             return;
         }
 
-        // change password 1st time login
-
         res.status(200).send(user);
     } catch (error) {
         res.status(500).send(error.message);
