@@ -1,4 +1,9 @@
 <table mat-table [dataSource]="allOrders" class="mat-elevation-z8">
+    <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef> Br. porudžbine </th>
+        <td mat-cell class="hoverborder" *matCellDef="let order"> {{order.id}} </td>
+    </ng-container>
+
     <ng-container matColumnDef="customer">
         <th mat-header-cell *matHeaderCellDef> Kupac </th>
         <td mat-cell class="hoverborder" *matCellDef="let order"> {{order.customer.name}} </td>

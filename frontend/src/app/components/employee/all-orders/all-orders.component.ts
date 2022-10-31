@@ -12,7 +12,7 @@ export class AllOrdersComponent implements OnInit {
 
   allOrders: Order[];
 
-  displayedColumns: string[] = ['customer', 'address', 'totalPrice', 'status', 'isPaidString', 'createdAt'];
+  displayedColumns: string[] = ['id', 'customer', 'address', 'totalPrice', 'status', 'isPaidString', 'createdAt'];
 
   constructor(private router: Router, private orderService: OrderService) { }
 
