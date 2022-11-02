@@ -20,6 +20,7 @@ import { AllCustomersComponent } from './components/employee/all-customers/all-c
 import { OrderComponent } from './components/employee/order/order.component';
 import { CustomerComponent } from './components/employee/customer/customer.component';
 import { AddProductDiscountsComponent } from './components/employee/add-product-discounts/add-product-discounts.component';
+import { UserComponent } from './components/employee/user/user.component';
 
 const routes: Routes = [
   {
@@ -27,6 +28,9 @@ const routes: Routes = [
     children: [
       {
         path: 'all-users', component: AllUsersComponent
+      },
+      {
+        path: 'user/:id', component: UserComponent
       },
       {
         path: 'create-user', component: CreateUserComponent

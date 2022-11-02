@@ -12,6 +12,14 @@ export class UserService {
 
   constructor(private httpClient: HttpClient) { }
 
+  getAllUsers() {
+    return this.httpClient.get(`${this.baseUrl}${ApiPaths.user}`);
+  }
+
+  getUserById(userId: number) {
+    return this.httpClient.get(`${this.baseUrl}${ApiPaths.user}/${userId}`);
+  }
+
   createUser(email, password, name, surname, phone) {
     const data = {
       email,

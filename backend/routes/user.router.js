@@ -2,6 +2,7 @@ const { Router } = require("express");
 const Joi = require('joi');
 const { isNil } = require("lodash");
 const { sequelize } = require("../models");
+const UserFull = require("../models/response-models/user-full.model");
 
 const router = Router();
 
@@ -11,7 +12,26 @@ router.get('/', async (req, res) => {
     try {
         const users = await userService.getAllUsers();
 
-        res.status(200).send(users);
+        const data = { users }
+
+        return res.status(200).json(data);
+    } catch (err) {
+        console.log(err);
+        return res.status(500).json(err);
+    }
+});
+
+router.get('/:userId', async (req, res) => {
+    try {
+        const { userId } = req.params;
+
+        const user = await userService.getUserWithAllById(userId);
+
+        const data = {
+            user: new UserFull(user)
+        }
+
+        res.status(200).send(data);
     } catch (error) {
         res.status(500).send(error.message);
     }

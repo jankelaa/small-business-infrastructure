@@ -1,1 +1,30 @@
-<p>all-users works!</p>
+<table mat-table [dataSource]="allUsers" class="mat-elevation-z8">
+    <ng-container matColumnDef="username">
+        <th mat-header-cell *matHeaderCellDef> Korisničko ime </th>
+        <td mat-cell class="hoverborder" *matCellDef="let user"> {{user.username}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="email">
+        <th mat-header-cell *matHeaderCellDef> E-mail </th>
+        <td mat-cell class="hoverborder" *matCellDef="let user"> {{user.email}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef> Ime </th>
+        <td mat-cell class="hoverborder" *matCellDef="let user"> {{user.name}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="surname">
+        <th mat-header-cell *matHeaderCellDef> Prezime </th>
+        <td mat-cell class="hoverborder" *matCellDef="let user"> {{user.surname}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="phone">
+        <th mat-header-cell *matHeaderCellDef> Telefon </th>
+        <td mat-cell class="hoverborder" *matCellDef="let user"> {{user.phone}} </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row class="hoverborder" (click)="openUser(row)" *matRowDef="let row; columns: displayedColumns;">
+    </tr>
+</table>

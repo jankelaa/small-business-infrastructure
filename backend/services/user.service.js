@@ -7,8 +7,12 @@ const saltRounds = 10;
 let instance = null;
 
 class UserService {
-    async findUserById(userId) {
+    async getUserById(userId) {
         return await User.findByPk(userId);
+    }
+
+    async getUserWithAllById(id, transaction = null) {
+        return await User.findByPk(id, { transaction });
     }
 
     async getAllUsers() {
