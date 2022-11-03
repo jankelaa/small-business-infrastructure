@@ -1,3 +1,11 @@
+<mat-form-field>
+    <input matInput placeholder="Filter" [(ngModel)]="filterValue">
+</mat-form-field>
+&nbsp;
+<button type="button" mat-raised-button color="primary" (click)="applyFilter()">
+    <mat-icon>search</mat-icon>
+</button>
+
 <table mat-table [dataSource]="allOrders" class="mat-elevation-z8">
     <ng-container matColumnDef="id">
         <th mat-header-cell *matHeaderCellDef> Br. porudžbine </th>

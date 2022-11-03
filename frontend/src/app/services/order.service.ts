@@ -17,6 +17,14 @@ export class OrderService {
     return this.httpClient.get(`${this.baseUrl}${ApiPaths.order}`);
   }
 
+  getFilteredOrders(filterValue: string) {
+    const params = {
+      filterValue
+    }
+
+    return this.httpClient.get(`${this.baseUrl}${ApiPaths.order}/filter`, { params });
+  }
+
   customerSignupAndOrder(name, pib, email, phone, address, country, city, postcode) {
     const data = {
       name,

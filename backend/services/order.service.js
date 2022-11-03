@@ -1,4 +1,5 @@
 const { isNil } = require('lodash');
+const { Op, where } = require('sequelize');
 const { Order, ProductOrder } = require('../models');
 
 let instance = null;
@@ -10,6 +11,40 @@ class OrderService {
                 Order.Customer,
                 Order.CustomerAddress
             ],
+            order: [
+                ['createdAt', 'DESC']
+            ]
+        });
+    }
+
+    async getFilteredOrders(filterValue) {
+        let where = {};
+
+        if (!isNaN(filterValue)) {
+            where = {
+                ...where,
+                [Op.or]: [
+                    {
+                        id: parseInt(filterValue)
+                    },
+                    {
+                        '$customer.name$': { [Op.iLike]: `%${filterValue}%` }
+                    }
+                ]
+            }
+        } else {
+            where = {
+                ...where,
+                '$customer.name$': { [Op.iLike]: `%${filterValue}%` }
+            }
+        }
+
+        return Order.findAll({
+            include: [
+                Order.Customer,
+                Order.CustomerAddress
+            ],
+            where,
             order: [
                 ['createdAt', 'DESC']
             ]

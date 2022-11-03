@@ -30,6 +30,34 @@ router.get('/', async (req, res) => {
     }
 });
 
+router.get('/filter', async (req, res) => {
+    try {
+        const validationSchema = Joi.object().keys({
+            filterValue: Joi.string()
+        })
+
+        const validate = validationSchema.validate(req.query);
+
+        if (!isNil(validate.error)) {
+            res.status(400).send(new ErrorResponse(validate.error.message));
+            return;
+        }
+
+        const { filterValue } = req.query;
+
+        const orders = await orderService.getFilteredOrders(filterValue);
+        const formattedOrders = orders.map(o => new Order(o));
+
+        const data = {
+            orders: formattedOrders
+        }
+
+        res.status(200).send(data);
+    } catch (error) {
+        res.status(500).send(error.message);
+    }
+});
+
 router.post('/create', async (req, res) => {
     let transaction;
 
@@ -75,7 +103,6 @@ router.post('/create', async (req, res) => {
 
         res.status(200).send(order);
     } catch (error) {
-        console.log(error);
         transaction.rollback();
         res.status(500).send(error.message);
     }

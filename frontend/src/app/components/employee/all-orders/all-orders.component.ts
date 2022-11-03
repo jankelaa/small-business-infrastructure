@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { Order } from 'src/app/model/order.model';
 import { OrderService } from 'src/app/services/order.service';
@@ -11,6 +12,7 @@ import { OrderService } from 'src/app/services/order.service';
 export class AllOrdersComponent implements OnInit {
 
   allOrders: Order[];
+  filterValue: string;
 
   displayedColumns: string[] = ['id', 'customer', 'address', 'totalPrice', 'status', 'isPaidString', 'createdAt'];
 
@@ -30,5 +32,17 @@ export class AllOrdersComponent implements OnInit {
 
   openOrder(order: Order) {
     this.router.navigate([`employee/order/${order.id}`]);
+  }
+
+  applyFilter() {
+    this.orderService.getFilteredOrders(this.filterValue).subscribe((data: { orders: Order[] }) => {
+      this.allOrders = data.orders.map(o => {
+        return {
+          ...o,
+          statusString: this.orderService.getStatusString(o.status),
+          isPaidString: this.orderService.getPaymentStatusString(o.isPaid)
+        }
+      });
+    });
   }
 }

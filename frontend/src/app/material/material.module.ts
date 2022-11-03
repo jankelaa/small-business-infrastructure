@@ -9,6 +9,8 @@ import { MatListModule } from '@angular/material/list';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatTableModule } from '@angular/material/table';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
 const MaterialModules = [
   MatButtonModule,
@@ -20,7 +22,9 @@ const MaterialModules = [
   MatListModule,
   MatStepperModule,
   MatRadioModule,
-  MatTableModule
+  MatTableModule,
+  MatFormFieldModule,
+  MatInputModule
 ];
 
 @NgModule({
