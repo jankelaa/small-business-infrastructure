@@ -21,6 +21,14 @@ export class CustomerService {
     return this.httpClient.get(`${this.baseUrl}${ApiPaths.customer}/${customerId}`);
   }
 
+  getFilteredCustomers(filterValue: string) {
+    const params = {
+      filterValue
+    }
+
+    return this.httpClient.get(`${this.baseUrl}${ApiPaths.customer}/filter`, { params });
+  }
+
   createCustomer(name, pib, email, phone, address, country, city, postcode) {
     const data = {
       name,

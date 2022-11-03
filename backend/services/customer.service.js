@@ -102,6 +102,43 @@ class CustomerService {
         return await Customer.findAll();
     }
 
+    async getFilteredCustomers(filterValue) {
+        let where = {};
+
+        if (!isNaN(filterValue)) {
+            where = {
+                ...where,
+                [Op.or]: [
+                    {
+                        'pib': parseInt(filterValue)
+                    },
+                    {
+                        'name': { [Op.iLike]: `%${filterValue}%` }
+                    },
+                    {
+                        'email': { [Op.iLike]: `%${filterValue}%` }
+                    }
+                ]
+            }
+        } else {
+            where = {
+                ...where,
+                [Op.or]: [
+                    {
+                        'name': { [Op.iLike]: `%${filterValue}%` }
+                    },
+                    {
+                        'email': { [Op.iLike]: `%${filterValue}%` }
+                    }
+                ]
+            }
+        }
+
+        return Customer.findAll({
+            where
+        });
+    }
+
     async getCustomerWithAllById(customerId, transaction = null) {
         const dateNow = moment.utc();
 

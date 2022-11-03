@@ -2,7 +2,7 @@ const { Router } = require("express");
 const { isNil } = require("lodash");
 const Joi = require('joi');
 
-const { Customer, sequelize } = require('../models');
+const { sequelize } = require('../models');
 
 const customerService = require('../services/customer.service');
 const productService = require('../services/product.service');
@@ -284,6 +284,46 @@ router.post('/discount/product', async (req, res) => {
     }
 });
 
+router.get('/', async (req, res) => {
+    try {
+        const customers = await customerService.getAllCustomers();
+
+        const data = { customers }
+
+        return res.status(200).json(data);
+    } catch (err) {
+        console.log(err);
+        return res.status(500).json(err);
+    }
+});
+
+router.get('/filter', async (req, res) => {
+    try {
+        const validationSchema = Joi.object().keys({
+            filterValue: Joi.string()
+        })
+
+        const validate = validationSchema.validate(req.query);
+
+        if (!isNil(validate.error)) {
+            res.status(400).send(new ErrorResponse(validate.error.message));
+            return;
+        }
+
+        const { filterValue } = req.query;
+
+        const customers = await customerService.getFilteredCustomers(filterValue);
+
+        const data = {
+            customers
+        }
+
+        res.status(200).send(data);
+    } catch (error) {
+        res.status(500).send(error.message);
+    }
+});
+
 router.get('/:customerId', async (req, res) => {
     try {
         const { customerId } = req.params;
@@ -297,19 +337,6 @@ router.get('/:customerId', async (req, res) => {
         res.status(200).send(data);
     } catch (error) {
         res.status(500).send(error.message);
-    }
-});
-
-router.get('/', async (req, res) => {
-    try {
-        const customers = await customerService.getAllCustomers();
-
-        const data = { customers }
-
-        return res.status(200).json(data);
-    } catch (err) {
-        console.log(err);
-        return res.status(500).json(err);
     }
 });
 

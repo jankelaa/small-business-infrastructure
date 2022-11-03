@@ -11,6 +11,7 @@ import { CustomerService } from 'src/app/services/customer.service';
 export class AllCustomersComponent implements OnInit {
 
   allCustomers: Customer[];
+  filterValue: string;
 
   displayedColumns: string[] = ['name', 'pib', 'email', 'rankString'];
 
@@ -29,5 +30,16 @@ export class AllCustomersComponent implements OnInit {
 
   openCustomer(customer: Customer) {
     this.router.navigate([`employee/customer/${customer.id}`]);
+  }
+
+  applyFilter() {
+    this.customerService.getFilteredCustomers(this.filterValue).subscribe((data: { customers: Customer[] }) => {
+      this.allCustomers = data.customers.map(c => {
+        return {
+          ...c,
+          rankString: this.customerService.getCustomerRankString(c.rank)
+        }
+      });
+    });
   }
 }

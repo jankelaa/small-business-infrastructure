@@ -108,24 +108,6 @@ router.post('/create', async (req, res) => {
     }
 });
 
-router.get('/:orderId', async (req, res) => {
-    try {
-        const { orderId } = req.params;
-
-        const order = await orderService.getOrderWithCustomerAndAdress(orderId);
-        const productsForOrder = await productService.getProductsForOrder(orderId);
-
-        const data = {
-            order: new Order(order),
-            productsForOrder: productsForOrder.map(pfo => new ProductForOrder(pfo))
-        }
-
-        res.status(200).send(data);
-    } catch (error) {
-        res.status(500).send(error.message);
-    }
-});
-
 router.post('/approve', async (req, res) => {
     let transaction;
 
@@ -215,6 +197,24 @@ router.post('/cancel', async (req, res) => {
         res.status(200).send('Order has been canceled.');
     } catch (error) {
         transaction.rollback();
+        res.status(500).send(error.message);
+    }
+});
+
+router.get('/:orderId', async (req, res) => {
+    try {
+        const { orderId } = req.params;
+
+        const order = await orderService.getOrderWithCustomerAndAdress(orderId);
+        const productsForOrder = await productService.getProductsForOrder(orderId);
+
+        const data = {
+            order: new Order(order),
+            productsForOrder: productsForOrder.map(pfo => new ProductForOrder(pfo))
+        }
+
+        res.status(200).send(data);
+    } catch (error) {
         res.status(500).send(error.message);
     }
 });
