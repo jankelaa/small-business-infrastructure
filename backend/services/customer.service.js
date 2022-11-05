@@ -153,6 +153,7 @@ class CustomerService {
                             [Op.gte]: dateNow
                         }
                     },
+                    required: false,
                     include: {
                         model: Product,
                         as: 'product'
