@@ -291,9 +291,8 @@ router.get('/', async (req, res) => {
         const data = { customers }
 
         return res.status(200).json(data);
-    } catch (err) {
-        console.log(err);
-        return res.status(500).json(err);
+    } catch (error) {
+        return res.status(500).json(error);
     }
 });
 
