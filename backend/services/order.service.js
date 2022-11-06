@@ -73,9 +73,14 @@ class OrderService {
                 productId: pfo.id,
                 quantity: pfo.quantity,
                 price: pfo.price,
+                baseSum: pfo.baseSum,
+                permanentDiscount: pfo.permanentDiscount,
+                productDiscount: pfo.productDiscount,
+                totalWithoutPdv: pfo.totalWithoutPdv,
+                pdvAmount: pfo.pdvAmount,
                 totalPrice: pfo.totalPrice
             }
-        })
+        });
 
         return await ProductOrder.bulkCreate(productsOrders, { transaction })
     }

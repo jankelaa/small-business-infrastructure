@@ -8,8 +8,13 @@ class ProductForOrder {
         this.size = productForOrder.product.size;
         this.bundleSize = productForOrder.product.bundleSize;
 
-        this.price = productForOrder.price;
         this.quantity = productForOrder.quantity;
+        this.price = productForOrder.price;
+        this.baseSum = productForOrder.baseSum;
+        this.permanentDiscount = productForOrder.permanentDiscount;
+        this.productDiscount = productForOrder.productDiscount;
+        this.totalWithoutPdv = productForOrder.totalWithoutPdv;
+        this.pdvAmount = productForOrder.quantity;
         this.totalPrice = productForOrder.totalPrice;
     }
 }

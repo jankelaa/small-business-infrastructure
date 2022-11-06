@@ -130,7 +130,7 @@
             </div>
             <br>
             <h2>Vaša porudžbina:</h2>
-            <table>
+            <table class="order">
                 <tr align="left">
                     <th>Količina</th>
                     <th>Slika</th>
@@ -138,6 +138,11 @@
                     <th>Pakovanje</th>
                     <th>Cena artikla</th>
                     <th>Zbirna cena</th>
+                    <th>Rabat</th>
+                    <th>Popust</th>
+                    <th>Ukupno bez PDV</th>
+                    <th>PDV</th>
+                    <th>Ukupno</th>
                 </tr>
                 <tr *ngFor="let product of productsForOrder">
                     <td>{{product.quantity}}x</td>
@@ -146,37 +151,42 @@
                     </td>
                     <td>{{product.name}}</td>
                     <td>{{product.size}}</td>
-                    <td>{{product.price}} RSD</td>
-                    <td>{{product.totalPrice}} RSD</td>
+                    <td>{{product.price | number : '1.2-2'}} RSD</td>
+                    <td>{{product.baseSum | number : '1.2-2'}} RSD</td>
+                    <td>-{{product.permanentDiscount | number : '1.2-2'}} RSD</td>
+                    <td>-{{product.productDiscount | number : '1.2-2'}} RSD</td>
+                    <td>{{product.totalWithoutPdv | number : '1.2-2'}} RSD</td>
+                    <td>{{product.pdvAmount | number : '1.2-2'}} RSD</td>
+                    <td>{{product.totalPrice | number : '1.2-2'}} RSD</td>
                 </tr>
                 <tr align="center">
-                    <td [colSpan]="6">
+                    <td [colSpan]="11">
                         <hr>
                     </td>
                 </tr>
                 <tr align="right">
-                    <td [colSpan]="6">
-                        Ukupan iznos bez PDV: {{baseAmount}} RSD
+                    <td [colSpan]="11">
+                        Ukupan iznos bez PDV: {{baseAmount | number : '1.2-2'}} RSD
                     </td>
                 </tr>
                 <tr align="right">
-                    <td [colSpan]="6">
-                        PDV : {{pdvAmount}} RSD
+                    <td [colSpan]="11">
+                        PDV : {{pdvAmount | number : '1.2-2'}} RSD
                     </td>
                 </tr>
                 <tr align="right">
-                    <td [colSpan]="6">
-                        Ukupno sa PDV : {{totalAmountWithPdv}} RSD
+                    <td [colSpan]="11">
+                        Ukupno sa PDV : {{totalAmountWithPdv | number : '1.2-2'}} RSD
                     </td>
                 </tr>
                 <tr align="right">
-                    <td [colSpan]="6">
-                        Dostava: {{shippingAmountWithPdv}} RSD
+                    <td [colSpan]="11">
+                        Dostava: {{shippingAmountWithPdv | number : '1.2-2'}} RSD
                     </td>
                 </tr>
                 <tr align="right">
-                    <td [colSpan]="6">
-                        <b>Ukupno za plaćanje: {{totalPrice}} RSD </b>
+                    <td [colSpan]="11">
+                        <b>Ukupno za plaćanje: {{totalPrice | number : '1.2-2'}} RSD </b>
                     </td>
                 </tr>
             </table>

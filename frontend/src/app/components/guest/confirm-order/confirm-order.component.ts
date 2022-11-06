@@ -7,6 +7,7 @@ import { CartService } from 'src/app/services/cart.service';
 import { CustomerService } from 'src/app/services/customer.service';
 import { OrderService } from 'src/app/services/order.service';
 import { environment } from '../../../../environments/environment';
+import { DecimalPipe, formatNumber } from '@angular/common';
 
 @Component({
   selector: 'app-confirm-order',
@@ -100,38 +101,40 @@ export class ConfirmOrderComponent implements OnInit {
 
   orderCalculations() {
     this.productsForOrder.forEach(pfo => {
+      pfo.totalWithoutPdv = pfo.baseSum;
+
       if (this.customer.permanentDiscount != null && this.customer.permanentDiscount > 0) {
-        pfo.price -= pfo.price * this.customer.permanentDiscount / 100;
-        pfo.totalPrice -= pfo.totalPrice * this.customer.permanentDiscount / 100;
-        pfo.price = parseFloat(pfo.price.toFixed(2));
-        pfo.totalPrice = parseFloat(pfo.totalPrice.toFixed(2));
+        pfo.permanentDiscount = pfo.baseSum * this.customer.permanentDiscount / 100;
+        pfo.permanentDiscount = this.roundToTwoDecimals(pfo.permanentDiscount);
+
+        pfo.totalWithoutPdv -= pfo.permanentDiscount;
       }
 
       if (pfo.id in this.productDiscounts) {
-        pfo.price -= pfo.price * this.productDiscounts[pfo.id] / 100;
-        pfo.totalPrice -= pfo.totalPrice * this.productDiscounts[pfo.id] / 100;
-        pfo.price = parseFloat(pfo.price.toFixed(2));
-        pfo.totalPrice = parseFloat(pfo.totalPrice.toFixed(2));
+        pfo.productDiscount = pfo.baseSum * this.productDiscounts[pfo.id] / 100;
+        pfo.productDiscount = this.roundToTwoDecimals(pfo.productDiscount);
+
+        pfo.totalWithoutPdv -= pfo.permanentDiscount;
       }
 
-      this.baseAmount += pfo.totalPrice;
-      this.baseAmount = parseFloat(this.baseAmount.toFixed(2));
-    })
+      pfo.pdvAmount = pfo.totalWithoutPdv * environment.PDV / 100;
+      pfo.pdvAmount = this.roundToTwoDecimals(pfo.pdvAmount);
 
-    this.pdvAmount = this.baseAmount * environment.PDV / 100;
-    this.pdvAmount = parseFloat(this.pdvAmount.toFixed(2));
+      pfo.totalPrice = pfo.totalWithoutPdv + pfo.pdvAmount;
+
+      this.baseAmount += pfo.baseSum;
+      this.pdvAmount += pfo.pdvAmount;
+    });
 
     this.totalAmountWithPdv = this.baseAmount + this.pdvAmount;
-    this.totalAmountWithPdv = parseFloat(this.totalAmountWithPdv.toFixed(2));
 
     this.shippingAmountWithPdv = this.totalAmountWithPdv * environment.shippingPercent / 100;
-    this.shippingAmountWithPdv = parseFloat(this.shippingAmountWithPdv.toFixed(2));
+    this.shippingAmountWithPdv = this.roundToTwoDecimals(this.shippingAmountWithPdv);
 
-    this.shippingAmount = this.totalAmountWithPdv * (environment.PDV + 100) / 100;
-    this.shippingAmount = parseFloat(this.shippingAmount.toFixed(2));
+    this.shippingAmount = this.shippingAmountWithPdv / (environment.PDV + 100) * 100;
+    this.shippingAmount = this.roundToTwoDecimals(this.shippingAmount);
 
     this.totalPrice = this.totalAmountWithPdv + this.shippingAmountWithPdv;
-    this.totalPrice = parseFloat(this.totalPrice.toFixed(2));
   }
 
   confirmOrder() {
@@ -148,5 +151,9 @@ export class ConfirmOrderComponent implements OnInit {
           this.message = error.error;
         }
       })
+  }
+
+  roundToTwoDecimals(value: number) {
+    return Math.round(value * 100) / 100;
   }
 }

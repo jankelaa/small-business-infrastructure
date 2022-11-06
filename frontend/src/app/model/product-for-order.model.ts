@@ -6,6 +6,11 @@ export class ProductForOrder {
   name: string;
   imgUrl: string;
   price: number;
+  baseSum: number;
+  permanentDiscount: number;
+  productDiscount: number;
+  totalWithoutPdv: number;
+  pdvAmount: number;
   totalPrice: number;
   size: string;
   quantity: number;
@@ -17,7 +22,12 @@ export class ProductForOrder {
     this.name = product.name;
     this.imgUrl = product.imgUrl;
     this.price = product.price;
-    this.totalPrice = parseFloat((product.price * quantity).toFixed(2));
+    this.baseSum = parseFloat((product.price * quantity).toFixed(2));
+    this.permanentDiscount = 0;
+    this.productDiscount = 0;
+    this.totalWithoutPdv = 0;
+    this.pdvAmount = 0;
+    this.totalPrice = 0;
     this.size = product.size;
     this.quantity = quantity;
   }

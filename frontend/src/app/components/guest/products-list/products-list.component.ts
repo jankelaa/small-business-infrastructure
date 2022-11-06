@@ -59,8 +59,8 @@ export class ProductsListComponent implements OnInit {
       this.productsForOrder.push(new ProductForOrder(product, quantity));
     } else {
       this.productsForOrder[index].quantity += quantity;
-      this.productsForOrder[index].totalPrice =
-        parseFloat((this.productsForOrder[index].totalPrice + product.price * quantity).toFixed(2));
+      this.productsForOrder[index].baseSum =
+        parseFloat((this.productsForOrder[index].baseSum + product.price * quantity).toFixed(2));
     }
 
     product.quantity = null;

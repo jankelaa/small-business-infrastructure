@@ -33,6 +33,26 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.INTEGER,
             allowNull: false
         },
+        baseSum: {
+            type: DataTypes.DECIMAL(10, 2),
+            allowNull: false
+        },
+        permanentDiscount: {
+            type: DataTypes.DECIMAL(10, 2),
+            allowNull: false
+        },
+        productDiscount: {
+            type: DataTypes.DECIMAL(10, 2),
+            allowNull: false
+        },
+        totalWithoutPdv: {
+            type: DataTypes.DECIMAL(10, 2),
+            allowNull: false
+        },
+        pdvAmount: {
+            type: DataTypes.DECIMAL(10, 2),
+            allowNull: false
+        },
         totalPrice: {
             type: DataTypes.DECIMAL(10, 2),
             allowNull: false
