@@ -20,6 +20,10 @@ export class ProductService {
     return this.httpClient.post(`${this.baseUrl}${ApiPaths.product}/update`, fd, { responseType: 'text' });
   }
 
+  updateStock(fd: FormData) {
+    return this.httpClient.post(`${this.baseUrl}${ApiPaths.product}/stock/update`, fd, { responseType: 'text' });
+  }
+
   addProductDiscounts(fd: FormData) {
     return this.httpClient.post(`${this.baseUrl}${ApiPaths.product}/discounts/add`, fd, { responseType: 'text' });
   }

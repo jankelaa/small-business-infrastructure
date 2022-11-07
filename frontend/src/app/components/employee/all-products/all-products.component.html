@@ -38,6 +38,11 @@
             <td mat-header-cell *matCellDef="let product"> {{product.price}} RSD </td>
         </ng-container>
 
+        <ng-container matColumnDef="quantity">
+            <th mat-header-cell *matHeaderCellDef> Količina </th>
+            <td mat-header-cell *matCellDef="let product"> {{product.amountAvailable}} </td>
+        </ng-container>
+
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>

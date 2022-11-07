@@ -21,6 +21,7 @@ import { OrderComponent } from './components/employee/order/order.component';
 import { CustomerComponent } from './components/employee/customer/customer.component';
 import { AddProductDiscountsComponent } from './components/employee/add-product-discounts/add-product-discounts.component';
 import { UserComponent } from './components/employee/user/user.component';
+import { UpdateStockComponent } from './components/employee/update-stock/update-stock.component';
 
 const routes: Routes = [
   {
@@ -55,6 +56,9 @@ const routes: Routes = [
       },
       {
         path: 'add-products', component: AddProductsComponent
+      },
+      {
+        path: 'update-stock', component: UpdateStockComponent
       },
       {
         path: 'add-product-discounts', component: AddProductDiscountsComponent

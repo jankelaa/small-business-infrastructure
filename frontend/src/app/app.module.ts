@@ -30,6 +30,7 @@ import { OrderComponent } from './components/employee/order/order.component';
 import { CustomerComponent } from './components/employee/customer/customer.component';
 import { AddProductDiscountsComponent } from './components/employee/add-product-discounts/add-product-discounts.component';
 import { UserComponent } from './components/employee/user/user.component';
+import { UpdateStockComponent } from './components/employee/update-stock/update-stock.component';
 
 @NgModule({
   declarations: [
@@ -56,7 +57,8 @@ import { UserComponent } from './components/employee/user/user.component';
     OrderComponent,
     CustomerComponent,
     AddProductDiscountsComponent,
-    UserComponent
+    UserComponent,
+    UpdateStockComponent
   ],
   imports: [
     BrowserModule,

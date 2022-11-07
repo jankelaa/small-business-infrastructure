@@ -1,0 +1,10 @@
+<h1>Učitajte datoteku sa novim stanjem proizvoda</h1>
+<button type="button" mat-raised-button color="accent" (click)="fileInput.click()">Izaberite fajl</button>
+<input hidden (change)="onFileSelected($event)" #fileInput type="file">
+<span class="file-name">{{selectedFile?.name}}</span>
+<br><br>
+<button type="button" mat-raised-button color="primary" (click)="updateStock()"
+    [disabled]="selectedFile==null">Ažurirajte proizvode
+</button>
+<br><br>
+<span *ngIf="message!=null">{{message}}</span>

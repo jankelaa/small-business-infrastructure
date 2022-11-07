@@ -41,6 +41,38 @@ router.post('/update', upload.single('file'), async (req, res) => {
     }
 });
 
+router.post('/stock/update', upload.single('file'), async (req, res) => {
+    let transaction;
+    try {
+        const file = req.file;
+
+        transaction = await sequelize.transaction();
+
+        const productsCsv = await productService.readCsvForStock(file, transaction);
+
+        const productBarcodes = productsCsv.map(pcsv => pcsv.barcode);
+        const allProducts = await productService.getProductsByProductsBarcodes(productBarcodes, transaction);
+
+        let product;
+
+        const updatedProducts = productsCsv.map(pcsv => {
+            product = allProducts.find(ap => ap.barcode === pcsv.barcode);
+            product.amountAvailable = product.amountAvailable + parseInt(pcsv.quantity);
+
+            return product;
+        });
+
+        await productService.updateStock(updatedProducts, transaction);
+
+        await transaction.commit();
+
+        res.status(200).send('Stock successfully updated.');
+    } catch (error) {
+        transaction.rollback();
+        res.status(500).send(error.message);
+    }
+});
+
 router.post('/discounts/add', upload.single('file'), async (req, res) => {
     let transaction;
     try {

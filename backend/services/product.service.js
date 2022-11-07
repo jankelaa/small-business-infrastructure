@@ -24,9 +24,9 @@ class ProductService {
             const products = [];
 
             fs.createReadStream(file.path)
-                .pipe(csv({}))
+                .pipe(csv())
                 .on('data', (data) => {
-                    products.push(data)
+                    products.push(data);
                 })
                 .on('end', async () => {
                     await Product.bulkCreate(products, {
@@ -38,6 +38,30 @@ class ProductService {
                 })
                 .on('error', reject);
         })
+    }
+
+    async readCsvForStock(file) {
+        return new Promise(function (resolve, reject) {
+            const products = [];
+
+            fs.createReadStream(file.path)
+                .pipe(csv({ skipLines: 1, headers: ['barcode', 'quantity'] }))
+                .on('data', (data) => {
+                    products.push(data);
+                })
+                .on('end', () => {
+                    resolve(products);
+                })
+                .on('error', reject);
+        })
+    }
+
+    async updateStock(products, transaction = null) {
+        await Product.bulkCreate(products, {
+            upsertKeys: ['barcode'],
+            updateOnDuplicate: ['amountAvailable'],
+            transaction
+        });
     }
 
     async addProductDiscounts(file, transaction = null) {
@@ -77,6 +101,16 @@ class ProductService {
                 as: 'product'
             }
         })
+    }
+
+    async getProductsByProductsBarcodes(barcodes, transaction = null) {
+        return await Product.findAll({
+            where: {
+                barcode: barcodes
+            },
+            raw: true,
+            transaction
+        });
     }
 }
 
