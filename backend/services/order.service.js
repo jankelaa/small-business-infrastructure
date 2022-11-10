@@ -1,6 +1,7 @@
 const { isNil } = require('lodash');
 const { Op, where } = require('sequelize');
-const { Order, ProductOrder } = require('../models');
+const { orderStatuses } = require('../enums/enums');
+const { Order, ProductOrder, OrderMissingProduct } = require('../models');
 
 let instance = null;
 
@@ -52,8 +53,8 @@ class OrderService {
     }
 
     async createOrder(customerId, baseAmount, pdvAmount, totalAmountWithPdv, shippingAmount, shippingAmountWithPdv,
-        totalPrice, customerAddressId, productsForOrder, status, transaction = null) {
-        const order = await Order.create({
+        totalPrice, customerAddressId, status, transaction = null) {
+        return await Order.create({
             customerId,
             baseAmount,
             pdvAmount,
@@ -66,23 +67,25 @@ class OrderService {
         }, {
             transaction
         });
+    }
 
-        const productsOrders = productsForOrder.map(pfo => {
+    async addProductsForOrder(orderId, productsForOrder, transaction = null) {
+        const orderProducts = productsForOrder.map(op => {
             return {
-                orderId: order.id,
-                productId: pfo.id,
-                quantity: pfo.quantity,
-                price: pfo.price,
-                baseSum: pfo.baseSum,
-                permanentDiscount: pfo.permanentDiscount,
-                productDiscount: pfo.productDiscount,
-                totalWithoutPdv: pfo.totalWithoutPdv,
-                pdvAmount: pfo.pdvAmount,
-                totalPrice: pfo.totalPrice
+                orderId: orderId,
+                productId: op.id,
+                quantity: op.quantity,
+                price: op.price,
+                baseSum: op.baseSum,
+                permanentDiscount: op.permanentDiscount,
+                productDiscount: op.productDiscount,
+                totalWithoutPdv: op.totalWithoutPdv,
+                pdvAmount: op.pdvAmount,
+                totalPrice: op.totalPrice
             }
         });
 
-        return await ProductOrder.bulkCreate(productsOrders, { transaction })
+        return await ProductOrder.bulkCreate(orderProducts, { transaction })
     }
 
     async getOrderById(orderId, transaction = null) {
@@ -119,6 +122,10 @@ class OrderService {
             where: { id: orderId },
             transaction
         });
+    }
+
+    async addMissingProductsForOrder(missingProducts, transaction = null) {
+        await OrderMissingProduct.bulkCreate(missingProducts, { transaction });
     }
 }
 

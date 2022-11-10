@@ -17,7 +17,12 @@ module.exports = (sequelize, DataTypes) => {
       Product.Orders = Product.hasMany(models.ProductOrder, {
         as: 'productOrders',
         foreignKey: 'productId'
-      })
+      });
+
+      Product.OrdersMissingProducts = Product.hasMany(models.OrderMissingProduct, {
+        as: 'ordersMissingProducts',
+        foreignKey: 'productId'
+      });
     }
   }
   Product.init({

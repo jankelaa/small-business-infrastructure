@@ -6,8 +6,8 @@ module.exports = {
     },
     orderStatuses: {
         PENDING: 0,
-        APPROVED: 1,
-        IN_PRODUCTION: 2,
+        INCOMPLETE: 1,
+        READY: 2,
         DELIVERED: 3,
         COMPLETED: 4,
         CANCELED: 5,

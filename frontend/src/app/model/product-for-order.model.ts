@@ -14,6 +14,7 @@ export class ProductForOrder {
   totalPrice: number;
   size: string;
   quantity: number;
+  missingQuantity: number;
 
 
   constructor(product: ProductForList, quantity: number) {

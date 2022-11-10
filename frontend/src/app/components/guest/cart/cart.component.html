@@ -1,6 +1,6 @@
 <div>
   <h1>Vaša korpa: </h1>
-  <table *ngIf='cartCount!==0;else emptyOrder'>
+  <table *ngIf='cartCount!==0;else emptyOrder' class="order">
     <tr align="left">
       <th>Količina</th>
       <th>Slika</th>
@@ -16,8 +16,8 @@
       </td>
       <td>{{product.name}}</td>
       <td>{{product.size}}</td>
-      <td>{{product.price}} RSD</td>
-      <td>{{product.baseSum}} RSD</td>
+      <td>{{product.price| number : '1.2-2'}} RSD</td>
+      <td>{{product.baseSum| number : '1.2-2'}} RSD</td>
       <td>
         <button mat-button color="warn" (click)="removeItem(product)">Ukloni</button>
       </td>
@@ -29,7 +29,7 @@
     </tr>
     <tr align="right">
       <td [colSpan]="6">
-        Ukupno: {{totalPrice}} RSD
+        Ukupno: {{totalPrice| number : '1.2-2'}} RSD
       </td>
     </tr>
     <tr align="center">

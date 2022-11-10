@@ -20,6 +20,7 @@ export class OrderComponent implements OnInit {
   productsForOrder: ProductForOrder[];
 
   displayApproveButton: boolean = false;
+  displayCompleteButton: boolean = false;
   displayCancelButton: boolean = false;
 
   message: string;
@@ -43,7 +44,12 @@ export class OrderComponent implements OnInit {
         this.displayApproveButton = true;
       }
 
-      if (this.order.status !== this.orderStatuses.otkazana && this.order.status !== this.orderStatuses.zatvorena) {
+      if (this.order.status === this.orderStatuses['nedovoljno zaliha']) {
+        this.displayCompleteButton = true;
+      }
+
+      if (this.order.status !== this.orderStatuses.otkazana && this.order.status !== this.orderStatuses.zatvorena
+        && this.order.status !== this.orderStatuses['isporučena']) {
         this.displayCancelButton = true;
       }
     });
@@ -51,6 +57,17 @@ export class OrderComponent implements OnInit {
 
   approveOrder() {
     this.orderService.approveOrder(this.orderId).subscribe({
+      next: () => {
+        window.location.reload();
+      },
+      error: (error: HttpErrorResponse) => {
+        this.message = error.error;
+      }
+    })
+  }
+
+  completeOrder() {
+    this.orderService.completeOrder(this.orderId).subscribe({
       next: () => {
         window.location.reload();
       },

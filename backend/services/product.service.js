@@ -2,7 +2,7 @@ const { isNil } = require('lodash');
 const csv = require('csv-parser');
 const fs = require('fs');
 const moment = require('moment');
-const { Product, ProductOrder, CustomerProductDiscount } = require('../models');
+const { Product, ProductOrder, CustomerProductDiscount, OrderMissingProduct } = require('../models');
 
 let instance = null;
 
@@ -93,14 +93,38 @@ class ProductService {
         })
     }
 
-    async getProductsForOrder(orderId) {
+    async getProductsForOrder(orderId, transaction = null) {
         return await ProductOrder.findAll({
             where: { orderId },
             include: {
                 model: Product,
-                as: 'product'
-            }
+                as: 'product',
+                include: {
+                    model: OrderMissingProduct,
+                    as: 'ordersMissingProducts',
+                    required: false,
+                    where: { orderId }
+                }
+            },
+            transaction
         })
+    }
+
+    async removeMissingProductsForOrder(orderId, transaction = null) {
+        await OrderMissingProduct.destroy({
+            where: { orderId },
+            transaction
+        });
+    }
+
+    async getProductsByProductIds(productIds, transaction = null) {
+        return await Product.findAll({
+            where: {
+                id: productIds
+            },
+            raw: true,
+            transaction
+        });
     }
 
     async getProductsByProductsBarcodes(barcodes, transaction = null) {

@@ -94,10 +94,23 @@ router.post('/create', async (req, res) => {
             return;
         }
 
-        const status = customer.rank === customerRanks.PENDING ? orderStatuses.PENDING : orderStatuses.APPROVED;
+        const status = customer.rank === customerRanks.PENDING ? orderStatuses.PENDING : orderStatuses.INCOMPLETE;
 
         const order = await orderService.createOrder(customerId, baseAmount, pdvAmount, totalAmountWithPdv,
-            shippingAmount, shippingAmountWithPdv, totalPrice, customerAddressId, productsForOrder, status, transaction);
+            shippingAmount, shippingAmountWithPdv, totalPrice, customerAddressId, status, transaction);
+
+        await orderService.addProductsForOrder(order.id, productsForOrder, transaction);
+
+        if (status === orderStatuses.INCOMPLETE) {
+            const missingProducts = await updateProductSupplyOnCreateOrder(order.id, productsForOrder, transaction);
+
+            if (missingProducts.length == 0) {
+                await orderService.updateOrderStatus(order.id, orderStatuses.READY, transaction);
+            } else {
+                await orderService.updateOrderStatus(order.id, orderStatuses.INCOMPLETE, transaction);
+                await orderService.addMissingProductsForOrder(missingProducts, transaction);
+            }
+        }
 
         await transaction.commit();
 
@@ -141,12 +154,66 @@ router.post('/approve', async (req, res) => {
             return;
         }
 
-        await orderService.updateOrderStatus(orderId, orderStatuses.APPROVED, transaction);
+        const productsForOrder = await productService.getProductsForOrder(orderId, transaction);
+
+        const missingProducts = await updateProductSupplyOnApproveOrder(orderId, productsForOrder, transaction);
+
+        if (missingProducts.length == 0) {
+            await orderService.updateOrderStatus(orderId, orderStatuses.READY, transaction);
+        } else {
+            await orderService.updateOrderStatus(orderId, orderStatuses.INCOMPLETE, transaction);
+            await orderService.addMissingProductsForOrder(missingProducts, transaction);
+        }
 
         if (order.customer.rank === customerRanks.PENDING) {
             await customerService.updateCustomerRankAndSecretCode(order.customer.id, order.customer.email,
                 order.customer.name, customerRanks.VERIFIED, transaction);
         }
+
+        await transaction.commit();
+
+        res.status(200).send('Order successfully confirmed.');
+    } catch (error) {
+        transaction.rollback();
+        res.status(500).send(error.message);
+    }
+});
+
+router.post('/complete', async (req, res) => {
+    let transaction;
+
+    try {
+        const validationSchemaCustomer = Joi.object().keys({
+            orderId: Joi.number().integer().required()
+        });
+
+        const validate = validationSchemaCustomer.validate(req.body);
+
+        if (!isNil(validate.error)) {
+            res.status(400).send(validate.error.message);
+            return;
+        }
+
+        transaction = await sequelize.transaction();
+
+        const { orderId } = req.body;
+
+        const order = await orderService.getOrderWithCustomerById(orderId, transaction);
+
+        if (isNil(order)) {
+            await transaction.commit();
+            res.status(400).send(`Order not found, orderId ${orderId}`);
+            return;
+        }
+
+        if (order.status !== orderStatuses.INCOMPLETE) {
+            await transaction.commit();
+            res.status(400).send(`Order is not incomplete, orderId ${orderId}`);
+            return;
+        }
+
+        await orderService.updateOrderStatus(orderId, orderStatuses.READY, transaction);
+        await productService.removeMissingProductsForOrder(orderId, transaction);
 
         await transaction.commit();
 
@@ -218,5 +285,62 @@ router.get('/:orderId', async (req, res) => {
         res.status(500).send(error.message);
     }
 });
+
+const updateProductSupplyOnCreateOrder = async (orderId, productsForOrder, transaction) => {
+    const productsForOrderIds = productsForOrder.map(pfo => pfo.id);
+
+    const allProducts = await productService.getProductsByProductIds(productsForOrderIds, transaction);
+
+    const missingProducts = [];
+    let product;
+
+    const updatedProducts = productsForOrder.map(pfo => {
+        product = allProducts.find(ap => ap.id === pfo.id);
+        if (product.amountAvailable - pfo.quantity >= 0) {
+            product.amountAvailable = product.amountAvailable - pfo.quantity;
+        } else {
+            missingProducts.push({
+                orderId: orderId,
+                productId: product.id,
+                quantity: pfo.quantity - product.amountAvailable
+            });
+
+            product.amountAvailable = 0;
+        }
+
+        return product;
+    });
+
+    await productService.updateStock(updatedProducts, transaction);
+
+    return missingProducts;
+}
+
+const updateProductSupplyOnApproveOrder = async (orderId, productsForOrder, transaction) => {
+    const missingProducts = [];
+    let product;
+
+    const updatedProducts = productsForOrder.map(pfo => {
+        product = pfo.product.dataValues;
+
+        if (product.amountAvailable - pfo.quantity >= 0) {
+            product.amountAvailable = product.amountAvailable - pfo.quantity;
+        } else {
+            missingProducts.push({
+                orderId: orderId,
+                productId: product.id,
+                quantity: pfo.quantity - product.amountAvailable
+            });
+
+            product.amountAvailable = 0;
+        }
+
+        return product;
+    });
+
+    await productService.updateStock(updatedProducts, transaction);
+
+    return missingProducts;
+}
 
 module.exports = router;

@@ -17,6 +17,10 @@ export class OrderService {
     return this.httpClient.get(`${this.baseUrl}${ApiPaths.order}`);
   }
 
+  getIncompleteOrders() {
+    return this.httpClient.get(`${this.baseUrl}${ApiPaths.order}/incomplete`);
+  }
+
   getFilteredOrders(filterValue: string) {
     const params = {
       filterValue
@@ -63,6 +67,14 @@ export class OrderService {
     }
 
     return this.httpClient.post(`${this.baseUrl}${ApiPaths.order}/approve`, data, { responseType: 'text' });
+  }
+
+  completeOrder(orderId: number) {
+    const data = {
+      orderId
+    }
+
+    return this.httpClient.post(`${this.baseUrl}${ApiPaths.order}/complete`, data, { responseType: 'text' });
   }
 
   cancelOrder(orderId: number) {

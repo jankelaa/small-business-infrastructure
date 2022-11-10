@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
         as: 'customer',
         onDelete: 'RESTRICT'
       });
-      
+
       Order.CustomerAddress = Order.belongsTo(models.CustomerAddress, {
         foreignKey: {
           name: 'customerAddressId'
@@ -20,26 +20,36 @@ module.exports = (sequelize, DataTypes) => {
         as: 'customerAddress',
         onDelete: 'SET NULL'
       });
+
+      Order.Orders = Order.hasMany(models.ProductOrder, {
+        as: 'productOrders',
+        foreignKey: 'orderId'
+      });
+
+      Order.OrdersMissingProducts = Order.hasMany(models.OrderMissingProduct, {
+        as: 'ordersMissingProducts',
+        foreignKey: 'orderId'
+      });
     }
   }
   Order.init({
     baseAmount: {
-      type: DataTypes.DECIMAL(10,2)
+      type: DataTypes.DECIMAL(10, 2)
     },
     pdvAmount: {
-      type: DataTypes.DECIMAL(10,2)
+      type: DataTypes.DECIMAL(10, 2)
     },
     totalAmountWithPdv: {
-      type: DataTypes.DECIMAL(10,2)
+      type: DataTypes.DECIMAL(10, 2)
     },
     shippingAmount: {
-      type: DataTypes.DECIMAL(10,2)
+      type: DataTypes.DECIMAL(10, 2)
     },
     shippingAmountWithPdv: {
-      type: DataTypes.DECIMAL(10,2)
+      type: DataTypes.DECIMAL(10, 2)
     },
     totalPrice: {
-      type: DataTypes.DECIMAL(10,2)
+      type: DataTypes.DECIMAL(10, 2)
     },
     status: {
       type: DataTypes.SMALLINT,

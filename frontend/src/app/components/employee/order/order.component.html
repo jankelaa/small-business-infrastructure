@@ -14,11 +14,13 @@
     <br>
     <br>
     <h2>Proizvodi:</h2>
-    <table>
+    <table class="order">
         <tr align="left">
         <tr align="left">
-            <th>Količina</th>
             <th>Slika</th>
+            <th>Barkod</th>
+            <th>Količina</th>
+            <th>Nedostaje komada</th>
             <th>Naziv</th>
             <th>Pakovanje</th>
             <th>Cena artikla</th>
@@ -28,11 +30,13 @@
             <th>Ukupno bez PDV</th>
             <th>PDV</th>
             <th>Ukupno</th>
-        <tr *ngFor="let product of productsForOrder">
-            <td>{{product.quantity}}x</td>
+        <tr *ngFor="let product of productsForOrder" [class.make-red]='product.missingQuantity!=0'>
             <td>
                 <img src='{{"assets/images/products/"+product.imgUrl}}' width="100px">
             </td>
+            <td>{{product.barcode}}</td>
+            <td>{{product.quantity}}</td>
+            <td>{{product.missingQuantity}}</td>
             <td>{{product.name}}</td>
             <td>{{product.size}}</td>
             <td>{{product.price | number : '1.2-2'}} RSD</td>
@@ -44,42 +48,48 @@
             <td>{{product.totalPrice | number : '1.2-2'}} RSD</td>
         </tr>
         <tr align="center">
-            <td [colSpan]="11">
+            <td [colSpan]="13">
                 <hr>
             </td>
         </tr>
         <tr align="right">
-            <td [colSpan]="11">
-                Ukupan iznos bez PDV: {{order.baseAmount}} RSD
+            <td [colSpan]="13">
+                Ukupan iznos bez PDV: {{order.baseAmount | number : '1.2-2'}} RSD
             </td>
         </tr>
         <tr align="right">
-            <td [colSpan]="11">
-                PDV : {{order.pdvAmount}} RSD
+            <td [colSpan]="13">
+                PDV: {{order.pdvAmount | number : '1.2-2'}} RSD
             </td>
         </tr>
         <tr align="right">
-            <td [colSpan]="11">
-                Ukupno sa PDV : {{order.totalAmountWithPdv}} RSD
+            <td [colSpan]="13">
+                Ukupno sa PDV: {{order.totalAmountWithPdv | number : '1.2-2'}} RSD
             </td>
         </tr>
         <tr align="right">
-            <td [colSpan]="11">
-                Dostava: {{order.shippingAmountWithPdv}} RSD
+            <td [colSpan]="13">
+                Dostava: {{order.shippingAmountWithPdv | number : '1.2-2'}} RSD
             </td>
         </tr>
         <tr align="right">
-            <td [colSpan]="11">
-                <b>Ukupno za plaćanje: {{order.totalPrice}} RSD </b>
+            <td [colSpan]="13">
+                <b>Ukupno za plaćanje: {{order.totalPrice | number : '1.2-2'}} RSD </b>
             </td>
         </tr>
         <tr align="center" *ngIf="displayApproveButton">
-            <td [colSpan]="11">
-                <button mat-raised-button color="primary" (click)="approveOrder()">Potvrdi narudžbinu</button>
+            <td [colSpan]="13">
+                <button mat-raised-button color="primary" (click)="approveOrder()">Odobri narudžbinu</button>
+            </td>
+        </tr>
+        <tr align="center" *ngIf="displayCompleteButton">
+            <td [colSpan]="13">
+                <button mat-raised-button color="primary" (click)="completeOrder()">Potvrdi narudžbinu za
+                    slanje</button>
             </td>
         </tr>
         <tr align="center" *ngIf="displayCancelButton">
-            <td [colSpan]="11">
+            <td [colSpan]="13">
                 <button mat-stroked-button color="accent" (click)="cancelOrder()">Otkaži narudžbinu</button>
             </td>
         </tr>

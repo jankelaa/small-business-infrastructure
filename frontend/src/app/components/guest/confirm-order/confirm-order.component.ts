@@ -122,7 +122,7 @@ export class ConfirmOrderComponent implements OnInit {
 
       pfo.totalPrice = pfo.totalWithoutPdv + pfo.pdvAmount;
 
-      this.baseAmount += pfo.baseSum;
+      this.baseAmount += pfo.totalWithoutPdv;
       this.pdvAmount += pfo.pdvAmount;
     });
 

@@ -28,12 +28,13 @@
 
     <ng-container matColumnDef="totalPrice">
         <th mat-header-cell *matHeaderCellDef> Iznos </th>
-        <td mat-cell class="hoverborder" *matCellDef="let order"> {{order.totalPrice}} RSD</td>
+        <td mat-cell class="hoverborder" *matCellDef="let order"> {{order.totalPrice | number : '1.2-2'}} RSD</td>
     </ng-container>
 
     <ng-container matColumnDef="status">
         <th mat-header-cell *matHeaderCellDef> Status porudžbine </th>
-        <td mat-cell class="hoverborder" *matCellDef="let order"> {{order.statusString}} </td>
+        <td mat-cell class="hoverborder" *matCellDef="let order" [class.make-red]='order.status==1'>
+            {{order.statusString}} </td>
     </ng-container>
 
     <ng-container matColumnDef="isPaidString">

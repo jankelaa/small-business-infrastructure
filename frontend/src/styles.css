@@ -19,6 +19,11 @@ table.order {
     padding-right: 10px;
 }
 
+.make-red {
+    color: red;
+    font-weight: bold;
+}
+
 .main-content {
     margin-top: 100px;
     padding-bottom: 20px;
