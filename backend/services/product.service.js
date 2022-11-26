@@ -24,7 +24,7 @@ class ProductService {
             const products = [];
 
             fs.createReadStream(file.path)
-                .pipe(csv())
+                .pipe(csv({ skipLines: 1, headers: ['barcode', 'name', 'price', 'size', 'imgUrl', 'categoryId'] }))
                 .on('data', (data) => {
                     products.push(data);
                 })
@@ -70,7 +70,7 @@ class ProductService {
             const nextMonthDate = moment.utc().add(1, 'months');
 
             fs.createReadStream(file.path)
-                .pipe(csv({}))
+                .pipe(csv({ skipLines: 1, headers: ['customerId', 'productId', 'percentage'] }))
                 .on('data', (data) => {
                     productDiscounts.push(data)
                 })
