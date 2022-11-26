@@ -137,7 +137,7 @@ export class ConfirmOrderComponent implements OnInit {
     this.totalPrice = this.totalAmountWithPdv + this.shippingAmountWithPdv;
   }
 
-  confirmOrder() {
+  createOrder() {
     this.orderService.createOrder(this.customer.id, this.baseAmount, this.pdvAmount, this.totalAmountWithPdv,
       this.shippingAmount, this.shippingAmountWithPdv, this.totalPrice, this.selectedAddress, this.productsForOrder)
       .subscribe({
