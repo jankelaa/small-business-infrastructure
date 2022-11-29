@@ -30,6 +30,49 @@
         </td>
     </tr>
     <tr>
+        <td [colSpan]="2">Dozvole:</td>
+    </tr>
+    <tr>
+        <td>
+            Admin
+        </td>
+        <td>
+            <input type="checkbox" name="admin" [(ngModel)]="admin">
+        </td>
+    </tr>
+    <tr>
+        <td>
+            Zaposleni
+        </td>
+        <td>
+            <input type="checkbox" name="users" [(ngModel)]="users">
+        </td>
+    </tr>
+    <tr>
+        <td>
+            Kupci
+        </td>
+        <td>
+            <input type="checkbox" name="customers" [(ngModel)]="customers">
+        </td>
+    </tr>
+    <tr>
+        <td>
+            Narudžbine
+        </td>
+        <td>
+            <input type="checkbox" name="orders" [(ngModel)]="orders">
+        </td>
+    </tr>
+    <tr>
+        <td>
+            Proizvodi
+        </td>
+        <td>
+            <input type="checkbox" name="products" [(ngModel)]="products">
+        </td>
+    </tr>
+    <tr>
         <td>
             <br>
             <button mat-raised-button color="primary" (click)="createUser()">Kreiraj korisnika</button>

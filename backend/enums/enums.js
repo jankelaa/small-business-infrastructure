@@ -11,5 +11,13 @@ module.exports = {
         DELIVERED: 3,
         COMPLETED: 4,
         CANCELED: 5,
+    },
+    permissions: {
+        SUPER_ADMIN: 'superAdmin',
+        ADMIN: 'admin',
+        USERS: 'users',
+        CUSTOMERS: 'customers',
+        ORDERS: 'orders',
+        PRODUCTS: 'products'
     }
 };

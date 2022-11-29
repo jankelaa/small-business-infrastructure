@@ -19,7 +19,7 @@ class UserService {
         return await User.findAll();
     }
 
-    async createUser(username, password, email, name, surname, phone, transaction = null) {
+    async createUser(username, password, email, name, surname, phone, admin, users, customers, orders, products, transaction = null) {
         const passwordHash = await generatePasswordHash(password);
 
         return await User.create({
@@ -28,8 +28,17 @@ class UserService {
             email,
             name,
             surname,
-            phone
+            phone,
+            permissions: [{
+                superAdmin: false,
+                admin,
+                users,
+                customers,
+                orders,
+                products
+            }]
         }, {
+            include: User.Permissions,
             transaction
         });
     }
@@ -37,6 +46,7 @@ class UserService {
     async findUserWithPermissionsByUsername(username, transaction = null) {
         return await User.findOne({
             where: { username },
+            include: User.Permissions,
             transaction
         });
     }

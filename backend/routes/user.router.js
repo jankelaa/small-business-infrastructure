@@ -6,19 +6,24 @@ const UserFull = require("../models/response-models/user-full.model");
 
 const router = Router();
 
+// const permissionInterceptor = require('../interceptors/permissions.interceptor');
+// const enums = require('../enums/enums');
+// const permissions = enums.permissions;
 const userService = require('../services/user.service');
 
-router.get('/', async (req, res) => {
-    try {
-        const users = await userService.getAllUsers();
+router.get('/',
+    // permissionInterceptor(permissions.USERS),
+    async (req, res) => {
+        try {
+            const users = await userService.getAllUsers();
 
-        const data = { users }
+            const data = { users }
 
-        return res.status(200).json(data);
-    } catch (error) {
-        return res.status(500).json(error);
-    }
-});
+            return res.status(200).json(data);
+        } catch (error) {
+            return res.status(500).json(error);
+        }
+    });
 
 router.get('/:userId', async (req, res) => {
     try {
@@ -45,7 +50,12 @@ router.post('/create', async (req, res) => {
             password: Joi.string().regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/).required(),
             name: Joi.string(),
             surname: Joi.string(),
-            phone: Joi.string().regex(/^\d+$/)
+            phone: Joi.string().regex(/^\d+$/),
+            admin: Joi.boolean(),
+            users: Joi.boolean(),
+            customers: Joi.boolean(),
+            orders: Joi.boolean(),
+            products: Joi.boolean()
         });
 
         const validate = validationSchema.validate(req.body);
@@ -57,11 +67,12 @@ router.post('/create', async (req, res) => {
 
         transaction = await sequelize.transaction();
 
-        const { email, password, name, surname, phone } = req.body;
+        const { email, password, name, surname, phone, admin, users, customers, orders, products } = req.body;
 
         const username = userService.getUsernameFromEmail(email);
 
-        const user = await userService.createUser(username, password, email, name, surname, phone, transaction);
+        const user = await userService.createUser(username, password, email, name, surname, phone,
+            admin, users, customers, orders, products, transaction);
 
         await transaction.commit();
 

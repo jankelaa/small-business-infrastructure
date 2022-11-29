@@ -10,7 +10,7 @@ body {
     flex-direction: column; */
 }
 
-table {
+table.wide {
     width: 100%;
 }
 

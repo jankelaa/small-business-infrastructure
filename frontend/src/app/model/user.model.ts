@@ -8,4 +8,14 @@ export class User {
     phone: string;
     createdAt: Date;
     updatedAt: Date;
+
+    permissions: {
+        id: number;
+        superAdmin: boolean;
+        admin: boolean;
+        users: boolean;
+        customers: boolean;
+        orders: boolean;
+        products: boolean;
+    };
 }

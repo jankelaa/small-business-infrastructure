@@ -20,13 +20,18 @@ export class UserService {
     return this.httpClient.get(`${this.baseUrl}${ApiPaths.user}/${userId}`);
   }
 
-  createUser(email, password, name, surname, phone) {
+  createUser(email, password, name, surname, phone, admin, users, customers, orders, products) {
     const data = {
       email,
       password,
       name,
       surname,
-      phone
+      phone,
+      admin,
+      users,
+      customers,
+      orders,
+      products
     }
 
     return this.httpClient.post(`${this.baseUrl}${ApiPaths.user}/create`, data);

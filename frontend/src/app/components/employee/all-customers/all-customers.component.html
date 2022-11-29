@@ -6,7 +6,7 @@
     <mat-icon>search</mat-icon>
 </button>
 
-<table mat-table [dataSource]="allCustomers" class="mat-elevation-z8">
+<table mat-table [dataSource]="allCustomers" class="mat-elevation-z8" class="wide">
     <ng-container matColumnDef="name">
         <th mat-header-cell *matHeaderCellDef> Kupac </th>
         <td mat-cell class="hoverborder" *matCellDef="let customer"> {{customer.name}} </td>
