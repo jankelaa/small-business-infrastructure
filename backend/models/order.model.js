@@ -21,8 +21,8 @@ module.exports = (sequelize, DataTypes) => {
         onDelete: 'SET NULL'
       });
 
-      Order.Orders = Order.hasMany(models.ProductOrder, {
-        as: 'productOrders',
+      Order.Products = Order.hasMany(models.ProductOrder, {
+        as: 'orderProducts',
         foreignKey: 'orderId'
       });
 

@@ -88,9 +88,14 @@ class OrderService {
         return await ProductOrder.bulkCreate(orderProducts, { transaction })
     }
 
-    async getOrderById(orderId, transaction = null) {
+    async getOrderWithProductsById(orderId, transaction = null) {
         return await Order.findOne({
             where: { id: orderId },
+            include:
+                [
+                    Order.Products,
+                    Order.OrdersMissingProducts
+                ],
             transaction
         });
     }

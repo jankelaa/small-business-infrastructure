@@ -243,7 +243,7 @@ router.post('/cancel', async (req, res) => {
 
         const { orderId } = req.body;
 
-        const order = await orderService.getOrderById(orderId, transaction);
+        const order = await orderService.getOrderWithProductsById(orderId, transaction);
 
         if (isNil(order)) {
             await transaction.commit();
@@ -258,6 +258,54 @@ router.post('/cancel', async (req, res) => {
         }
 
         await orderService.updateOrderStatus(orderId, orderStatuses.CANCELED, transaction);
+
+        let product;
+        let quantity;
+
+        const productIds = [];
+
+        if (order.status === orderStatuses.PENDING) {
+            await transaction.commit();
+            res.status(200).send('Order has been canceled.');
+        }
+
+        const productsToRestore = order.orderProducts.map(op => {
+            product = order.ordersMissingProducts.find(omp => omp.productId == op.productId);
+
+            if (isNil(product)) {
+                quantity = op.quantity;
+            } else {
+                quantity = op.quantity - product.quantity;
+            }
+
+            if (quantity != 0) {
+                productIds.push(op.productId);
+
+                return {
+                    id: op.productId,
+                    quantity
+                };
+            }
+        });
+
+        if (productIds.length === 0) {
+            await transaction.commit();
+            res.status(200).send('Order has been canceled.');
+        }
+
+        const allProducts = await productService.getProductsByProductIds(productIds, transaction);
+
+        const updatedProducts = productsToRestore.map(ptr => {
+            product = allProducts.find(ap => ap.id === ptr.id);
+
+            product.amountAvailable = product.amountAvailable + ptr.quantity;
+
+            return product;
+        });
+
+        await productService.updateStock(updatedProducts, transaction);
+
+        await productService.removeMissingProductsForOrder(orderId, transaction);
 
         await transaction.commit();
 
