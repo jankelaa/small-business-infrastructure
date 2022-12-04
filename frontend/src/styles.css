@@ -57,6 +57,10 @@ table.order {
     font-weight: bold;
 }
 
+input.width {
+    width: 80px;
+}
+
 mat-toolbar {
     justify-content: space-between;
     position: fixed;
