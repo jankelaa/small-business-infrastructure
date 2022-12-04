@@ -33,6 +33,7 @@ export class ProductsListComponent implements OnInit {
     });
 
     this.productService.getAllProducts().subscribe((allProducts: ProductForList[]) => {
+      allProducts.forEach(ap => ap.quantity = 1);
       this.productsToDisplay = this.allProducts = allProducts;
     });
   }
@@ -63,7 +64,7 @@ export class ProductsListComponent implements OnInit {
         parseFloat((this.productsForOrder[index].baseSum + product.price * quantity).toFixed(2));
     }
 
-    product.quantity = null;
+    product.quantity = 1;
 
     localStorage.removeItem('productsForOrder');
     localStorage.setItem('productsForOrder', JSON.stringify(this.productsForOrder));
